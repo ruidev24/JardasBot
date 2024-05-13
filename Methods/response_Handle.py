@@ -19,7 +19,6 @@ async def handle_Responses(message, intensity):
         roll = generate_roll(intensity)
         p_message = message.content.lower()
 
-        print("HEY")
         # Caralhamos
         if await caralhamos(message):
             return
@@ -31,8 +30,6 @@ async def handle_Responses(message, intensity):
         # Check if Rebola is Conas
         elif(str(message.author) == "rebolamercedes" and "@everyone" in message.content):
             await rebola_is_conas(message)
-
-        roll = 1
 
         # Generic
         if roll == 1:
@@ -65,7 +62,7 @@ async def german_reply(message):
 #####################################################
 async def respond_generic(message):
     roll = random.randint(1,21)
-    roll = 5
+
     if roll == 1:
         response = random.choice(DarkJokes.arr_darkjokes)
     elif roll == 2:

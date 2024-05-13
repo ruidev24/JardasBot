@@ -53,8 +53,8 @@ def run_discord_bot():
                 return
             
             # FOR DEBUG
-            if str(message.author) != "ruimachado":
-                return
+            # if str(message.author) != "ruimachado":
+            #     return
             
             # Update stats
             # stats_handle.update_stats(message)
