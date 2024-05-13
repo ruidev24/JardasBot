@@ -3,6 +3,9 @@ import datetime
 
 #################################################
 def update_vocabulary(pvocabulary, pusername):
+    print("HEY")
+    print(pvocabulary)
+    print(pusername)
     try:
         conn = sqlite3.connect("wordstats.db")
         c = conn.cursor()
@@ -58,6 +61,7 @@ def update_nuke_count(username):
 #################################################
 def update_mention_cnt(username):
     try:
+        today = datetime.date.today()
         conn = sqlite3.connect("wordstats.db")
         c = conn.cursor()
 
@@ -66,10 +70,12 @@ def update_mention_cnt(username):
         existing_user = c.fetchone()
 
         if existing_user is None:
-            c.execute("INSERT INTO mention_table (username, mention_cnt) VALUES (?, 1)", (username,))
+            c.execute("INSERT INTO mention_table (username, mention_cnt, date) VALUES (?, 1, ?)", (username, today))
         else:
             count = existing_user[1] + 1
             c.execute("UPDATE mention_table SET mention_cnt = ? WHERE username = ?", (count, username))
+            c.execute("UPDATE mention_table SET date = ? WHERE username = ?", (today, username))
+
 
         conn.commit()
     except sqlite3.Error as e:

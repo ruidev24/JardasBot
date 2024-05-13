@@ -1,10 +1,24 @@
 import sqlite3
 
 ############################################################
+def clear_mention_table(username):
+    try:
+        conn = sqlite3.connect("wordstats.db")
+        c = conn.cursor()
+        
+        # Delete nuke table
+        c.execute("DELETE FROM mention_table WHERE username = ?", (username,))
+        
+        conn.commit()
+    except sqlite3.Error as e:
+        print("Error deleting tables from database:", e)
+    finally:
+        conn.close()
+
+############################################################
 def clear_nuke_table():
     try:
         conn = sqlite3.connect("wordstats.db")
-        print(conn)
         c = conn.cursor()
         
         # Delete nuke table

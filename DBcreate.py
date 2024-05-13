@@ -54,6 +54,7 @@ def create_database():
         c.execute("""CREATE TABLE IF NOT EXISTS mention_table (
                     username TEXT,
                     mention_cnt INTEGER,
+                    date DATETIME,
                     FOREIGN KEY(username) REFERENCES users(username)
                 )""")
         

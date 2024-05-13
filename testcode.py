@@ -1,5 +1,5 @@
 import sqlite3
-import responses.BomDia as BomDia
+from responses import BomDia
 import random
 
 ############################################################

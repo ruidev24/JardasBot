@@ -132,7 +132,9 @@ arr_medium = [
     "I like you. People say I have no taste, but I like you",
     "You continue to meet my expectations",
     "You're entitled to your incorrect opinion",
-    "What in the butt?"
+    "What in the butt?",
+    "Vai-te mamar",
+    "Joga-te"
 ]
 
 arr_low = [

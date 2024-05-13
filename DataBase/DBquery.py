@@ -88,6 +88,25 @@ def query_nuke_last_date():
         conn.close()
 
 #################################################
+def query_mention_last_date(username):
+    try:
+        conn = sqlite3.connect("wordstats.db")
+        c = conn.cursor()
+
+        c.execute("SELECT * FROM mention_table WHERE username = ?", (username,))
+        mention_item = c.fetchone()
+
+        conn.commit()
+
+        if mention_item is not None:
+            return mention_item[2] # date
+        
+    except sqlite3.Error as e:
+        print("Error querying nuke_last_date:", e)
+    finally:
+        conn.close()
+
+#################################################
 def query_leastFavourable():
     try:
         conn = sqlite3.connect("wordstats.db")
