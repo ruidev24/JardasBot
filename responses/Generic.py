@@ -134,7 +134,8 @@ arr_medium = [
     "You're entitled to your incorrect opinion",
     "What in the butt?",
     "Vai-te mamar",
-    "Joga-te"
+    "Joga-te",
+    "A tua mãe aos pulos"
 ]
 
 arr_low = [

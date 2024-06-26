@@ -10,7 +10,7 @@ def clear_nuke_table():
         c = conn.cursor()
         
         # Delete nuke table
-        c.execute("DELETE FROM favour_table WHERE username = ? ", ("ruimachado",))
+        c.execute("DELETE FROM nuke_table WHERE username = ? ", ("ruimachado",))
         
         conn.commit()
     except sqlite3.Error as e:

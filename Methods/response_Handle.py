@@ -71,7 +71,7 @@ async def respond_generic(message):
         response = random.choice(ShowerThoughts.arr_shower)
     elif roll == 4:
         response = random.choice(Generic.arr_low)
-    elif roll == 5:
+    elif roll <= 6:
         response = DBquery.query_strangers_vocabulary()
     elif roll <= 11:
         response = random.choice(Generic.arr_medium)
@@ -82,7 +82,7 @@ async def respond_generic(message):
 
 ######################################################
 async def caralhamos(message):
-    caralhamos_roll = random.randint(1,50)
+    caralhamos_roll = random.randint(1,100)
     message_text = str(message.content).lower()
     words = message_text.split()
 

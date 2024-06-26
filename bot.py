@@ -1,4 +1,5 @@
 import discord
+import random
 from discord.ext import commands
 import time
 from Methods import response_Handle
@@ -7,11 +8,12 @@ from DataBase import DBupdate
 from DataBase import DBquery
 from Methods import command_Handle
 from Methods import stats_handle
+from responses import Offerings
 
 from utils.state import STATE
 
 state = STATE.NORMAL
-div_intensity = 1
+div_intensity = 3
 message_count = 0
 timestamp = None
 
@@ -25,6 +27,7 @@ def run_discord_bot():
     intents = discord.Intents.default()
     intents.message_content = True
     bot = commands.Bot(command_prefix='!', intents = intents)
+    allowed_mentions = discord.AllowedMentions(everyone = True)
     
     # Events
     @bot.event
@@ -93,7 +96,7 @@ def run_discord_bot():
 
     @bot.command()
     async def nuke(message):
-        await command_Handle.respond_nuke(message)
+        await command_Handle.respond_nuke(message, allowed_mentions)
 
     @bot.command()
     async def defuse(message):
@@ -118,9 +121,10 @@ def run_discord_bot():
 
     @bot.command()
     async def vocabulary(ctx, arg):
-        await ctx.channel.send(ctx.author)
-        await ctx.channel.send(arg)
         DBupdate.update_vocabulary(arg, str(ctx.author))
+        response = random.choice(Offerings.arr_offerings)
+        dm = await ctx.author.create_dm() #If dm is already made, it does not matter :)
+        await dm.send(response)
 
     # Commands Stats
     @bot.command()
@@ -159,8 +163,8 @@ async def dont_let_spam(message):
     message_count += 1
 
     # Check if message count exceeds the limit
-    if message_count > 20:
-        if current_time - timestamp < 30:
+    if message_count > 10:
+        if current_time - timestamp < 60:
             # Stop spamming
             await message.channel.send("Vou-me calar que o caralho do meu pai não quer que eu seja spammer")
             div_intensity = 1

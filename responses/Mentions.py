@@ -129,6 +129,7 @@ arr_mention = [
     "I'll never forget the first time we met. But I'll keep trying",
     "I admire the way you try so hard",
     "The key to happiness is to live without regrets and embrace your mistakes. Hug?",
-    "ou look easy to draw"
+    "You look easy to draw",
+    "Seu boiadeiro"
     
 ]

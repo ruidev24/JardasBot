@@ -28,7 +28,8 @@ async def self_roast(message):
     await message.channel.send(response)
 
 ############################
-def change_intensity(message, value):
+async def change_intensity(message, value):
+    value = int(value)
     if value >= 1 and value <= 4:
         intensity = value
     
@@ -59,7 +60,7 @@ async def vaidormir(message):
 
 
 #####################################################
-async def respond_nuke(message):
+async def respond_nuke(message, allowed_mentions):
     today = datetime.date.today()
     last_date = DBquery.query_nuke_last_date()
     if str(last_date) != str(today):
@@ -75,28 +76,40 @@ async def respond_nuke(message):
     else:
         DBupdate.update_negativeFavour(str(message.author))
 
-    if counter < 10:
+    if counter % 10 == 0:
+        await nuke_channel(message, allowed_mentions)
+    else:
         response = random.choice(Warning.arr_warn)
         await message.channel.send(response)
-    else:
-        await nuke_channel(message)
 
-async def nuke_channel(message):
-    await message.channel.send("Nuke activated...")
-    await message.channel.send("NOW I AM BECOME DEATH, THE DESTROYER OF WORLDS...")
-    time.sleep(60)
-    await message.channel.send("@everyone")
-    await message.channel.send("@everyone")
-    await message.channel.send("@everyone")
-    await message.channel.send("@everyone")
-    await message.channel.send("@everyone")
-    await message.channel.send("@everyone")
-    await message.channel.send("@everyone")
-    await message.channel.send("@everyone")
-    await message.channel.send("@everyone")
-    await message.channel.send("@everyone")
-    await message.channel.send("@everyone")
-    await message.channel.send("@everyone")
+async def nuke_channel(message, allowed_mentions):
+    x = 10
+    # await message.channel.send("Nuke activated...")
+    # await message.channel.send("NOW I AM BECOME DEATH, THE DESTROYER OF WORLDS...")
+    # time.sleep(5)
+    # await message.channel.send(content = "@everyone", allowed_mentions = allowed_mentions)
+    # time.sleep(5)
+    # await message.channel.send(content = "@everyone", allowed_mentions = allowed_mentions)
+    # time.sleep(5)
+    # await message.channel.send(content = "@everyone", allowed_mentions = allowed_mentions)
+    # time.sleep(5)
+    # await message.channel.send(content = "@everyone", allowed_mentions = allowed_mentions)
+    # time.sleep(5)
+    # await message.channel.send(content = "@everyone", allowed_mentions = allowed_mentions)
+    # time.sleep(5)
+    # await message.channel.send(content = "@everyone", allowed_mentions = allowed_mentions)
+    # time.sleep(5)
+    # await message.channel.send(content = "@everyone", allowed_mentions = allowed_mentions)
+    # time.sleep(5)
+    # await message.channel.send(content = "@everyone", allowed_mentions = allowed_mentions)
+    # time.sleep(5)
+    # await message.channel.send(content = "@everyone", allowed_mentions = allowed_mentions)
+    # time.sleep(5)
+    # await message.channel.send(content = "@everyone", allowed_mentions = allowed_mentions)
+    # time.sleep(5)
+    # await message.channel.send(content = "@everyone", allowed_mentions = allowed_mentions)
+    # time.sleep(5)
+    # await message.channel.send(content = "@everyone", allowed_mentions = allowed_mentions)
 
 #####################################################
 async def respond_defuse(message):
