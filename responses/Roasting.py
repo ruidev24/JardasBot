@@ -79,6 +79,5 @@ arr_roast = [
     "I bet you take more than 15 items through the express lane",
     "You have the charisma of a wet sock",
     "You look like you’d struggle to pour water out of a boot with instructions on the heel",
-    "My life may be a joke, but it’s not as funny as your face"
-    
+    "My life may be a joke, but it’s not as funny as your face",
 ]

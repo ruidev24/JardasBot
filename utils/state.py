@@ -1,5 +1,6 @@
 from enum import Enum
 
+
 class STATE(Enum):
     NORMAL = 0
     CHEAT = 1

@@ -15,5 +15,5 @@ arr_wake = [
     "Guten Morgen",
     "Bom dia seus Porcos",
     "Bom dia seus Seres com corpos e necessidades básicas",
-    "Acordei Rabujento"
+    "Acordei Rabujento",
 ]

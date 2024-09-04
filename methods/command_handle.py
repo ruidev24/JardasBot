@@ -1,10 +1,10 @@
 import random
 import datetime
-import time
 
-from DataBase import DBdelete
-from DataBase import DBupdate
-from DataBase import DBquery
+from discord import Message
+from database import DBdelete
+from database import DBupdate
+from database import DBquery
 
 from responses import BomDia
 from responses import Wronged
@@ -12,28 +12,31 @@ from responses import Warning
 from responses import Thanks
 from responses import Roasting
 
-from utils.state import *
-from utils.utils import *
+from utils.state import STATE
+
 
 ######################################################
-async def handle_roast(message):
+async def handle_roast(message: Message):
     roast = random.choice(Roasting.arr_roast)
     for mentioned_user in message.mentions:
         response = f"{mentioned_user.mention}, {roast}"
         await message.channel.send(response)
 
-async def self_roast(message):
+
+async def self_roast(message: Message):
     roast = random.choice(Roasting.arr_roast)
     response = f"{message.author.mention}, {roast}"
     await message.channel.send(response)
 
+
 ############################
-async def change_intensity(message, value):
+async def change_intensity(value: str):
     value = int(value)
     if value >= 1 and value <= 4:
         intensity = value
-    
+
     return intensity
+
 
 ####################################################################
 async def wakeup(message, state):
@@ -43,17 +46,18 @@ async def wakeup(message, state):
     else:
         await message.channel.send("Já tou acordado caralho, cala-te")
 
-async def respond_acordar(message):
+
+async def respond_acordar(message: Message):
     response = random.choice(BomDia.arr_wake)
     excluded = DBquery.query_leastFavourable()
     DBupdate.update_positiveFavour(str(message.author))
-    if(excluded):
+    if excluded:
         response += f" Excepto tu {excluded}! Tu podes ir pro caralho"
     await message.channel.send(response)
 
 
 ####################################################################
-async def vaidormir(message):
+async def vaidormir(message: Message):
     DBupdate.update_negativeFavour(str(message.author))
     response = random.choice(Wronged.arr_wronged)
     await message.channel.send(response)
@@ -82,8 +86,9 @@ async def respond_nuke(message, allowed_mentions):
         response = random.choice(Warning.arr_warn)
         await message.channel.send(response)
 
+
 async def nuke_channel(message, allowed_mentions):
-    x = 10
+    pass
     # await message.channel.send("Nuke activated...")
     # await message.channel.send("NOW I AM BECOME DEATH, THE DESTROYER OF WORLDS...")
     # time.sleep(5)
@@ -111,8 +116,9 @@ async def nuke_channel(message, allowed_mentions):
     # time.sleep(5)
     # await message.channel.send(content = "@everyone", allowed_mentions = allowed_mentions)
 
+
 #####################################################
-async def respond_defuse(message):
+async def respond_defuse(message: Message):
     prev_cnt = DBquery.query_nuke_count()
     DBupdate.update_defuse_count(str(message.author))
     counter = DBquery.query_nuke_count()
@@ -122,6 +128,6 @@ async def respond_defuse(message):
         return
     else:
         DBupdate.update_positiveFavour(str(message.author))
-    
+
     response = random.choice(Thanks.arr_thanks)
     await message.channel.send(response)

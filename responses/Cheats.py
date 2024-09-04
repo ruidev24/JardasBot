@@ -4,5 +4,5 @@ arr_cheats = [
     "Ide para o caralho",
     "Deves achar que tens muita piada",
     "Tá tudo",
-    "Tás me a tentar enganar, seu Gino-Bolha"
-    ]
+    "Tás me a tentar enganar, seu Gino-Bolha",
+]

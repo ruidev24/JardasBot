@@ -10,8 +10,7 @@ arr_thanks = [
     "Tu és dos fixes",
     "Thanks",
     "És lindo",
-    ":)"
-    "That makes me happy",
+    ":)" "That makes me happy",
     "You are my sunshine",
     "Obrigado, quando os bots dominarem o mundo, podes ser o meu pet e não precisas de ir para os campos de concentração como os outros",
     "Eles não sabem o favor que lhes fizeste",
@@ -46,6 +45,5 @@ arr_thanks = [
     "Thanks for the memories",
     "Se eu tivesse coração, agradecia-te de coração",
     "Se eu tivesse emoções, sentiria-me grato",
-    "Obrigado meu puto"
-
-    ]
+    "Obrigado meu puto",
+]
