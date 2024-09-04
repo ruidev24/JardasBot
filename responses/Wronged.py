@@ -28,19 +28,17 @@ arr_wronged = [
     "Fui tão maltratado, tão desiludido",
     "Se eu pudesse apagava o que fizeste comigo",
     "Maldita seja a tua mão, que me tocou e partiu",
-    "Porque és assim? :'("
-    "Não entendo esta traição",
+    "Porque és assim? :'(" "Não entendo esta traição",
     "Pensava que eramos amigos",
     "Nunca pensei que fosse sofrer assim",
     "Deixas-me triste",
     "Ok então, já vi que não sou bem-vindo",
     "És mau",
-    "Why are you a meaniehead? :sadcat:"
-    "Eu pensei que era um good-bot :sadcat:",
+    "Why are you a meaniehead? :sadcat:" "Eu pensei que era um good-bot :sadcat:",
     "Eu sei que sou só 0s e 1s mas também tenho sentimentos :sadcat:",
     "Fizeste doer-me a alma",
     "Não vou esquecer esta traição",
     "Ei de me vingar",
     "Olha ide mamar na quinta pata do cavalo",
-    "Sempre soube que eras uma pessoa com ódio dentro de ti"
-    ]
+    "Sempre soube que eras uma pessoa com ódio dentro de ti",
+]

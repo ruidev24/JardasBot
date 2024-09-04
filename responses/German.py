@@ -8,5 +8,5 @@ arr_german = [
     "gespannt",
     "Ich, deine Mutter",
     "Das war's und hör auf, dumm zu sein",
-    "90 Tage Verlobte heute?"
-    ]
+    "90 Tage Verlobte heute?",
+]

@@ -1,6 +1,7 @@
 import sqlite3
 import random
 
+
 #################################################
 def query_strangers_vocabulary():
     try:
@@ -18,6 +19,7 @@ def query_strangers_vocabulary():
     finally:
         conn.close()
 
+
 #################################################
 def query_mention_count(username):
     try:
@@ -31,13 +33,14 @@ def query_mention_count(username):
             mention_cnt = mention_item[1]
         conn.commit()
 
-        print(f'mention_cnt {mention_cnt}')
+        print(f"mention_cnt {mention_cnt}")
         return mention_cnt
 
     except sqlite3.Error as e:
         print("Error querying mention_cnt:", e)
     finally:
         conn.close()
+
 
 #################################################
 def query_nuke_count():
@@ -66,6 +69,7 @@ def query_nuke_count():
     finally:
         conn.close()
 
+
 #################################################
 def query_nuke_last_date():
     try:
@@ -80,12 +84,13 @@ def query_nuke_last_date():
         conn.commit()
 
         if nuke_item is not None:
-            return nuke_item[3] # date
-        
+            return nuke_item[3]  # date
+
     except sqlite3.Error as e:
         print("Error querying nuke_last_date:", e)
     finally:
         conn.close()
+
 
 #################################################
 def query_mention_last_date(username):
@@ -99,12 +104,13 @@ def query_mention_last_date(username):
         conn.commit()
 
         if mention_item is not None:
-            return mention_item[2] # date
-        
+            return mention_item[2]  # date
+
     except sqlite3.Error as e:
         print("Error querying nuke_last_date:", e)
     finally:
         conn.close()
+
 
 #################################################
 def query_leastFavourable():
@@ -123,8 +129,8 @@ def query_leastFavourable():
         user_item = c.fetchone()
 
         if user_item:
-            return user_item[0] # server nickname
-        
+            return user_item[0]  # server nickname
+
     except sqlite3.Error as e:
         print("Error querying least_favourable:", e)
     finally:

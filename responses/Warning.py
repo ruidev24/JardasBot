@@ -40,5 +40,5 @@ arr_warn = [
     "Tu é um psicopata",
     "Why do you feel the need to destroy the peace?",
     "Que engraçadinho",
-    "Tás a mexer em coisas que não devias"
+    "Tás a mexer em coisas que não devias",
 ]

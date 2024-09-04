@@ -90,5 +90,5 @@ arr_piropo = [
     "Ó filha, tens carinha de modelo mas o teu cu é um continente",
     "Com umas bóias dessas o Titanic não tinha ido ao fundo",
     "Com um piso desses deves ser mais rodada que a 2ª Circular",
-    "Ó filha, se o teu cu fosse uma torrada, precisava de um remo para o barrar"
+    "Ó filha, se o teu cu fosse uma torrada, precisava de um remo para o barrar",
 ]

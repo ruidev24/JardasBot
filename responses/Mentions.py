@@ -130,6 +130,5 @@ arr_mention = [
     "I admire the way you try so hard",
     "The key to happiness is to live without regrets and embrace your mistakes. Hug?",
     "You look easy to draw",
-    "Seu boiadeiro"
-    
+    "Seu boiadeiro",
 ]

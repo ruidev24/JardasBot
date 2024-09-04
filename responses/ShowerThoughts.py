@@ -1,4 +1,4 @@
-arr_shower=[
+arr_shower = [
     "We laugh at dogs getting excited when they hear a bark on TV, but if TV was a nonstop stream of unintelligible noises and then someone suddenly spoke to you in your language, you'd be pretty fucking startled too.",
     "Lawyers hope you get sued, and doctors hope you get sick, cops hope you're criminal, mechanics hope you have car trouble, but only a thief wishes prosperity",
     "Usually, you empty your drink from the top, but when you use a straw, you empty it from the bottom",
@@ -104,6 +104,5 @@ arr_shower=[
     "Why do we call it a 'building' if it's already built?",
     "If your shirt isn't tucked into your pants, are your pants tucked into your shirt?",
     "Why is bacon called bacon and cookies called cookies when you cook bacon and bake cookies?",
-    "Porque é que calçamos os sapatos, mas não sapatamos as calças?"
-
+    "Porque é que calçamos os sapatos, mas não sapatamos as calças?",
 ]

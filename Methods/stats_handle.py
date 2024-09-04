@@ -1,11 +1,12 @@
 import sqlite3
 
 from utils import stopfile
-from DataBase import DBupdate
+from database import DBupdate
+from discord import Message
 
 #####################################################
-def update_stats(message):
-    username = str(message.author) 
+def update_stats(message: Message):
+    username = str(message.author)
     message_text = str(message.content).lower()
     channel = str(message.channel)
 
@@ -23,14 +24,14 @@ def update_stats(message):
 
 
 ##################################################
-async def get_top_users_by_word(message):
+async def get_top_users_by_word(message: Message):
     try:
         conn = sqlite3.connect("wordstats.db")
         c = conn.cursor()
 
         word = message.content[12:]
         word = word.lower()
-        word = word.replace(" ","")
+        word = word.replace(" ", "")
         print(word)
 
         # Check if the word exists
@@ -40,7 +41,8 @@ async def get_top_users_by_word(message):
             return "That words has never been written"
 
         # Query to get the top 10 words by user
-        c.execute("""
+        c.execute(
+            """
             SELECT u.username, uw.count
             FROM userwords uw
             JOIN words w ON uw.word_id = w.word_id
@@ -48,7 +50,9 @@ async def get_top_users_by_word(message):
             WHERE w.word = ?
             ORDER BY uw.count DESC
             LIMIT 10
-        """, (word,))
+        """,
+            (word,),
+        )
 
         top_users_by_word = c.fetchall()
 
@@ -58,7 +62,7 @@ async def get_top_users_by_word(message):
             response += "{:<30} {:<5}\n".format(user[0], user[1])
 
         await message.channel.send(response)
-    
+
     except sqlite3.Error as e:
         print("Error retrieving top words by user:", e)
     finally:
@@ -66,25 +70,26 @@ async def get_top_users_by_word(message):
 
 
 #########################################
-async def get_top_words_by_channel(message):
+async def get_top_words_by_channel(message: Message):
     try:
         conn = sqlite3.connect("wordstats.db")
         c = conn.cursor()
 
         channel = message.content[15:]
         channel = channel.lower()
-        channel = channel.replace(" ","")
+        channel = channel.replace(" ", "")
         channel = transform_channel(channel)
         print(channel)
 
-         # Check if the channel exists
+        # Check if the channel exists
         c.execute("SELECT channel_id FROM channels WHERE channel_name = ?", (channel,))
         channel_id = c.fetchone()
         if not channel_id:
             return "That channel doesn't exist"
 
         # Query to get the top 10 words by channel
-        c.execute("""
+        c.execute(
+            """
             SELECT w.word, cw.count
             FROM channelwords cw
             JOIN words w ON cw.word_id = w.word_id
@@ -92,7 +97,9 @@ async def get_top_words_by_channel(message):
             WHERE c.channel_name = ?
             ORDER BY cw.count DESC
             LIMIT 10
-        """, (channel,))
+        """,
+            (channel,),
+        )
 
         top_words_by_channel = c.fetchall()
 
@@ -100,7 +107,7 @@ async def get_top_words_by_channel(message):
         response += "{:<30} {:<5}\n".format("Word", "Count")
         for word in top_words_by_channel:
             response += "{:<30} {:<5}\n".format(word[0], word[1])
-        
+
         await message.channel.send(response)
 
     except sqlite3.Error as e:
@@ -110,14 +117,14 @@ async def get_top_words_by_channel(message):
 
 
 ##################################################
-async def get_top_words_by_user(message):
+async def get_top_words_by_user(message: Message):
     try:
         conn = sqlite3.connect("wordstats.db")
         c = conn.cursor()
 
         username = message.content[12:]
         username = username.lower()
-        username = username.replace(" ","")
+        username = username.replace(" ", "")
         print(username)
 
         # Check if the user exists
@@ -127,7 +134,8 @@ async def get_top_words_by_user(message):
             return "That user doesn't exist"
 
         # Query to get the top 10 words by user
-        c.execute("""
+        c.execute(
+            """
             SELECT w.word, uw.count
             FROM userwords uw
             JOIN words w ON uw.word_id = w.word_id
@@ -135,7 +143,9 @@ async def get_top_words_by_user(message):
             WHERE u.username = ?
             ORDER BY uw.count DESC
             LIMIT 10
-        """, (username,))
+        """,
+            (username,),
+        )
 
         top_words_by_user = c.fetchall()
 
@@ -143,7 +153,7 @@ async def get_top_words_by_user(message):
         response += "{:<30} {:<5}\n".format("Word", "Count")
         for word in top_words_by_user:
             response += "{:<30} {:<5}\n".format(word[0], word[1])
-        
+
         await message.channel.send(response)
 
     except sqlite3.Error as e:
@@ -153,7 +163,7 @@ async def get_top_words_by_user(message):
 
 
 ################################################
-async def get_top_words_general(message):
+async def get_top_words_general(message: Message):
     try:
         conn = sqlite3.connect("wordstats.db")
         c = conn.cursor()
@@ -171,7 +181,7 @@ async def get_top_words_general(message):
             response += word[0].ljust(15) + str(word[1]).rjust(5) + "\n"
 
         await message.channel.send(response)
-    
+
     except sqlite3.Error as e:
         print("Error retrieving top words:", e)
     finally:

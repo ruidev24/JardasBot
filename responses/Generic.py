@@ -45,7 +45,7 @@ arr_high = [
     "Até ficas abananade :KEKW:",
     "Fuck it, We Ball",
     "Vai dormir que o teu mal é sono",
-    "Um relógio parado acerta mais vezes do que tu"
+    "Um relógio parado acerta mais vezes do que tu",
 ]
 
 arr_medium = [
@@ -135,7 +135,7 @@ arr_medium = [
     "What in the butt?",
     "Vai-te mamar",
     "Joga-te",
-    "A tua mãe aos pulos"
+    "A tua mãe aos pulos",
 ]
 
 arr_low = [
@@ -158,5 +158,5 @@ arr_low = [
     "A inteligência é uma virtude não comum a todos"
     "Que os teus dedos se transformem em ganchos e que te dê comichão nos tomates",
     "Haviam de te besuntar com mel e atirar-te aos ursos",
-    "Já se questionaram como é que a malta sem braços limpa o cu depois de cagar?"
+    "Já se questionaram como é que a malta sem braços limpa o cu depois de cagar?",
 ]

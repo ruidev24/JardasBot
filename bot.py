@@ -1,13 +1,20 @@
 import discord
+from discord.errors import DiscordException
 import random
 from discord.ext import commands
 import time
-from Methods import response_Handle
-from utils import utils
-from DataBase import DBupdate
-from DataBase import DBquery
-from Methods import command_Handle
-from Methods import stats_handle
+from methods.response_handle import handle_responses
+from utils.utils import check_for_cheats, respond_mention
+from database import DBupdate
+from methods.command_handle import (
+    wakeup,
+    self_roast,
+    handle_roast,
+    respond_nuke,
+    respond_defuse,
+    change_intensity,
+)
+from methods import stats_handle
 from responses import Offerings
 
 from utils.state import STATE
@@ -17,32 +24,30 @@ div_intensity = 3
 message_count = 0
 timestamp = None
 
+
 ########################################################
 def run_discord_bot():
     global state
     global div_intensity
 
     # Discord Code - Ainda nao vi a documentaçao
-    TOKEN = ''
+    TOKEN = ""
     intents = discord.Intents.default()
     intents.message_content = True
-    bot = commands.Bot(command_prefix='!', intents = intents)
-    allowed_mentions = discord.AllowedMentions(everyone = True)
-    
+    bot = commands.Bot(command_prefix="!", intents=intents)
+    allowed_mentions = discord.AllowedMentions(everyone=True)
+
     # Events
     @bot.event
     async def on_ready():
-        print(f'{bot.user} is running!')
-        # Get the guild object
-        guild = bot.guilds[0]  # Assuming your bot is in only one guild
-        # await utils.get_history_all_channels(guild)
+        print(f"{bot.user} is running!")
 
     # On Message
     @bot.event
-    async def on_message(message):
+    async def on_message(message: discord.Message):
         try:
             await bot.process_commands(message)
-        except:
+        except [TypeError, DiscordException]:
             print("OK")
         # Aqui devia dar return se processou algum comando
 
@@ -54,11 +59,11 @@ def run_discord_bot():
             if message.author == bot.user:
                 await dont_let_spam(message)
                 return
-            
+
             # FOR DEBUG
             # if str(message.author) != "ruimachado":
             #     return
-            
+
             # Update stats
             # stats_handle.update_stats(message)
 
@@ -67,55 +72,54 @@ def run_discord_bot():
                 return
 
             # Check Cheats
-            if await utils.checkForCheats(message):
+            if await check_for_cheats(message):
                 return
 
             # Mention the Bot
             if bot.user.mentioned_in(message):
-                await utils.respond_mention(message)  
+                await respond_mention(message)
                 return
 
-            await response_Handle.handle_Responses(message, div_intensity)
+            await handle_responses(message, div_intensity)
 
         except Exception as e:
             print(e)
-
 
     # Commands
     @bot.command()
     async def acorda(ctx):
         global state
-        await command_Handle.wakeup(ctx.message, state)
+        await wakeup(ctx.message, state)
         state = STATE.NORMAL
 
     @bot.command()
-    async def vaidormir(message):
+    async def vaidormir(message: discord.Message):
         global state
-        await command_Handle.vaidormir(message)
+        await vaidormir(message)
         state = STATE.SLEEP
 
     @bot.command()
-    async def nuke(message):
-        await command_Handle.respond_nuke(message, allowed_mentions)
+    async def nuke(message: discord.Message):
+        await respond_nuke(message, allowed_mentions)
 
     @bot.command()
-    async def defuse(message):
-        await command_Handle.respond_defuse(message)
+    async def defuse(message: discord.Message):
+        await respond_defuse(message)
 
     @bot.command()
-    async def intensity(message, arg):
+    async def intensity(_: discord.Message, arg: str):
         global div_intensity
-        div_intensity = await command_Handle.change_intensity(message, arg)
+        div_intensity = await change_intensity(arg)
 
     @bot.command()
     async def roast(ctx):
         mentioned_users = ctx.message.mentions
         if bot.user.mentioned_in(ctx.message):
             await ctx.channel.send("Querias que eu fizesse roast a mim próprio?")
-            await command_Handle.self_roast(ctx.message)
+            await self_roast(ctx.message)
             return
         if mentioned_users:
-            await command_Handle.handle_roast(ctx.message)
+            await handle_roast(ctx.message)
         else:
             await ctx.channel.send("Dou roast a quem? Seu burro!")
 
@@ -123,33 +127,34 @@ def run_discord_bot():
     async def vocabulary(ctx, arg):
         DBupdate.update_vocabulary(arg, str(ctx.author))
         response = random.choice(Offerings.arr_offerings)
-        dm = await ctx.author.create_dm() #If dm is already made, it does not matter :)
+        dm = (
+            await ctx.author.create_dm()
+        )  # If dm is already made, it does not matter :)
         await dm.send(response)
 
     # Commands Stats
     @bot.command()
-    async def stats(message):
+    async def stats(message: discord.Message):
         stats_handle.get_top_words_general(message)
 
     @bot.command()
-    async def stats_user(message):
+    async def stats_user(message: discord.Message):
         stats_handle.get_top_words_by_user(message)
 
     @bot.command()
-    async def stats_word(message):
+    async def stats_word(message: discord.Message):
         stats_handle.get_top_users_by_word(message)
 
     @bot.command()
-    async def stats_channel(message):
+    async def stats_channel(message: discord.Message):
         stats_handle.get_top_words_by_channel(message)
-
 
     #################
     bot.run(TOKEN)
 
 
 ####################################################################
-async def dont_let_spam(message):
+async def dont_let_spam(message: discord.Message):
     global timestamp
     global message_count
     global div_intensity
@@ -166,32 +171,17 @@ async def dont_let_spam(message):
     if message_count > 10:
         if current_time - timestamp < 60:
             # Stop spamming
-            await message.channel.send("Vou-me calar que o caralho do meu pai não quer que eu seja spammer")
+            await message.channel.send(
+                "Vou-me calar que o caralho do meu pai não quer que eu seja spammer"
+            )
             div_intensity = 1
             time.sleep(180)
             await message.channel.send("Voltei caralho")
-            
+
         message_count = 0
         timestamp = current_time
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
 #################################################################################3
-if __name__ == '__main__':
+if __name__ == "__main__":
     run_discord_bot()

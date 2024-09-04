@@ -5,5 +5,5 @@ arr_friendly = [
     "May the force be with you",
     "Hakuna Matata, no worries",
     "Geralmente não gosto de pessoas, mas tu és a excepção",
-    ""
+    "",
 ]
