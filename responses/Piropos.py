@@ -37,7 +37,7 @@ arr_piropo = [
     "Só queria que fosses um cavalinho de carrossel, para te montar todo o dia por 50 cêntimos",
     "Ó filha, anda cá a cima que até a barraca abana",
     "Contigo filha, era até ao osso",
-    "Metia-te-a inteira até que ma mordesses",
+    "Metia-te inteira até que ma mordesses",
     "Posso tocar no teu umbigo da parte de dentro?",
     "Ai de ti que eu saiba que esse cuzinho anda a passar fome",
     "Só não tenho pêlos na língua porque tu não deixas",
