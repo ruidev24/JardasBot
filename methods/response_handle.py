@@ -4,12 +4,11 @@ from responses import Generic
 from responses import DarkJokes
 from responses import ShowerThoughts
 from responses import German
+from responses import Latin
 from responses import Piropos
 from database import DBquery
 
-
 from utils.stopfile import validate_word
-
 
 #################################################
 async def handle_responses(message: Message, intensity):
@@ -22,6 +21,10 @@ async def handle_responses(message: Message, intensity):
 
         # Check if curlyfry
         if (str(message.author) == "curlyfry591") and await german_reply(message):
+            return
+
+        # Check if KikaMod
+        elif (str(message.author) == "shipyroni") and await latin_reply(message):
             return
 
         # Check if Rebola is Conas
@@ -55,6 +58,14 @@ async def german_reply(message: Message):
         return True
     return False
 
+######################################################
+async def latin_reply(message: Message):
+    roll = random.randint(1, 30)
+    if roll == 1:
+        response = random.choice(Latin.arr_latin)
+        await message.channel.send(response)
+        return True
+    return False
 
 #####################################################
 async def respond_generic(message: Message):
