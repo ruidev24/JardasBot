@@ -5,6 +5,7 @@ from responses import DarkJokes
 from responses import ShowerThoughts
 from responses import German
 from responses import Latin
+from responses import French
 from responses import Piropos
 from database import DBquery
 
@@ -25,6 +26,10 @@ async def handle_responses(message: Message, intensity):
 
         # Check if KikaMod
         elif (str(message.author) == "shipyroni") and await latin_reply(message):
+            return
+        
+        # Check if Caro
+        elif (str(message.author) == "carosaf") and await french_reply(message):
             return
 
         # Check if Rebola is Conas
@@ -48,10 +53,9 @@ async def rebola_is_conas(message: Message):
     message.channel.send(message, "Deves ter batido com a cabeça em miudo só pode")
     message.channel.send(message, "Caralho do moço")
 
-
 ######################################################
 async def german_reply(message: Message):
-    roll = random.randint(1, 30)
+    roll = random.randint(1, 10)
     if roll == 1:
         response = random.choice(German.arr_german)
         await message.channel.send(response)
@@ -60,9 +64,18 @@ async def german_reply(message: Message):
 
 ######################################################
 async def latin_reply(message: Message):
-    roll = random.randint(1, 30)
+    roll = random.randint(1, 10)
     if roll == 1:
         response = random.choice(Latin.arr_latin)
+        await message.channel.send(response)
+        return True
+    return False
+
+######################################################
+async def french_reply(message: Message):
+    roll = random.randint(1, 10)
+    if roll == 1:
+        response = random.choice(French.arr_french)
         await message.channel.send(response)
         return True
     return False
