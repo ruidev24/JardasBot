@@ -1,3 +1,5 @@
+#https://raw.githubusercontent.com/Desassossego/JardasBot/refs/heads/main/methods/response_handle.py
+###
 import random
 from discord import Message
 from responses import Generic
@@ -7,6 +9,9 @@ from responses import German
 from responses import Latin
 from responses import French
 from responses import Piropos
+from responses import Communism
+from responses import Euskara
+from responses import Japanese
 from database import DBquery
 
 from utils.stopfile import validate_word
@@ -32,6 +37,18 @@ async def handle_responses(message: Message, intensity):
         elif (str(message.author) == "carosaf") and await french_reply(message):
             return
 
+        # Check if JECS
+        elif (str(message.author) == "jecs21") and await communism_reply(message):
+            return
+            
+        # Check if Renato
+        elif (str(message.author) == "lazersword996") and await japanese_reply(message):
+            return
+
+        # Check if Toirao
+        elif (str(message.author) == "toirao") and await euskara_reply(message):
+            return
+            
         # Check if Rebola is Conas
         elif str(message.author) == "rebolamercedes" and "@everyone" in message.content:
             await rebola_is_conas(message)
@@ -55,7 +72,7 @@ async def rebola_is_conas(message: Message):
 
 ######################################################
 async def german_reply(message: Message):
-    roll = random.randint(1, 10)
+    roll = random.randint(1, 20)
     if roll == 1:
         response = random.choice(German.arr_german)
         await message.channel.send(response)
@@ -64,7 +81,7 @@ async def german_reply(message: Message):
 
 ######################################################
 async def latin_reply(message: Message):
-    roll = random.randint(1, 10)
+    roll = random.randint(1, 20)
     if roll == 1:
         response = random.choice(Latin.arr_latin)
         await message.channel.send(response)
@@ -72,8 +89,35 @@ async def latin_reply(message: Message):
     return False
 
 ######################################################
+async def communism_reply(message: Message):
+    roll = random.randint(1, 20)
+    if roll == 1:
+        response = random.choice(Communism.arr_communism)
+        await message.channel.send(response)
+        return True
+    return False
+    
+######################################################
+async def japanese_reply(message: Message):
+    roll = random.randint(1, 20)
+    if roll == 1:
+        response = random.choice(Japanese.arr_japanese)
+        await message.channel.send(response)
+        return True
+    return False
+
+######################################################
+async def euskara_reply(message: Message):
+    roll = random.randint(1, 20)
+    if roll == 1:
+        response = random.choice(Euskara.arr_euskara)
+        await message.channel.send(response)
+        return True
+    return False
+
+######################################################
 async def french_reply(message: Message):
-    roll = random.randint(1, 10)
+    roll = random.randint(1, 20)
     if roll == 1:
         response = random.choice(French.arr_french)
         await message.channel.send(response)
