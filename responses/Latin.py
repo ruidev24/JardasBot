@@ -31,5 +31,4 @@ arr_latin = [
     "Forsan et haec olim meminisse iuvabit",
     "Ignoramus et ignorabimus",
     "A far l'amore comincia tu",
-    
-]
+    ]

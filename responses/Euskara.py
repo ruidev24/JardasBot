@@ -3,5 +3,6 @@ arr_euskara = [
     "Euskadi Ta Askatasuna",
     "Txerria txerria txerria",
     "Frossos Tripodea",
-    
+    "Kabroi!",
+    "Zozoa!",   
 ]

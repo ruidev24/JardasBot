@@ -1,4 +1,5 @@
 import discord
+import logging
 from discord.errors import DiscordException
 import random
 from discord.ext import commands
@@ -29,6 +30,9 @@ timestamp = None
 def run_discord_bot():
     global state
     global div_intensity
+
+    #log_handler
+    handler = logging.FileHandler(filename='JardasBot.log', encoding='utf-8', mode = 'w')
 
     # Discord Code - Ainda nao vi a documentaçao
     TOKEN = ""
@@ -150,8 +154,7 @@ def run_discord_bot():
         stats_handle.get_top_words_by_channel(message)
 
     #################
-    bot.run(TOKEN)
-
+    bot.run(TOKEN, log_handler=handler, log_level=logging.INFO)
 
 ####################################################################
 async def dont_let_spam(message: discord.Message):

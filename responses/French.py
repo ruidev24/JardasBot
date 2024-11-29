@@ -31,8 +31,7 @@ arr_french = [
     "Mettre les couilles sur la table",
     "C'est comme pisser dans un violon",
     "Mets la moi dans le cul",
-    
-]
+    ]
 
 
 

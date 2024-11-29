@@ -30,6 +30,4 @@ arr_german = [
     "Heil, Chancellora",
     "Ich tu dir weh",
     "Schauen wir uns Game of Thrones an",
-    "Schauen wir uns Snooker an, um diese Ärsche zu sehen"
-    
 ]
