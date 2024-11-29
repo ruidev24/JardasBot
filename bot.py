@@ -1,5 +1,6 @@
 import discord
 import logging
+import logging.handlers
 from discord.errors import DiscordException
 import random
 from discord.ext import commands
@@ -25,6 +26,24 @@ div_intensity = 3
 message_count = 0
 timestamp = None
 
+def setup_logging(logger: logging.Logger):
+    logger.setLevel(logging.INFO)
+    logging.getLogger('discord.gateway').setLevel(logging.DEBUG)
+    
+    handler = logging.handlers.RotatingFileHandler(
+        filename='JardasBot.log',
+        encoding='utf-8',
+        maxBytes=32 * 1024 * 1024,  # 32 MiB
+        backupCount=5,  # Rotate through 5 files
+        )
+    
+    dt_fmt = '%Y-%m-%d %H:%M:%S'
+    formatter = logging.Formatter('[{asctime}] [{levelname:<8}] {name}: {message}', dt_fmt, style='{')
+    handler.setFormatter(formatter)
+    logger.addHandler(handler)
+    return
+
+
 
 ########################################################
 def run_discord_bot():
@@ -32,7 +51,8 @@ def run_discord_bot():
     global div_intensity
 
     #log_handler
-    handler = logging.FileHandler(filename='JardasBot.log', encoding='utf-8', mode = 'w')
+    logger = logging.getLogger('discord')
+    setup_logging(logger)
 
     # Discord Code - Ainda nao vi a documentaçao
     TOKEN = ""
@@ -154,7 +174,7 @@ def run_discord_bot():
         stats_handle.get_top_words_by_channel(message)
 
     #################
-    bot.run(TOKEN, log_handler=handler, log_level=logging.INFO)
+    bot.run(TOKEN, log_handler=None)
 
 ####################################################################
 async def dont_let_spam(message: discord.Message):
