@@ -2,7 +2,6 @@ arr_high = [
     "é mamares",
     "é cagar e andar",
     "tenso",
-    "@90 Day Fiancé 👰 Putaria logo?",
     "a tua prima",
     "olha e deixares de ser conas?",
     "majé",
@@ -52,7 +51,7 @@ arr_medium = [
     "4, 8, 15, 16, 23, 42",
     "never gonna give you up",
     "Isso parece um ritual sexual",
-    "Tomará tu teres o minha quantidade de tecido adiposo",
+    "Tomara tu teres a minha quantidade de tecido adiposo",
     "Que Cancro",
     "Harambe",
     "I just had the best 1000101 of my life, I think I'm in love"
@@ -155,7 +154,7 @@ arr_low = [
     "Algures no mundo uma árvore esta a trabalhar para substituir o oxigênio que tu desperdiças",
     "Não és a pessoa mais burra do mundo, mas reza para essa pessoa não morrer",
     "Enquanto te ouvia falar, lembrei-me que tenho de deitar fora o lixo",
-    "A inteligência é uma virtude não comum a todos"
+    "A inteligência é uma virtude não comum a todos",
     "Que os teus dedos se transformem em ganchos e que te dê comichão nos tomates",
     "Haviam de te besuntar com mel e atirar-te aos ursos",
     "Já se questionaram como é que a malta sem braços limpa o cu depois de cagar?",
