@@ -17,7 +17,7 @@ async def handle_responses(message: Message, intensity):
     try:
         roll = generate_roll(intensity)
         #refatorado
-        custom_handlers.check_custom_replies(message)
+        await custom_handlers.check_custom_replies(message)
         # Generic
         if roll == 1:
             await respond_generic(message)
