@@ -8,6 +8,9 @@ import time
 from methods.response_handle import handle_responses
 from utils.utils import check_for_cheats, respond_mention
 from database import DBupdate
+
+from methods import stats_handle
+from methods.logging_handle import setup_logging
 from methods.command_handle import (
     wakeup,
     self_roast,
@@ -15,8 +18,9 @@ from methods.command_handle import (
     respond_nuke,
     respond_defuse,
     change_intensity,
+    handle_fortune,
+    russian_roulette
 )
-from methods import stats_handle
 from responses import Offerings
 
 from utils.state import STATE
@@ -26,23 +30,7 @@ div_intensity = 3
 message_count = 0
 timestamp = None
 
-#set logging
-def setup_logging(logger: logging.Logger):
-    logger.setLevel(logging.INFO)
-    logging.getLogger('discord.gateway').setLevel(logging.DEBUG)
-    
-    handler = logging.handlers.RotatingFileHandler(
-        filename='JardasBot.log',
-        encoding='utf-8',
-        maxBytes=32 * 1024 * 1024,  # 32 MiB
-        backupCount=5,  # Rotate through 5 files
-        )
-    
-    dt_fmt = '%Y-%m-%d %H:%M:%S'
-    formatter = logging.Formatter('[{asctime}] [{levelname:<8}] {name}: {message}', dt_fmt, style='{')
-    handler.setFormatter(formatter)
-    logger.addHandler(handler)
-    return
+
 
 ########################################################
 def run_discord_bot():
@@ -109,6 +97,14 @@ def run_discord_bot():
             print(e)
 
     # Commands
+    @bot.command()
+    async def fortune_teller(ctx):
+        await handle_fortune(ctx.message)
+
+    @bot.command()
+    async def russianroulette(ctx):
+        await russian_roulette(ctx.message)
+
     @bot.command()
     async def acorda(ctx):
         global state

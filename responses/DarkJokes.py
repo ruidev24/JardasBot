@@ -7,3 +7,4 @@ arr_darkjokes = [
     "My German girlfriend always yells her age when we have sex",
     "Do you know the difference in peanut butter and jam? Well, I can't peanut butter my dick in your ass",
 ]
+

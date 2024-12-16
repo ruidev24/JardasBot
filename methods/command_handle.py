@@ -1,5 +1,7 @@
 import random
 import datetime
+from datetime import timedelta
+
 
 from discord import Message
 from database import DBdelete
@@ -11,6 +13,7 @@ from responses import Wronged
 from responses import Warning
 from responses import Thanks
 from responses import Roasting
+from responses import Fortunes
 
 from utils.state import STATE
 
@@ -86,6 +89,25 @@ async def respond_nuke(message, allowed_mentions):
         response = random.choice(Warning.arr_warn)
         await message.channel.send(response)
 
+
+#################################################################
+async def russian_roulette(message: Message):
+    bullet = random.randint(1, 6)
+    if bullet == 1:
+        try:
+            timeout_duration = timedelta(hours=1)
+            await message.author.timeout(timeout_duration, reason="Drawn the bullet in Russian Roulette")
+            await message.channel.send(f"{message.author.mention} has died")
+        except Exception as e:
+            await message.channel.send(f"Error timing out {message.author.mention}: {e}")
+    else:
+        await message.channel.send(f"{message.author.mention} is safe!")
+
+#################################################
+async def handle_fortune(message:Message):
+    fortune = random.choice(Fortunes.arr_fortune)
+    response = f"{message.author.mention}, esta semana {fortune}"
+    await message.channel.send(response)
 
 async def nuke_channel(message, allowed_mentions):
     pass
