@@ -26,6 +26,7 @@ div_intensity = 3
 message_count = 0
 timestamp = None
 
+#set logging
 def setup_logging(logger: logging.Logger):
     logger.setLevel(logging.INFO)
     logging.getLogger('discord.gateway').setLevel(logging.DEBUG)
@@ -42,8 +43,6 @@ def setup_logging(logger: logging.Logger):
     handler.setFormatter(formatter)
     logger.addHandler(handler)
     return
-
-
 
 ########################################################
 def run_discord_bot():
