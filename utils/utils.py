@@ -4,7 +4,7 @@ import datetime
 
 from collections import defaultdict
 
-from methods import stats_handle
+from methods import stats_handlers
 from database import DBquery
 from database import DBupdate
 from database import DBdelete
@@ -29,7 +29,7 @@ async def get_history_all_channels(guild):
 async def get_history(channel):
     try:
         async for message in channel.history():
-            stats_handle.update_stats(message)
+            stats_handlers.update_stats(message)
     except Exception as e:
         print("Error:", e)
 
@@ -78,9 +78,7 @@ async def respond_mention(message: discord.Message):
 
 async def respond_mention_dm(message: discord.Message):
     response = random.choice(Mentions.arr_mention)
-    dm = (
-        await message.author.create_dm()
-    )  # If dm is already made, it does not matter :)
+    dm = ( await message.author.create_dm() )  # If dm is already made, it does not matter :)
     await dm.send(response)
 
 

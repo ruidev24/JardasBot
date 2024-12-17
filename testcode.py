@@ -2,14 +2,17 @@ import sqlite3
 
 
 ############################################################
-def clear_nuke_table():
+def test_code():
     try:
         conn = sqlite3.connect("wordstats.db")
         print(conn)
         c = conn.cursor()
 
-        # Delete nuke table
-        c.execute("DELETE FROM nuke_table WHERE username = ? ", ("ruimachado",))
+        c.execute(
+    """INSERT INTO global_variables (state, intensity)
+        VALUES (1,3)
+        """
+)
 
         conn.commit()
     except sqlite3.Error as e:
@@ -19,5 +22,4 @@ def clear_nuke_table():
 
 
 if __name__ == "__main__":
-    transformed_channel = clear_nuke_table()
-    print(transformed_channel)
+    test_code()

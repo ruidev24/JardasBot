@@ -2,7 +2,6 @@ import sqlite3
 import random
 
 
-# Utility function for database connection
 def execute_query(query, params=None, fetch_one=False, fetch_all=False):
     try:
         with sqlite3.connect("wordstats.db") as conn:
@@ -21,20 +20,18 @@ def execute_query(query, params=None, fetch_one=False, fetch_all=False):
 #################################################
 def query_strangers_vocabulary():
     result = execute_query(
-        "SELECT * FROM vocabulary_table", fetch_all=True
+        "SELECT vocabulary FROM vocabulary_table", fetch_all=True
     )
-    if result:
-        return random.choice(result)[0]
-    return None
+    return random.choice(result)[0] if result else None
 
 
 #################################################
 def query_mention_count(username):
     result = execute_query(
-        "SELECT * FROM mention_table WHERE username = ?", (username,), fetch_one=True
+        "SELECT mention FROM mention_table WHERE username = ?", (username,), fetch_one=True
     )
     if result:
-        mention_cnt = result[1]
+        mention_cnt = result[0]
         print(f"mention_cnt {mention_cnt}")
         return mention_cnt
     return 0
