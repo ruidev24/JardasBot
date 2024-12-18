@@ -86,7 +86,6 @@ async def handle_nuke(message):
 
 
 
-#################################################################
 async def handle_russian_roulette(message: Message):
     bullet = random.randint(0, 5)
     if not bullet:
@@ -99,7 +98,37 @@ async def handle_russian_roulette(message: Message):
         except Exception as e:
             await message.channel.send(f"Error timing out {message.author.mention}: {e}")
 
-#################################################
+
+async def handle_hard_russian_roulette(message: Message):
+    bullet = random.randint(0, 2)
+    if not bullet:
+        await message.channel.send(f"{message.author.mention} is safe!")
+    else:
+        try:
+            timeout_seconds = random.randint(600, 10800)
+            timeout_duration = timedelta(seconds=timeout_seconds)
+            await message.author.timeout(timeout_duration, reason="Drawn the bullet in Russian Roulette")
+            await message.channel.send(f"{message.author.mention} has died")
+        except Exception as e:
+            await message.channel.send(f"Error timing out {message.author.mention}: {e}")
+
+
+async def handle_death_roll(message: Message):
+    death_roll = DBbotvars.get_death_roll()
+    bullet = random.randint(0, death_roll)
+
+    if not bullet:
+        await message.channel.send(f"{message.author.mention} is safe!")
+        DBbotvars.update_death_roll(bullet)
+    else:
+        try:
+            timeout_duration = timedelta(hours=1)
+            await message.author.timeout(timeout_duration, reason="Drawn the bullet in Russian Roulette")
+            await message.channel.send(f"{message.author.mention} has died")
+        except Exception as e:
+            await message.channel.send(f"Error timing out {message.author.mention}: {e}")
+
+
 async def handle_fortune(message:Message):
     await respond_fortune(message)
 

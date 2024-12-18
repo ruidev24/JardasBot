@@ -52,3 +52,18 @@ def update_state(state):
                WHERE id = 1
             """
     execute_query(query, (state))
+
+
+def get_death_roll():
+    result = execute_query(
+        """SELECT death_roll FROM global_cariables WHERE id = 1""", fetch_one=True
+    )
+    return result[0] if result else None
+
+def update_death_roll(death_roll):
+    query = """UPDATE TABLE global_variables
+                SET state = ?
+                WHERE id = 1
+            """
+    
+    execute_query(query, (death_roll))
