@@ -13,7 +13,8 @@ from methods.command_handlers import (
     handle_vocabulary,
     call_JECS,
     callKika,
-    glock_roulette
+    glock_roulette,
+    handle_highscores
 )
 
 
@@ -47,6 +48,10 @@ def setup_commands(bot: commands.Bot, allowed_mentions):
     @bot.command()
     async def russianroulette(ctx):
         await handle_russian_roulette(ctx.message)
+
+    @bot.command()
+    async def highscores(ctx):
+        await handle_highscores(ctx.message)
 
 
     @bot.command()

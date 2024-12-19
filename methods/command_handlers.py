@@ -8,6 +8,7 @@ from database import DBdelete
 from database import DBupdate
 from database import DBquery
 from database import DBbotvars
+from database import DBnew
 
 
 from methods.response_handlers import (
@@ -83,20 +84,27 @@ async def handle_nuke(message):
         await respond_nuke(message)
 
 
-
+# TODO
+async def handle_highscores(message: Message):
+    DBnew.get_highscores()
+    print("highscores or something")
 
 
 async def handle_russian_roulette(message: Message):
-    bullet = random.randint(0, 5)
-    if not bullet:
-        await message.channel.send(f"{message.author.mention} is safe!")
-    else:
+    bullet = random.randint(1, 6)
+    DBnew.update_russian_curr_score(message.author)
+
+    if bullet == 1:
         try:
             timeout_duration = timedelta(hours=1)
             await message.author.timeout(timeout_duration, reason="Drawn the bullet in Russian Roulette")
             await message.channel.send(f"{message.author.mention} has died")
         except Exception as e:
             await message.channel.send(f"Error timing out {message.author.mention}: {e}")
+    else:
+        await message.channel.send(f"{message.author.mention} is safe!")
+
+        
 
 
 async def handle_hard_russian_roulette(message: Message):
