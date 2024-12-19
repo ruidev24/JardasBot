@@ -1,4 +1,5 @@
 - Eu quero que o Jardas todos os dias às 08:00 mande um "Bom dia, seus javardos" na taverna 
 - Da 01:00 às 07:00, se alguém mandar mensagem na taverna, quero que o Jardas diga "Mas vocês não dormem, seus caralhos?"
 - Nas falas do Toirão, quero que adicionem uma a dizer "Eu queria perguntar ao Dr. Jorge onde é que ele foi arranjar tanto estilo?"
-- refatorar replies custom (adicionar frases ao BD) 
+- refatorar replies custom (adicionar frases ao BD)
+- migrar funções para classes

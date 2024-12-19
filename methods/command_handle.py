@@ -2,7 +2,6 @@ import random
 import datetime
 from datetime import timedelta
 
-
 from discord import Message
 from database import DBdelete
 from database import DBupdate
@@ -16,7 +15,7 @@ from responses import Roasting
 from responses import Fortunes
 
 from utils.state import STATE
-
+from fortune import fortune as fortuneQuote
 
 ######################################################
 async def handle_roast(message: Message):
@@ -105,8 +104,8 @@ async def russian_roulette(message: Message):
 
 #################################################
 async def handle_fortune(message:Message):
-    fortune = random.choice(Fortunes.arr_fortune)
-    response = f"{message.author.mention}, esta semana {fortune}"
+    #fortune = random.choice(Fortunes.arr_fortune)
+    response = f"{message.author.mention}, esta semana {fortuneQuote()}"
     await message.channel.send(response)
 
 async def nuke_channel(message, allowed_mentions):
@@ -153,3 +152,33 @@ async def respond_defuse(message: Message):
 
     response = random.choice(Thanks.arr_thanks)
     await message.channel.send(response)
+
+
+#################################################################
+#################################################################
+#################################################################
+#################################################################
+#################################################################
+
+async def glock_roulette(message: Message):
+    bullet = random.randint(1, 99)
+    if bullet != 1:
+        try:
+            timeout_duration = timedelta(minutes=10)
+            await message.author.timeout(timeout_duration, reason="Drawn the bullet with a gun.")
+            await message.channel.send(f"{message.author.mention} has died")
+        except Exception as e:
+            await message.channel.send(f"Error timing out {message.author.mention}: {e}")
+    else:
+        await message.channel.send(f"{message.author.mention} is safe! The gun jammed.")
+
+async def call_JECS(message: Message):
+    if str(message.author) == "leomarcuzzo":
+        try:
+            await message.channel.send("<@192306440315076608> anda cá.")
+            await message.channel.send("<@192306440315076608> anda cá.")
+            await message.channel.send("<@192306440315076608> anda cá.")
+        except Exception as e:
+            await message.channel.send("Error sending message: {e}")
+    else:
+        pass

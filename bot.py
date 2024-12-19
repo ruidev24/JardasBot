@@ -19,7 +19,8 @@ from methods.command_handle import (
     respond_defuse,
     change_intensity,
     handle_fortune,
-    russian_roulette
+    russian_roulette,
+    glock_roulette
 )
 from responses import Offerings
 
@@ -29,7 +30,6 @@ state = STATE.NORMAL
 div_intensity = 3
 message_count = 0
 timestamp = None
-
 
 
 ########################################################
@@ -97,6 +97,10 @@ def run_discord_bot():
             print(e)
 
     # Commands
+    @bot.command()
+    async def glockroulette(ctx):
+        await glock_roulette(ctx.message)
+
     @bot.command()
     async def fortune_teller(ctx):
         await handle_fortune(ctx.message)

@@ -1,7 +1,6 @@
 import sqlite3
 import random
 
-
 # Utility function for database connection
 def execute_query(query, params=None, fetch_one=False, fetch_all=False):
     try:
