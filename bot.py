@@ -49,7 +49,6 @@ async def process_message(bot: commands.Bot, message: Message):
         print(e)
 
 
-
 def run_discord_bot():
     # log_handler
     logger = logging.getLogger('discord')
