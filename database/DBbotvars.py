@@ -2,6 +2,13 @@ import sqlite3
 
 
 def execute_query(query: str, params: tuple = None, fetch_one: bool = False, fetch_all: bool = False):
+    print("---------------------")
+    print(query)
+    print(params)
+    print(fetch_one)
+    print(fetch_all)
+    print("---------------------")
+
     try:
         conn = sqlite3.connect("wordstats.db")
         c = conn.cursor()
@@ -36,7 +43,7 @@ def update_intensity(intensity):
                SET intensity = ?
                WHERE id = 1
             """
-    execute_query(query, (intensity))
+    execute_query(query, (intensity,))
 
 
 def get_state():
@@ -51,19 +58,19 @@ def update_state(state):
                SET state = ?
                WHERE id = 1
             """
-    execute_query(query, (state))
+    execute_query(query, (state,))
 
 
 def get_death_roll():
     result = execute_query(
-        """SELECT death_roll FROM global_cariables WHERE id = 1""", fetch_one=True
+        """SELECT death_roll FROM global_variables WHERE id = 1""", fetch_one=True
     )
     return result[0] if result else None
 
 def update_death_roll(death_roll):
-    query = """UPDATE TABLE global_variables
-                SET state = ?
+    query = """UPDATE global_variables
+                SET death_roll = ?
                 WHERE id = 1
             """
     
-    execute_query(query, (death_roll))
+    execute_query(query, (death_roll,))

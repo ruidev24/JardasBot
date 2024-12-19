@@ -9,7 +9,9 @@ def test_code():
         c = conn.cursor()
 
         c.execute(
-        """UPDATE global_variables SET death_roll = 100
+        """UPDATE global_variables 
+            SET death_roll = 100
+            WHERE id = 1
         """
         )
 

@@ -9,6 +9,7 @@ from methods.command_handlers import (
     handle_sleep,
     handle_fortune,
     handle_russian_roulette,
+    handle_death_roll,
     handle_vocabulary,
     call_JECS,
     callKika,
@@ -49,6 +50,11 @@ def setup_commands(bot: commands.Bot, allowed_mentions):
 
 
     @bot.command()
+    async def deathroll(ctx):
+        await handle_death_roll(ctx.message)
+
+
+    @bot.command()
     async def nuke(ctx):
         await handle_nuke(ctx.message, allowed_mentions)
 
@@ -71,7 +77,7 @@ def setup_commands(bot: commands.Bot, allowed_mentions):
     @bot.command()
     async def callKikaDev(ctx):
         await callKika(ctx.message)
-        
+
 
     @bot.command()
     async def glockroulette(ctx):

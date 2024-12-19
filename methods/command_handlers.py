@@ -114,19 +114,26 @@ async def handle_hard_russian_roulette(message: Message):
 
 
 async def handle_death_roll(message: Message):
-    death_roll = DBbotvars.get_death_roll()
-    bullet = random.randint(0, death_roll)
+    old_death_roll = DBbotvars.get_death_roll()
+    print(f"old_death_roll={old_death_roll}")
 
-    if not bullet:
-        await message.channel.send(f"{message.author.mention} is safe!")
-        DBbotvars.update_death_roll(bullet)
-    else:
+    curr_death_roll = random.randint(1, old_death_roll)
+    print(f"curr_death_roll={curr_death_roll}")
+
+    await message.channel.send(f"Deathroll = {curr_death_roll}")
+
+    if curr_death_roll == 1:
         try:
-            timeout_duration = timedelta(hours=1)
-            await message.author.timeout(timeout_duration, reason="Drawn the bullet in Russian Roulette")
+            timeout_duration = timedelta(hours=3)
+            await message.author.timeout(timeout_duration, reason="Drawn the bullet in Deathroll")
             await message.channel.send(f"{message.author.mention} has died")
+            DBbotvars.update_death_roll(100)
+
         except Exception as e:
             await message.channel.send(f"Error timing out {message.author.mention}: {e}")
+    else:
+        await message.channel.send(f"{message.author.mention} is safe!")
+        DBbotvars.update_death_roll(curr_death_roll)
 
 
 async def handle_fortune(message:Message):

@@ -30,9 +30,10 @@ async def process_message(bot: commands.Bot, message: Message):
         
         # Sleeping
         state = get_state()
-        print (f"debug = {state}")
-        if state == STATE.SLEEP:
+        print (f"debug = {STATE(state)}")
+        if STATE(state) == STATE.SLEEP:
             return
+        
 
         # Check Cheats
         if await check_for_cheats(message):
