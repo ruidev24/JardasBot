@@ -9,7 +9,10 @@ from methods.command_handlers import (
     handle_sleep,
     handle_fortune,
     handle_russian_roulette,
-    handle_vocabulary
+    handle_vocabulary,
+    call_JECS,
+    callKika,
+    glock_roulette
 )
 
 
@@ -58,6 +61,21 @@ def setup_commands(bot: commands.Bot, allowed_mentions):
     @bot.command()
     async def vocabulary(ctx, arg):
         await handle_vocabulary(ctx, arg)
+
+
+    @bot.command()
+    async def callJECS(ctx):
+        await call_JECS(ctx.message)
+
+
+    @bot.command()
+    async def callKikaDev(ctx):
+        await callKika(ctx.message)
+        
+
+    @bot.command()
+    async def glockroulette(ctx):
+        await glock_roulette(ctx.message)
 
 
     @bot.command()

@@ -9,14 +9,13 @@ def test_code():
         c = conn.cursor()
 
         c.execute(
-    """INSERT INTO global_variables (state, intensity)
-        VALUES (1,3)
+        """UPDATE global_variables SET death_roll = 100
         """
-)
+        )
 
         conn.commit()
     except sqlite3.Error as e:
-        print("Error deleting tables from database:", e)
+        print("Error executing:", e)
     finally:
         conn.close()
 

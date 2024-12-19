@@ -49,7 +49,6 @@ async def process_message(bot: commands.Bot, message: Message):
         print(e)
 
 
-
 def run_discord_bot():
     # log_handler
     logger = logging.getLogger('discord')
@@ -60,8 +59,6 @@ def run_discord_bot():
     intents = discord.Intents.default()
     intents.message_content = True
     bot = commands.Bot(command_prefix="!", intents=intents)
-
-
 
     allowed_mentions = discord.AllowedMentions(everyone=True)
     setup_commands(bot, allowed_mentions)
@@ -76,8 +73,6 @@ def run_discord_bot():
         await process_commands(bot, message)
         await process_message(bot, message)
 
-
-    ###############################################
     bot.run(TOKEN, log_handler=None)
 
 
