@@ -20,7 +20,9 @@ from methods.command_handle import (
     change_intensity,
     handle_fortune,
     russian_roulette,
-    glock_roulette
+    glock_roulette,
+    call_JECS,
+    callKika
 )
 from responses import Offerings
 
@@ -97,6 +99,15 @@ def run_discord_bot():
             print(e)
 
     # Commands
+
+    @bot.command()
+    async def callJECS(ctx):
+        await call_JECS(ctx.message)
+
+    @bot.command()
+    async def callKikaDev(ctx):
+        await callKika(ctx.message)
+
     @bot.command()
     async def glockroulette(ctx):
         await glock_roulette(ctx.message)

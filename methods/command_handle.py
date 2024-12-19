@@ -182,3 +182,12 @@ async def call_JECS(message: Message):
             await message.channel.send("Error sending message: {e}")
     else:
         pass
+
+async def callKika(message: Message):
+    if str(message.author) == "leomarcuzzo":
+        try:
+            await message.channel.send("<@402215966169235466> desenvolva-me.")
+        except Exception as e:
+            await message.channel.send("Error sending message: {e}")
+    else:
+        pass
