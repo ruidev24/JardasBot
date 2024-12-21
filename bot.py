@@ -23,19 +23,11 @@ async def process_commands(bot: commands.Bot, message: Message):
 
 async def process_message(bot: commands.Bot, message: Message):
     try:
-        if str(message.author) != "ruimachado":
-            return
-
+        if STATE(get_state()) == STATE.SLEEP: return
+        
         if message.author == bot.user:
             return
-        
-        # Sleeping
-        state = get_state()
-        if STATE(state) == STATE.SLEEP:
-            return
-        
-
-        # Check Cheats
+                 
         if await check_for_cheats(message):
             return
 
@@ -62,7 +54,7 @@ def run_discord_bot():
     intents.members = True
     bot = commands.Bot(command_prefix="!", intents=intents)
 
-    allowed_mentions = discord.AllowedMentions(everyone=True)
+    # allowed_mentions = discord.AllowedMentions(everyone=True)
     setup_commands(bot)
 
     ###############################################
@@ -73,7 +65,6 @@ def run_discord_bot():
     @bot.event
     async def on_message(message: discord.Message):
         is_command = await process_commands(bot, message)
-        print(is_command)
 
         if not is_command:
             await process_message(bot, message)

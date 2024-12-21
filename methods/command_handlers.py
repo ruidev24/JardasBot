@@ -1,5 +1,4 @@
 import datetime
-from discord import Message
 from discord.ext import commands
 
 from database import DBgeneral
@@ -20,7 +19,7 @@ from methods.response_handlers import (
 async def handle_wakeup(ctx: commands.Context):
     DBgeneral.update_positiveFavour(str(ctx.author))
     state = DBbotvars.get_state()
-    if state == STATE.SLEEP:
+    if STATE(state) == STATE.SLEEP:
         await respond_acordar(ctx)
         DBbotvars.update_state(STATE.NORMAL)
     else:
@@ -36,17 +35,24 @@ async def handle_sleep(ctx: commands.Context):
 async def handle_intensity(value: str):
     value = int(value)
     if value >= 1 and value <= 4:
-        intensity = value
-    return intensity
+        DBbotvars.update_intensity(value)
+
+
+async def handle_status(ctx: commands.Context):
+    state = DBbotvars.get_state()
+    intensity = DBbotvars.get_intentsity()
+    message_str = f"state = {STATE(state)}\nintensity = {intensity}"
+    await ctx.channel.send(message_str)
 
 
 async def handle_mistery(ctx: commands.Context):
-    await ctx.channel.send("Stuff was done")
+    await ctx.channel.send("Mistery command has been activated")
 
 
-async def handle_roast(bot: commands.bot, ctx: commands.Context):
-    mentioned_users = ctx.mentions
-    if bot.user.mentioned_in(ctx):
+async def handle_roast(bot: commands.Bot, ctx: commands.Context):
+    mentioned_users = ctx.message.mentions
+
+    if bot.user.mentioned_in(ctx.message):
         await respond_self_roast(ctx)
     elif mentioned_users:
         await respond_roast(ctx)
@@ -68,7 +74,7 @@ async def handle_fortune(ctx: commands.Context):
 
 async def handle_vocabulary(ctx: commands.Context, arg):
     DBgeneral.update_vocabulary(arg, str(ctx.author))
-    respond_vocabulary(ctx)
+    await respond_vocabulary(ctx)
 
 
 #################################################################

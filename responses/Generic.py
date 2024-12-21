@@ -159,7 +159,8 @@ arr_medium = [
     "Eu queria um Ferrari Amarelo",
     "Tudo nele era sedução, desde a maneira como sorria até a entonação da voz",
     "O que move o mundo não é a virtude, mas a vaidade",
-    "Vai masé comprar um ananás no Mercadona, que o teu mal é falta"
+    "Vai masé comprar um ananás no Mercadona, que o teu mal é falta",
+    "Anghkooey"
 ]
 
 arr_low = [

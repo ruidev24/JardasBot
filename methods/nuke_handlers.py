@@ -1,12 +1,13 @@
 import datetime
 import time
+import random
 import asyncio
 import discord
 from discord.ext import commands
 
 from database import DBnuke
 from database import DBgeneral
-from methods.response_handlers import respond_defuse, respond_nuke, respond_bomb
+from methods.response_handlers import respond_defuse, respond_nuke, respond_bomb, respond_random_roast
 
 
 async def handle_nuke(bot: commands.Bot, ctx: commands.Context):
@@ -23,8 +24,7 @@ async def handle_nuke(bot: commands.Bot, ctx: commands.Context):
         DBgeneral.update_negativeFavour(str(ctx.author))
 
     counter = DBnuke.query_nuke_count()
-    # if counter % 12 == 0:
-    if counter > 0:
+    if counter % 12 == 0:
         await nuke_channel(ctx)
     else:
         await respond_nuke(ctx)
@@ -60,9 +60,11 @@ async def drop_bombs(ctx: commands.Context):
         count -= 1
 
     await ctx.channel.send("NOW I AM BECOME DEATH, THE DESTROYER OF WORLDS...")
-    for i in range(40):
+    for i in range(30):
         await respond_bomb(ctx)
-        time.sleep(2)
+        time.sleep(1)
+        if random.randint(0, 1):
+            await respond_random_roast(ctx)
 
 
 async def store_nicks(ctx: commands.Context):
@@ -76,12 +78,11 @@ async def store_nicks(ctx: commands.Context):
 async def change_nicks(ctx: commands.Context):
     for member in ctx.guild.members:
         try:
-            # Change each user's nickname to the provided string
-            await member.edit(nick="hivemind")
+            await member.edit(nick="everyone")
         except discord.Forbidden:
-            ctx.channel.send(f"Could not change {member.name}'s nickname (Missing permissions).")
+            print(f"Could not change {member.name}'s nickname (Missing permissions).")
         except discord.HTTPException as e:
-            ctx.channel.send(f"Error changing {member.name}'s nickname: {e}")
+            print(f"Error changing {member.name}'s nickname: {e}")
 
 
 async def reset_nicks(ctx: commands.Context):
@@ -90,8 +91,6 @@ async def reset_nicks(ctx: commands.Context):
             nickname = DBnuke.get_nickname(member)
             await member.edit(nick=nickname)
         except discord.Forbidden:
-            ctx.channel.send(f"Could not change {member.name}'s nickname (Missing permissions).")
+            print(f"Could not change {member.name}'s nickname (Missing permissions).")
         except discord.HTTPException as e:
-            ctx.channel.send(f"Error changing {member.name}'s nickname: {e}")
-    else:
-        await ctx.channel.send("You don't have permission to change nicknames.")
+            print(f"Error changing {member.name}'s nickname: {e}")

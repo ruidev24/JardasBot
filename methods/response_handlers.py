@@ -60,7 +60,7 @@ async def respond_generic(message: Message):
 ###############################################################################################
 async def respond_acordar(ctx: commands.Context):
     response = random.choice(BomDia.arr_wake)
-    excluded = DBgeneral.query_leastFavourable()
+    excluded = DBgeneral.query_least_favourable()
     if excluded:
         response += f" Excepto tu {excluded}! Tu podes ir pro caralho"
     await ctx.channel.send(response)
@@ -71,6 +71,13 @@ async def respond_sleep(ctx: commands.Context):
     await ctx.channel.send(response)
 
 
+async def respond_roast(ctx: commands.Context):
+    roast = random.choice(Roasting.arr_roast)
+    for mentioned_user in ctx.message.mentions:
+        response = f"{mentioned_user.mention}, {roast}"
+        await ctx.channel.send(response)
+
+
 async def respond_self_roast(ctx: commands.Context):
     await ctx.channel.send("Querias que eu fizesse roast a mim próprio?")
     roast = random.choice(Roasting.arr_roast)
@@ -78,11 +85,11 @@ async def respond_self_roast(ctx: commands.Context):
     await ctx.channel.send(response)
 
 
-async def respond_roast(ctx: commands.Context):
+async def respond_random_roast(ctx: commands.Context):
+    random_user = random.choice(ctx.guild.members) 
     roast = random.choice(Roasting.arr_roast)
-    for mentioned_user in ctx.mentions:
-        response = f"{mentioned_user.mention}, {roast}"
-        await ctx.channel.send(response)
+    response = f"{random_user.mention}, {roast}"
+    await ctx.channel.send(response)
 
 
 async def respond_nuke(ctx: commands.Context):

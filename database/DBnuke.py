@@ -40,10 +40,7 @@ def query_nuke_last_date():
     return result[0] if result else None
 
 
-def insert_nickname(username, nickname):
-    print(f"username{username}")
-    print(f"nickname{nickname}")
-    
+def insert_nickname(username, nickname):    
     query = """INSERT INTO users (username, server_nick)
                 VALUES (?, ?)
                 ON CONFLICT (username) 
@@ -52,8 +49,7 @@ def insert_nickname(username, nickname):
     
     db_execute_query(query, (str(username), nickname))
 
-def get_nickname(username):
-    print(username)
 
+def get_nickname(username):
     query = """SELECT server_nick FROM users WHERE username = ?"""
     return db_select_one(query, (str(username),) )
