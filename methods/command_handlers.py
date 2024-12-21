@@ -1,6 +1,4 @@
-import random
 import datetime
-from datetime import timedelta
 from discord import Message
 from discord.ext import commands
 
@@ -8,7 +6,6 @@ from database import DBdelete
 from database import DBupdate
 from database import DBquery
 from database import DBbotvars
-from database import DBnew
 
 
 from methods.response_handlers import (
@@ -84,64 +81,8 @@ async def handle_nuke(message):
         await respond_nuke(message)
 
 
-# TODO
-async def handle_highscores(message: Message):
-    DBnew.get_highscores()
-    print("highscores or something")
 
 
-async def handle_russian_roulette(message: Message):
-    bullet = random.randint(1, 6)
-    DBnew.update_russian_curr_score(message.author)
-
-    if bullet == 1:
-        try:
-            timeout_duration = timedelta(hours=1)
-            await message.author.timeout(timeout_duration, reason="Drawn the bullet in Russian Roulette")
-            await message.channel.send(f"{message.author.mention} has died")
-        except Exception as e:
-            await message.channel.send(f"Error timing out {message.author.mention}: {e}")
-    else:
-        await message.channel.send(f"{message.author.mention} is safe!")
-
-        
-
-
-async def handle_hard_russian_roulette(message: Message):
-    bullet = random.randint(0, 2)
-    if not bullet:
-        await message.channel.send(f"{message.author.mention} is safe!")
-    else:
-        try:
-            timeout_seconds = random.randint(600, 10800)
-            timeout_duration = timedelta(seconds=timeout_seconds)
-            await message.author.timeout(timeout_duration, reason="Drawn the bullet in Russian Roulette")
-            await message.channel.send(f"{message.author.mention} has died")
-        except Exception as e:
-            await message.channel.send(f"Error timing out {message.author.mention}: {e}")
-
-
-async def handle_death_roll(message: Message):
-    old_death_roll = DBbotvars.get_death_roll()
-    print(f"old_death_roll={old_death_roll}")
-
-    curr_death_roll = random.randint(1, old_death_roll)
-    print(f"curr_death_roll={curr_death_roll}")
-
-    await message.channel.send(f"Deathroll = {curr_death_roll}")
-
-    if curr_death_roll == 1:
-        try:
-            timeout_duration = timedelta(hours=3)
-            await message.author.timeout(timeout_duration, reason="Drawn the bullet in Deathroll")
-            await message.channel.send(f"{message.author.mention} has died")
-            DBbotvars.update_death_roll(100)
-
-        except Exception as e:
-            await message.channel.send(f"Error timing out {message.author.mention}: {e}")
-    else:
-        await message.channel.send(f"{message.author.mention} is safe!")
-        DBbotvars.update_death_roll(curr_death_roll)
 
 
 async def handle_fortune(message:Message):
@@ -174,20 +115,6 @@ async def handle_defuse(message: Message):
 #####################################################
 
 #################################################################
-# Codigo do Leo
-
-async def glock_roulette(message: Message):
-    bullet = random.randint(1, 99)
-    if bullet != 1:
-        try:
-            timeout_duration = timedelta(minutes=10)
-            await message.author.timeout(timeout_duration, reason="Drawn the bullet with a gun.")
-            await message.channel.send(f"{message.author.mention} has died")
-        except Exception as e:
-            await message.channel.send(f"Error timing out {message.author.mention}: {e}")
-    else:
-        await message.channel.send(f"{message.author.mention} is safe! The gun jammed.")
-
 async def call_JECS(message: Message):
     if str(message.author) == "leomarcuzzo":
         try:
@@ -198,6 +125,8 @@ async def call_JECS(message: Message):
             await message.channel.send("Error sending message: {e}")
     else:
         pass
+
+    
 
 async def callKika(message: Message):
     if str(message.author) == "leomarcuzzo":

@@ -9,11 +9,7 @@ def test_code():
         c = conn.cursor()
 
         c.execute(
-        """CREATE TABLE russian_roulette_score(
-            username TEXT PRIMARY KEY,
-            best_score INTEGER,
-            current_score INTEGER
-        )
+        """DELETE FROM high_scores 
         """
         )
 

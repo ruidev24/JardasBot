@@ -5,7 +5,7 @@ from discord import Message
 from discord.errors import DiscordException
 from discord.ext import commands
 
-from bot_commands import setup_commands
+from bot_commands import setup_commands, is_command
 from methods.logging_handlers import setup_logging
 from methods.response_handlers import handle_responses
 from database.DBbotvars import get_state
@@ -16,6 +16,7 @@ from utils.state import STATE
 async def process_commands(bot: commands.Bot, message: Message):
     try:
         await bot.process_commands(message)
+        return is_command(message)
     except [TypeError, DiscordException]:
         print("Command Error")
 
@@ -30,7 +31,6 @@ async def process_message(bot: commands.Bot, message: Message):
         
         # Sleeping
         state = get_state()
-        print (f"debug = {STATE(state)}")
         if STATE(state) == STATE.SLEEP:
             return
         
@@ -71,8 +71,10 @@ def run_discord_bot():
 
     @bot.event
     async def on_message(message: discord.Message):
-        await process_commands(bot, message)
-        await process_message(bot, message)
+        is_command = await process_commands(bot, message)
+
+        if not is_command:
+            await process_message(bot, message)
 
     bot.run(TOKEN, log_handler=None)
 

@@ -2,13 +2,6 @@ import sqlite3
 
 
 def execute_query(query: str, params: tuple = None, fetch_one: bool = False, fetch_all: bool = False):
-    print("---------------------")
-    print(query)
-    print(params)
-    print(fetch_one)
-    print(fetch_all)
-    print("---------------------")
-
     try:
         conn = sqlite3.connect("wordstats.db")
         c = conn.cursor()
