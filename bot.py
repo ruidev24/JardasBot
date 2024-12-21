@@ -59,10 +59,11 @@ def run_discord_bot():
     TOKEN = ''
     intents = discord.Intents.default()
     intents.message_content = True
+    intents.members = True
     bot = commands.Bot(command_prefix="!", intents=intents)
 
     allowed_mentions = discord.AllowedMentions(everyone=True)
-    setup_commands(bot, allowed_mentions)
+    setup_commands(bot)
 
     ###############################################
     @bot.event
@@ -72,6 +73,7 @@ def run_discord_bot():
     @bot.event
     async def on_message(message: discord.Message):
         is_command = await process_commands(bot, message)
+        print(is_command)
 
         if not is_command:
             await process_message(bot, message)

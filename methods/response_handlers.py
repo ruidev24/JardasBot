@@ -2,6 +2,8 @@
 ###
 import random
 from discord import Message
+from discord.ext import commands
+
 from responses import Piropos
 from responses import Generic
 from responses import DarkJokes
@@ -13,18 +15,18 @@ from responses import Thanks
 from responses import Fortunes
 from responses import Warning
 from responses import Offerings
+from responses import Nuke
 
-from database import DBquery
 from database import DBbotvars
+from database import DBgeneral
 from methods import custom_handlers
 
-#################################################
+
 async def handle_responses(message: Message):
     intensity = DBbotvars.get_intentsity()
 
     try:
         roll = generate_roll(intensity)
-        #refatorado
         await custom_handlers.check_custom_replies(message)
         # Generic
         if roll == 1:
@@ -34,7 +36,7 @@ async def handle_responses(message: Message):
     except Exception as e:
         print(e)
 
-#####################################################
+
 async def respond_generic(message: Message):
     roll = random.randint(1, 21)
 
@@ -47,7 +49,7 @@ async def respond_generic(message: Message):
     elif roll == 4:
         response = random.choice(Generic.arr_low)
     elif roll <= 6:
-        response = DBquery.query_strangers_vocabulary()
+        response = DBgeneral.query_strangers_vocabulary()
     elif roll <= 11:
         response = random.choice(Generic.arr_medium)
     elif roll <= 21:
@@ -55,57 +57,61 @@ async def respond_generic(message: Message):
     await message.channel.send(response)
 
 
-#####################################################
-async def respond_acordar(message: Message):
+###############################################################################################
+async def respond_acordar(ctx: commands.Context):
     response = random.choice(BomDia.arr_wake)
-    excluded = DBquery.query_leastFavourable()
+    excluded = DBgeneral.query_leastFavourable()
     if excluded:
         response += f" Excepto tu {excluded}! Tu podes ir pro caralho"
-    await message.channel.send(response)
+    await ctx.channel.send(response)
 
 
-async def respond_sleep(message: Message):
+async def respond_sleep(ctx: commands.Context):
     response = random.choice(Wronged.arr_wronged)
-    await message.channel.send(response)
+    await ctx.channel.send(response)
 
 
-async def respond_self_roast(message: Message):
-    await message.channel.send("Querias que eu fizesse roast a mim próprio?")
+async def respond_self_roast(ctx: commands.Context):
+    await ctx.channel.send("Querias que eu fizesse roast a mim próprio?")
     roast = random.choice(Roasting.arr_roast)
-    response = f"{message.author.mention}, {roast}"
-    await message.channel.send(response)
+    response = f"{ctx.author.mention}, {roast}"
+    await ctx.channel.send(response)
 
 
-async def respond_roast(message: Message):
+async def respond_roast(ctx: commands.Context):
     roast = random.choice(Roasting.arr_roast)
-    for mentioned_user in message.mentions:
+    for mentioned_user in ctx.mentions:
         response = f"{mentioned_user.mention}, {roast}"
-        await message.channel.send(response)
+        await ctx.channel.send(response)
 
 
-async def respond_defuse(message: Message):
-    response = random.choice(Thanks.arr_thanks)
-    await message.channel.send(response)
-
-async def respond_nuke(message):
+async def respond_nuke(ctx: commands.Context):
     response = random.choice(Warning.arr_warn)
-    await message.channel.send(response)
+    await ctx.channel.send(response)
 
 
-async def respond_fortune(message:Message):
+async def respond_defuse(ctx: commands.Context):
+    response = random.choice(Thanks.arr_thanks)
+    await ctx.channel.send(response)
+
+
+async def respond_bomb(ctx: commands.Context):
+    response = random.choice(Nuke.arr_nuke)
+    await ctx.channel.send(response)
+
+
+async def respond_fortune(ctx: commands.Context):
     fortune = random.choice(Fortunes.arr_fortune)
-    response = f"{message.author.mention}, esta semana {fortune}"
-    await message.channel.send(response)
+    response = f"{ctx.author.mention}, esta semana {fortune}"
+    await ctx.channel.send(response)
 
 
-async def respond_vocabulary(ctx):
+async def respond_vocabulary(ctx: commands.Context):
     response = random.choice(Offerings.arr_offerings)
-    dm = (
-        await ctx.author.create_dm()
-    )  # If dm is already made, it does not matter :)
+    dm = (await ctx.author.create_dm())
     await dm.send(response)
 
-#####################################################
+
 def generate_roll(intensity: int):
     if intensity == 4:
         return 1

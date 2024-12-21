@@ -1,15 +1,15 @@
-import sqlite3
 from database.DBhelpers import db_execute_query, db_select_all, db_select_one
 
 def get_highscores_russian():
     return db_select_all("SELECT username, best_score_russian FROM high_scores ORDER BY best_score_russian DESC LIMIT 3")
 
+
 def get_highscores_hardcore():
     return db_select_all("SELECT username, best_score_hardcore FROM high_scores ORDER BY best_score_hardcore DESC LIMIT 3")
 
+
 def get_highscores_glock():
     return db_select_all("SELECT username, best_score_glock FROM high_scores ORDER BY best_score_glock DESC LIMIT 3")
-
 
 
 def reset_russian_curr_score(username):

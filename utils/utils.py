@@ -5,9 +5,7 @@ import datetime
 from collections import defaultdict
 
 from methods import stats_handlers
-from database import DBquery
-from database import DBupdate
-from database import DBdelete
+from database import DBgeneral
 from responses import Mentions
 from responses import Cheats
 
@@ -61,12 +59,12 @@ async def respond_cheats(message: discord.Message):
 #####################################################
 async def respond_mention(message: discord.Message):
     today = datetime.date.today()
-    last_date = DBquery.query_mention_last_date(str(message.author))
+    last_date = DBgeneral.query_mention_last_date(str(message.author))
     if str(last_date) != str(today):
-        DBdelete.clear_mention_table(str(message.author))
+        DBgeneral.clear_mention_table(str(message.author))
 
-    DBupdate.update_mention_cnt(str(message.author))
-    mention_cnt = int(DBquery.query_mention_count(str(message.author)))
+    DBgeneral.update_mention_cnt(str(message.author))
+    mention_cnt = int(DBgeneral.query_mention_count(str(message.author)))
 
     if mention_cnt < 10:
         await respond_mention_general(message)

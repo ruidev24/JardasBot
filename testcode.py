@@ -9,7 +9,7 @@ def test_code():
         c = conn.cursor()
 
         c.execute(
-        """DELETE FROM high_scores 
+        """DELETE FROM nuke_table
         """
         )
 

@@ -1,7 +1,7 @@
 import sqlite3
 
 from utils import stopfile
-from database import DBupdate
+from database import DBstatistics
 from discord import Message
 
 #####################################################
@@ -10,17 +10,17 @@ def update_stats(message: Message):
     message_text = str(message.content).lower()
     channel = str(message.channel)
 
-    DBupdate.update_users(message)
-    DBupdate.update_channels(message)
+    DBstatistics.update_users(message)
+    DBstatistics.update_channels(message)
 
     words = message_text.split()
 
     for word in words:
         if not stopfile.validate_word(word):
             continue
-        DBupdate.update_words(word)
-        DBupdate.update_user_words(username, word)
-        DBupdate.update_channel_words(channel, word)
+        DBstatistics.update_words(word)
+        DBstatistics.update_user_words(username, word)
+        DBstatistics.update_channel_words(channel, word)
 
 
 ##################################################

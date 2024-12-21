@@ -1,29 +1,30 @@
 import random
 from datetime import timedelta
 from discord import Message
+from discord.ext import commands
+
 from database import DBbotvars
 from database import DBroulette
 
 
 
-async def handle_russian_roulette(message: Message):
+async def handle_russian_roulette(ctx: commands.Context):
     bullet = random.randint(1, 6)
-    DBroulette.update_russian_score(message.author)
+    DBroulette.update_russian_score(ctx.author)
 
     if bullet == 1:
-        DBroulette.reset_russian_curr_score(message.author)
+        DBroulette.reset_russian_curr_score(ctx.author)
         try:
-            
             timeout_duration = timedelta(hours=1)
-            await message.author.timeout(timeout_duration, reason="Drawn the bullet in Russian Roulette")
-            await message.channel.send(f"{message.author.mention} has died")
+            await ctx.author.timeout(timeout_duration, reason="Drawn the bullet in Russian Roulette")
+            await ctx.channel.send(f"{ctx.author.mention} has died")
         except Exception as e:
-            await message.channel.send(f"Error timing out {message.author.mention}: {e}")
+            await ctx.channel.send(f"Error timing out {ctx.author.mention}: {e}")
     else:
-        await message.channel.send(f"{message.author.mention} is safe!")
+        await ctx.channel.send(f"{ctx.author.mention} is safe!")
 
 
-async def handle_hardcore_roulette(message: Message):
+async def handle_hardcore_roulette(ctx: commands.Context):
     rand = random.randint(1,100)
     if rand == 1:
         timeout_duration = timedelta(hours=24)
@@ -47,57 +48,79 @@ async def handle_hardcore_roulette(message: Message):
         timeout_duration = timedelta(minutes=1)
 
     bullet = random.randint(1, 3)
-    DBroulette.update_hardcore_score(message.author)
+    DBroulette.update_hardcore_score(ctx.author)
     if bullet == 1:
-        DBroulette.reset_hardcore_curr_score(message.author)
+        DBroulette.reset_hardcore_curr_score(ctx.author)
         try:
-            await message.author.timeout(timeout_duration, reason="Drawn the bullet in Hardcore Roulette")
-            await message.channel.send(f"{message.author.mention} has died")
+            await ctx.author.timeout(timeout_duration, reason="Drawn the bullet in Hardcore Roulette")
+            await ctx.channel.send(f"{ctx.author.mention} has died")
         except Exception as e:
-            await message.channel.send(f"Error timing out {message.author.mention}: {e}")
+            await ctx.channel.send(f"Error timing out {ctx.author.mention}: {e}")
     else:
-        await message.channel.send(f"{message.author.mention} is safe!")
+        await ctx.channel.send(f"{ctx.author.mention} is safe!")
 
 
-async def handle_glock_roulette(message: Message):
+async def handle_glock_roulette(ctx: commands.Context):
     bullet = random.randint(1, 99)
-    DBroulette.update_glock_score(message.author)
+    DBroulette.update_glock_score(ctx.author)
     if bullet != 1:
-        DBroulette.reset_glock_curr_score(message.author)
+        DBroulette.reset_glock_curr_score(ctx.author)
         try:
             timeout_duration = timedelta(minutes=10)
-            await message.author.timeout(timeout_duration, reason="Drawn the bullet with a gun.")
-            await message.channel.send(f"{message.author.mention} has died")
+            await ctx.author.timeout(timeout_duration, reason="Drawn the bullet with a gun.")
+            await ctx.channel.send(f"{ctx.author.mention} has died")
         except Exception as e:
-            await message.channel.send(f"Error timing out {message.author.mention}: {e}")
+            await ctx.channel.send(f"Error timing out {ctx.author.mention}: {e}")
     else:
-        await message.channel.send(f"{message.author.mention} is safe! The gun jammed.")
+        await ctx.channel.send(f"{ctx.author.mention} is safe! The gun jammed.")
+
+
+async def handle_ak47_roulette(ctx: commands.Context):
+    death_count = 0
+
+    for i in range(30):
+        bullet = random.randint(1, 6)
+        if bullet == 1:
+            death_count += 1   
+
+    if death_count > 0:
+        await ctx.channel.send(f"{ctx.author.mention} got hit by {death_count} bullets!")
+
+        try:
+            timeout_duration = timedelta(minutes=5*death_count)
+            await ctx.author.timeout(timeout_duration, reason="Drawn the bullet in AK47 Roulette")
+            await ctx.channel.send(f"{ctx.author.mention} has died")
+        except Exception as e:
+            await ctx.channel.send(f"Error timing out {ctx.author.mention}: {e}")
+    else:
+        await ctx.channel.send(f"{ctx.author.mention} got hit by {death_count} bullets! Gongratulations, you're a lucky MotherFucker")
 
 
 
 
 
-async def handle_death_roll(message: Message):
+
+async def handle_death_roll(ctx: commands.Context):
     old_death_roll = DBbotvars.get_death_roll()
     curr_death_roll = random.randint(1, old_death_roll)
-    await message.channel.send(f"Deathroll = {curr_death_roll}")
+    await ctx.channel.send(f"Deathroll = {curr_death_roll}")
 
     if curr_death_roll == 1:
         try:
             timeout_duration = timedelta(hours=3)
-            await message.author.timeout(timeout_duration, reason="Drawn the bullet in Deathroll")
-            await message.channel.send(f"{message.author.mention} has died")
+            await ctx.author.timeout(timeout_duration, reason="Drawn the bullet in Deathroll")
+            await ctx.channel.send(f"{ctx.author.mention} has died")
             DBbotvars.update_death_roll(100)
 
         except Exception as e:
-            await message.channel.send(f"Error timing out {message.author.mention}: {e}")
+            await ctx.channel.send(f"Error timing out {ctx.author.mention}: {e}")
     else:
-        await message.channel.send(f"{message.author.mention} is safe!")
+        await ctx.channel.send(f"{ctx.author.mention} is safe!")
         DBbotvars.update_death_roll(curr_death_roll)
 
 
 # TODO
-async def handle_highscores(message: Message):
+async def handle_highscores(ctx: commands.Context):
     message_txt = "" 
     
     message_txt += "\nRussian Roulette LeaderBoard\n"
@@ -121,4 +144,4 @@ async def handle_highscores(message: Message):
         pos += 1
         message_txt += f"Number {pos}: {champ[1]} - {champ[0]}\n"
 
-    await message.channel.send(message_txt)
+    await ctx.channel.send(message_txt)
