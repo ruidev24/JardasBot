@@ -128,20 +128,20 @@ async def handle_highscores(ctx: commands.Context):
     pos = 0
     for champ in champions_russian:
         pos += 1
-        message_txt += f"Number {pos}: {champ[1]} - {champ[0]}\n"
+        message_txt += f"{pos}st place: {champ[1]} - {champ[0]}\n"
 
     message_txt += "\nHardcore Roulette LeaderBoard\n"
     champions_hardcore = DBroulette.get_highscores_hardcore()
     pos = 0
     for champ in champions_hardcore:
         pos += 1
-        message_txt += f"Number {pos}: {champ[1]} - {champ[0]}\n"
+        message_txt += f"{pos}st place: {champ[1]} - {champ[0]}\n"
 
     message_txt += "\nGlock Roulette LeaderBoard\n"
     champions_glock = DBroulette.get_highscores_glock()
     pos = 0
     for champ in champions_glock:
         pos += 1
-        message_txt += f"Number {pos}: {champ[1]} - {champ[0]}\n"
+        message_txt += f"{pos}st place: {champ[1]} - {champ[0]}\n"
 
     await ctx.channel.send(message_txt)

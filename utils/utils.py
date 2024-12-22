@@ -57,7 +57,7 @@ async def respond_cheats(message: discord.Message):
 
 
 #####################################################
-async def respond_mention(message: discord.Message):
+async def handle_mention(message: discord.Message):
     today = datetime.date.today()
     last_date = DBgeneral.query_mention_last_date(str(message.author))
     if str(last_date) != str(today):
