@@ -8,8 +8,9 @@ from discord.ext import commands
 from bot_commands import setup_commands, is_command
 from methods.logging_handlers import setup_logging
 from methods.response_handlers import handle_responses
+from methods.stats_handlers import update_stats
 from database.DBbotvars import get_state
-from utils.utils import check_for_cheats, respond_mention
+from utils.utils import check_for_cheats, handle_mention
 from utils.state import STATE
 
 
@@ -33,7 +34,7 @@ async def process_message(bot: commands.Bot, message: Message):
 
         # Mention Bot
         if bot.user.mentioned_in(message):
-            await respond_mention(message)
+            await handle_mention(message)
             return
 
         await handle_responses(message)
@@ -64,6 +65,7 @@ def run_discord_bot():
 
     @bot.event
     async def on_message(message: discord.Message):
+        #await update_stats(message)
         is_command = await process_commands(bot, message)
 
         if not is_command:

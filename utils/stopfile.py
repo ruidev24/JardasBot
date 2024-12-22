@@ -144,17 +144,27 @@ stopwords = {
     "estivermos",
 }
 
-commands = {
+commands = [
     "!stats",
     "!stats!user=",
     "!stats!channel=",
     "!stats!word=",
     "!vaidormir",
     "!acorda",
-    "!intensity=",
+    "!intensity",
+    "!highscores",
     "!nuke",
-    "!4,8,15,16,23,42",
-}
+    "!defuse",
+    "!russianroulette",
+    "!hardcoreroulette", 
+    "!glockroulette",
+    "!ak47roulette",
+    "!deathroll", 
+    "!roast", 
+    "!fortuneteller", 
+    "!vocabulary", 
+    "!mistery" 
+]
 
 
 ##########################

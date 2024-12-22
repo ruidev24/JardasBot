@@ -83,7 +83,7 @@ def query_strangers_vocabulary():
 
 
 def query_mention_count(username):
-    result = db_select_one("SELECT mention FROM mention_table WHERE username = ?", (username,) )
+    result = db_select_one("SELECT mention_cnt FROM mention_table WHERE username = ?", (username,) )
     if result:
         return result[0]
     return 0
