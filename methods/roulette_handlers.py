@@ -53,7 +53,7 @@ async def handle_hardcore_roulette(ctx: commands.Context):
         DBroulette.reset_hardcore_curr_score(ctx.author)
         try:
             await ctx.author.timeout(timeout_duration, reason="Drawn the bullet in Hardcore Roulette")
-            await ctx.channel.send(f"{ctx.author.mention} has died")
+            await ctx.channel.send(f"{ctx.author.mention} has died! The timeout is {timeout_duration}")
         except Exception as e:
             await ctx.channel.send(f"Error timing out {ctx.author.mention}: {e}")
     else:

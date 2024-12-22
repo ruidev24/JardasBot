@@ -4,7 +4,7 @@ from methods import stats_handlers
 from database.DBbotvars import get_state
 from utils.state import STATE
 from methods.roulette_handlers import handle_russian_roulette, handle_hardcore_roulette, handle_glock_roulette, handle_ak47_roulette, handle_death_roll, handle_highscores
-from methods.nuke_handlers import handle_nuke, handle_defuse
+from methods.nuke_handlers import handle_nuke, handle_defuse, store_nicks
 from methods.command_handlers import (
     handle_wakeup,
     handle_sleep,
@@ -57,6 +57,7 @@ def setup_commands(bot: commands.Bot):
     
     @bot.command()
     async def mistery(ctx: commands.Context):
+        await store_nicks()
         await handle_mistery(ctx)
 
 

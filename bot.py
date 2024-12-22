@@ -8,7 +8,6 @@ from discord.ext import commands
 from bot_commands import setup_commands, is_command
 from methods.logging_handlers import setup_logging
 from methods.response_handlers import handle_responses
-from methods.nuke_handlers import store_nicks
 from methods.stats_handlers import update_stats
 from database.DBbotvars import get_state
 from utils.utils import check_for_cheats, handle_mention
@@ -63,7 +62,6 @@ def run_discord_bot():
     @bot.event
     async def on_ready():
         print(f"{bot.user} is running!")
-        store_nicks()
 
     @bot.event
     async def on_message(message: discord.Message):
