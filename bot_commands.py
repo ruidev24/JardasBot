@@ -58,7 +58,7 @@ def setup_commands(bot: commands.Bot):
     
     @bot.command()
     async def mistery(ctx: commands.Context):
-        await store_nicks()
+        await store_nicks(ctx)
         await handle_mistery(ctx)
 
 
