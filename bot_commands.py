@@ -11,6 +11,7 @@ from methods.command_handlers import (
     handle_intensity,
     handle_mistery,
     handle_status,
+    handle_huggies,
     
     handle_roast,
     handle_fortune, 
@@ -59,6 +60,11 @@ def setup_commands(bot: commands.Bot):
     async def mistery(ctx: commands.Context):
         await store_nicks()
         await handle_mistery(ctx)
+
+
+    @bot.command()
+    async def huggies(ctx: commands.Context):
+        await handle_huggies(ctx)
 
 
     # Roulettes #######################################################   

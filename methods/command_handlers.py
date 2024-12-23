@@ -11,9 +11,13 @@ from methods.response_handlers import (
     respond_self_roast,
     respond_roast,
     respond_fortune,
-    respond_vocabulary
+    respond_vocabulary,
+    respond_huggies
 )
 
+
+async def handle_huggies(ctx: commands.Context):
+    await respond_huggies(ctx)
     
 
 async def handle_wakeup(ctx: commands.Context):

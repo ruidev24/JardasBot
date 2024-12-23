@@ -1,0 +1,19 @@
+arr_huggies = [
+    "https://tenor.com/view/cute-bear-hug-love-you-gif-16511588921463300709",
+    "https://tenor.com/view/love-you-lots-kiss-peachcat-gif-1819740158771090491",
+    "https://tenor.com/view/huggies-slapy-pack-gif-27184797",
+    "https://tenor.com/view/huggie-cute-hearts-sweet-milk-and-mocha-gif-15690666",
+    "https://tenor.com/view/huggies-gif-25476139",
+    "https://tenor.com/view/hug-peachcat-cat-cute-gif-18412184",
+    "https://tenor.com/view/kristigocouple2024-gif-2780984522255990982",
+    "https://tenor.com/view/loveandhugs-virtual-hugs-gif-20551470",
+    "https://tenor.com/view/cat-hug-back-hug-notice-me-attention-to-me-gif-16902651",
+    "https://tenor.com/view/conyand-brown-hug-bear-hug-love-conybrown-gif-12776647",
+    "https://tenor.com/view/milk-and-mocha-hug-cute-kawaii-love-gif-15161101",
+    "https://tenor.com/view/cute-bear-hug-love-you-gif-21810409",
+    "https://tenor.com/view/hug-hugs-hugging-hug-time-hugtime-gif-17590429692787448132",
+    "https://tenor.com/view/cat-cute-hug-huggies-kozumexzumire-gif-2010381779327174323",
+    "https://tenor.com/view/dog-hugs-bff-best-friend-friend-gif-15045170",
+    "https://tenor.com/view/cat-dog-aww-huggy-best-friends-gif-17769172",
+    "https://tenor.com/view/hugging-huggies-hug-love-bighug-gif-19587519"
+]

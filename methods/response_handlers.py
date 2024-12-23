@@ -16,6 +16,7 @@ from responses import Fortunes
 from responses import Warning
 from responses import Offerings
 from responses import Nuke
+from responses import Huggies
 
 from database import DBbotvars
 from database import DBgeneral
@@ -127,3 +128,9 @@ def generate_roll(intensity: int):
     roll = random.randint(1, max_v)
 
     return roll
+
+
+async def respond_huggies(ctx: commands.Context):
+    response = random.choice(Huggies.arr_huggies)
+    await ctx.channel.send(f"{ctx.author.mention}, this is for you") 
+    await ctx.channel.send(response) 
