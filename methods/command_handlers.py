@@ -11,14 +11,9 @@ from methods.response_handlers import (
     respond_self_roast,
     respond_roast,
     respond_fortune,
-    respond_vocabulary,
-    respond_huggies
+    respond_vocabulary
 )
 
-
-async def handle_huggies(ctx: commands.Context):
-    await respond_huggies(ctx)
-    
 
 async def handle_wakeup(ctx: commands.Context):
     DBgeneral.update_positiveFavour(str(ctx.author))
@@ -45,12 +40,9 @@ async def handle_intensity(value: str):
 async def handle_status(ctx: commands.Context):
     state = DBbotvars.get_state()
     intensity = DBbotvars.get_intentsity()
-    message_str = f"state = {STATE(state)}\nintensity = {intensity}"
+    nuke_cnt = DBbotvars.get_nuke_cnt()
+    message_str = f"state = {STATE(state)}\nintensity = {intensity}\nnuke count = {nuke_cnt}"
     await ctx.channel.send(message_str)
-
-
-async def handle_mistery(ctx: commands.Context):
-    await ctx.channel.send("Mistery command has been activated")
 
 
 async def handle_roast(bot: commands.Bot, ctx: commands.Context):
@@ -81,25 +73,3 @@ async def handle_vocabulary(ctx: commands.Context, arg):
     await respond_vocabulary(ctx)
 
 
-#################################################################
-async def call_JECS(ctx: commands.Context):
-    if str(ctx.author) == "leomarcuzzo":
-        try:
-            await ctx.channel.send("<@192306440315076608> anda cá.")
-            await ctx.channel.send("<@192306440315076608> anda cá.")
-            await ctx.channel.send("<@192306440315076608> anda cá.")
-        except Exception as e:
-            await ctx.channel.send("Error sending message: {e}")
-    else:
-        pass
-
-    
-
-async def callKika(ctx: commands.Context):
-    if str(ctx.author) == "leomarcuzzo":
-        try:
-            await ctx.channel.send("<@402215966169235466> desenvolva-me.")
-        except Exception as e:
-            await ctx.channel.send("Error sending message: {e}")
-    else:
-        pass

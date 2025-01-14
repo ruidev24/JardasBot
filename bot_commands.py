@@ -1,3 +1,4 @@
+from datetime import timedelta
 from discord import Message
 from discord.ext import commands
 from methods import stats_handlers
@@ -9,14 +10,19 @@ from methods.command_handlers import (
     handle_wakeup,
     handle_sleep,
     handle_intensity,
-    handle_mistery,
     handle_status,
-    handle_huggies,
-    
     handle_roast,
-    handle_fortune, 
-    handle_vocabulary,
+    handle_fortune,
+    handle_vocabulary
+)
 
+from methods.command_special_handlers import (
+    handle_mistery,
+    handle_huggies,
+    handle_sacrifice,
+    handle_list_events,
+    handle_shrekt,
+    handle_super_shrekt,
     call_JECS,
     callKika
 )
@@ -33,6 +39,31 @@ def is_command(message: Message):
 
 
 def setup_commands(bot: commands.Bot):
+    # @bot.command()
+    # async def sacrifice(ctx: commands.Context):
+    #     await handle_sacrifice(ctx)
+
+    # @bot.command()
+    # async def get_shrekt(ctx: commands.Context):
+    #     await handle_shrekt(ctx)
+
+    # @bot.command()
+    # async def get_super_shrekt(ctx: commands.Context, arg: str):
+    #     await handle_super_shrekt(ctx, arg)
+
+
+    @bot.command()
+    async def mistery(ctx: commands.Context):
+        print("DEBUG GUILD")
+        print(ctx.channel.id)
+        await store_nicks(ctx)
+        await handle_mistery(ctx)
+
+
+    # @bot.command()
+    # async def list_events(ctx: commands.Context):
+    #     await handle_list_events(ctx)
+
     # Base #########################################################
     @bot.command()
     async def acorda(ctx: commands.Context):
@@ -56,12 +87,6 @@ def setup_commands(bot: commands.Bot):
         await handle_status(ctx)
 
     
-    @bot.command()
-    async def mistery(ctx: commands.Context):
-        await store_nicks(ctx)
-        await handle_mistery(ctx)
-
-
     @bot.command()
     async def huggies(ctx: commands.Context):
         await handle_huggies(ctx)

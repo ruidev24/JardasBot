@@ -2,6 +2,9 @@ import sqlite3
 from utils.state import STATE
 from database.DBhelpers import db_execute_query, db_select_all, db_select_one
 
+def get_nuke_cnt():
+    result = db_select_one("""SELECT SUM(nuke_count) - SUM(defuse_count) FROM nuke_table""")
+    return result[0] if result else None
 
 def get_intentsity():
     result = db_select_one("""SELECT intensity FROM global_variables WHERE id = 1""")
@@ -40,3 +43,4 @@ def update_death_roll(death_roll):
             """
     
     db_execute_query(query, (death_roll,))
+
