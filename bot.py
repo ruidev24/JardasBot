@@ -72,7 +72,7 @@ def run_discord_bot():
 
         # Initialize the scheduler
         scheduler = AsyncIOScheduler()
-        scheduler.add_job(lambda: bot.loop.create_task(remind_events(bot)), CronTrigger(day_of_week="wed-sat", hour=13, minute=54))
+        scheduler.add_job(lambda: bot.loop.create_task(remind_events(bot)), CronTrigger(day_of_week="wed-sat", hour=10, minute=00))
         scheduler.start()
 
     @bot.event

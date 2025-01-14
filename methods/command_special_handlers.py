@@ -38,12 +38,16 @@ async def handle_shrekt(ctx: commands.Context):
         await mentioned_user.edit(nick="O Rui é o melhor mod")
 
 async def handle_super_shrekt(ctx: commands.Context, arg: str):
-    if str(ctx.author) != "ruimachado":
-        await ctx.channel.send("Get Shrekt nerds!")
-        return
-
     for mentioned_user in ctx.message.mentions:
-        await mentioned_user.edit(nick=arg)
+        try:
+            if str(mentioned_user) == 'ruimachado':
+                await ctx.channel.send("Get Shrekt Nerds")
+                return
+
+            await mentioned_user.edit(nick=arg)
+        except Exception as e:
+            await ctx.channel.send(f"Error {mentioned_user.mention}: {e}")
+
 
 
 async def handle_list_events(ctx: commands.Context):
