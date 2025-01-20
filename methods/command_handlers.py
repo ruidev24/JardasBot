@@ -57,13 +57,10 @@ async def handle_roast(bot: commands.Bot, ctx: commands.Context):
 
 
 async def handle_fortune(ctx: commands.Context):
-    today = datetime.datetime.today().date()
-    last_fortune = DBgeneral.get_last_fortune_timestamp(ctx.author)
-
-    time_diff = today - last_fortune
-    if time_diff > datetime.timedelta(days=7):
+    has_asked_fortune = DBgeneral.get_fortune_has_asked(ctx.author)
+    if not has_asked_fortune:
         await respond_fortune(ctx)
-        DBgeneral.update_fortune(ctx.author)
+        DBgeneral.update_fortune_has_asked(ctx.author)
     else:
         await ctx.channel.send("Só tens direito a 1 por semana caralho")
 

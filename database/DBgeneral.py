@@ -43,7 +43,6 @@ def clear_mention_table(username: str):
     db_execute_query(query, (username,))
 
 
-
 def clear_database():
     queries = [
         "DELETE FROM users",
@@ -57,23 +56,14 @@ def clear_database():
     print("Tables deleted successfully.")
 
 
+def get_fortune_has_asked(username):
+    return db_select_one("SELECT has_asked FROM fortunes_table WHERE username = ?", (str(username),) )
 
-def get_last_fortune_timestamp(username):
-    res = db_select_one("SELECT last_fortune FROM fortunes_table WHERE username = ?", (str(username),) )
+def update_fortune_has_asked(username):
+    db_execute_query("UPDATE fortunes_table SET has_asked = True WHERE username = ?", (str(username),) )
 
-    if res is None:
-        begin_date = datetime.date(2024, 1, 1)
-        db_execute_query("INSERT INTO fortunes_table (username, last_fortune) VALUES (?, ?)", (str(username), begin_date))
-        return begin_date
-    
-    date_format = "%Y-%m-%d"
-    converted_date = datetime.datetime.strptime(res[0], date_format).date()
-    return converted_date
-     
-
-def update_fortune(username):
-    today = datetime.datetime.today().date()
-    db_execute_query("UPDATE fortunes_table SET last_fortune = ? WHERE username = ?", (today, str(username)) )
+def reset_fortune():
+    db_execute_query("UPDATE fortunes_table SET has_asked = False")
 
 
 

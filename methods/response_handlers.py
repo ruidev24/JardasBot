@@ -3,25 +3,10 @@
 import random
 from discord import Message
 from discord.ext import commands
-
-from responses import Piropos
-from responses import Generic
-from responses import DarkJokes
-from responses import ShowerThoughts
-from responses import BomDia
-from responses import Wronged
-from responses import Roasting
-from responses import Thanks
-from responses import Fortunes
-from responses import Warning
-from responses import Offerings
-from responses import Nuke
-from responses import Huggies
-
-from database import DBbotvars
-from database import DBgeneral
+from database import DBbotvars, DBgeneral
 from methods import custom_handlers
-
+from responses import (Piropos, Generic, DarkJokes, ShowerThoughts, BomDia, Wronged, Roasting, Thanks, Fortunes,
+                       Warning, Offerings, Nuke, Huggies)
 
 async def handle_responses(message: Message):
     intensity = DBbotvars.get_intentsity()

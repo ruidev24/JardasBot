@@ -9,7 +9,7 @@ def test_code():
         c = conn.cursor()
 
         c.execute(
-        """DELETE FROM nuke_table
+        """ALTER TABLE fortunes_table ADD COLUMN has_asked BOOLEAN DEFAULT FALSE
         """
         )
 

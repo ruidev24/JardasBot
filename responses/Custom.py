@@ -41,7 +41,8 @@ arr_euskara = [
     "Txerria txerria txerria",
     "Frossos Tripodea",
     "Kabroi!",
-    "Zozoa!",   
+    "Zozoa!",
+    "Eu queria perguntar ao Dr. Jorge onde é que ele foi arranjar tanto estilo?"
 ]
 
 arr_french = [
