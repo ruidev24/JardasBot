@@ -1,12 +1,12 @@
 from discord import Message
 from discord.ext import commands
 
-from base_commands import setup_base_commands, get_base_commands
-from general_commands import setup_general_commands, get_general_commands
-from nuke_commands import setup_nuke_commands, get_nuke_commands
-from roulette_commands import setup_roulette_commands, get_roulette_commands
-from special_commands import setup_special_commands, get_special_commands
-from stat_commands import setup_stat_commands, get_stat_commands
+from commands.base_commands import setup_base_commands, get_base_commands
+from commands.general_commands import setup_general_commands, get_general_commands
+from commands.nuke_commands import setup_nuke_commands, get_nuke_commands
+from commands.roulette_commands import setup_roulette_commands, get_roulette_commands
+from commands.special_commands import setup_special_commands, get_special_commands
+from commands.stat_commands import setup_stat_commands, get_stat_commands
 
 
 ##############################################################################
