@@ -2,6 +2,8 @@ import sqlite3
 from utils.state import STATE
 from database.DBhelpers import db_execute_query, db_select_all, db_select_one
 
+
+##############################################################################
 def get_nuke_cnt():
     result = db_select_one("""SELECT SUM(nuke_count) - SUM(defuse_count) FROM nuke_table""")
     return result[0] if result else None

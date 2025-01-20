@@ -1,7 +1,7 @@
 from discord.ext import commands
 from database.DBbotvars import get_state
 from utils.state import STATE
-from methods.command_handlers import (
+from methods_cmd.base_handlers import (
     handle_wakeup,
     handle_sleep,
     handle_intensity,
@@ -9,6 +9,7 @@ from methods.command_handlers import (
 )
 
 
+##############################################################################
 def get_base_commands():
     base_commands = ["!acorda", "!vaidormir", "!intensity", "!status"]
     return base_commands

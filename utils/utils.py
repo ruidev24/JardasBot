@@ -4,7 +4,7 @@ import datetime
 
 from collections import defaultdict
 
-from methods import stats_handlers
+from methods_cmd import stats_handlers
 from database import DBgeneral
 from responses import Mentions
 from responses import Cheats

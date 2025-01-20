@@ -2,6 +2,7 @@ from discord import Message
 from database.DBhelpers import db_execute_query, db_select_all, db_select_one
 
 
+##############################################################################
 def update_words(word):
     query = """
         INSERT INTO words (word, count)

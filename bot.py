@@ -8,7 +8,7 @@ from discord.ext import commands
 from commands.handle_bot_commands import setup_commands, is_command
 from methods.logging_handlers import setup_logging
 from methods.response_handlers import handle_responses
-from methods.stats_handlers import update_stats
+from methods_cmd.stats_handlers import update_stats
 from methods.schedule_events_handler import handle_schedules
 from database.DBbotvars import get_state
 from utils.utils import check_for_cheats, handle_mention

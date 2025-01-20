@@ -1,9 +1,10 @@
 import random
 from discord import Message
 from utils.stopfile import validate_word
-
 from responses import Custom
 
+
+##############################################################################
 async def check_custom_replies(message: Message):
     # Caralhamos
     if await caralhamos(message):
@@ -25,14 +26,14 @@ async def check_custom_replies(message: Message):
         return
     return
 
-###########################################################################
+
 async def rebola_is_conas(message: Message):
     message.channel.send(message, "oh caralho e parares com essa merda?")
     message.channel.send(message, "És estupido ou que?")
     message.channel.send(message, "Deves ter batido com a cabeça em miudo só pode")
     message.channel.send(message, "Caralho do moço")
 
-######################################################
+
 async def custom_reply(message: Message, custom_dict: Custom):
     roll = random.randint(1, 20)
     if roll == 1:
@@ -41,7 +42,7 @@ async def custom_reply(message: Message, custom_dict: Custom):
         return True
     return False
 
-######################################################
+
 async def caralhamos(message: Message):
     caralhamos_roll = random.randint(1, 100)
     message_text = str(message.content).lower()

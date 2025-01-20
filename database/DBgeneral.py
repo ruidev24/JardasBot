@@ -4,6 +4,7 @@ import random
 from database.DBhelpers import db_execute_query, db_select_all, db_select_one
 
 
+##############################################################################
 def update_vocabulary(pvocabulary, pusername):
     query = "INSERT INTO vocabulary_table (vocabulary, username) VALUES (?, ?)"
     db_execute_query(query, (pvocabulary, pusername))
@@ -27,7 +28,7 @@ def update_negativeFavour(username):
     query = """INSERT INTO favour_table (username, favour)
                 SELECT ?, -1 WHERE NOT EXISTS (SELECT 1 FROM favour_table WHERE username = ?)
             """
-    db_execute_query(query, (username, username))
+    db_execute_query(query, (str(username), str(username)) )
 
 
 def update_positiveFavour(username):
@@ -56,14 +57,15 @@ def clear_database():
     print("Tables deleted successfully.")
 
 
-def get_fortune_has_asked(username):
-    return db_select_one("SELECT has_asked FROM fortunes_table WHERE username = ?", (str(username),) )
+def get_fortune_allowed(username):
+    allowed = db_select_one("SELECT allowed FROM fortunes_table WHERE username = ?", (str(username),) )
+    return allowed[0] if allowed else False
 
-def update_fortune_has_asked(username):
-    db_execute_query("UPDATE fortunes_table SET has_asked = True WHERE username = ?", (str(username),) )
+def update_fortune_allowed(username):
+    db_execute_query("UPDATE fortunes_table SET allowed = False WHERE username = ?", (str(username),) )
 
 def reset_fortune():
-    db_execute_query("UPDATE fortunes_table SET has_asked = False")
+    db_execute_query("UPDATE fortunes_table SET has_asked = True")
 
 
 

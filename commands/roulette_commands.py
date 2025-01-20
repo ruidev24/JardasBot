@@ -1,9 +1,17 @@
 from discord.ext import commands
 from database.DBbotvars import get_state
 from utils.state import STATE
-from methods.roulette_handlers import handle_russian_roulette, handle_hardcore_roulette, handle_glock_roulette, handle_ak47_roulette, handle_death_roll, handle_highscores
+from methods_cmd.roulette_handlers import (
+    handle_russian_roulette, 
+    handle_hardcore_roulette, 
+    handle_glock_roulette, 
+    handle_ak47_roulette, 
+    handle_death_roll, 
+    handle_highscores
+)
 
 
+##############################################################################
 def get_roulette_commands():
     roulette_commmands = ["!russianroulette", "!hardcoreroulette", "glockroulette",
                           "!ak47roulette", "!deathroll", "!highscores"]

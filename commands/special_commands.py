@@ -1,8 +1,8 @@
 from discord.ext import commands
-from methods.nuke_handlers import store_nicks
-from database.DBbotvars import get_state
 from utils.state import STATE
-from methods.command_special_handlers import (
+from database.DBbotvars import get_state
+from methods_cmd.nuke_handlers import store_nicks
+from methods_cmd.special_handlers import (
     handle_mistery,
     handle_huggies,
     handle_sacrifice,
@@ -14,6 +14,7 @@ from methods.command_special_handlers import (
 )
 
 
+##############################################################################
 def get_special_commands():
     special_commands = ["!mistery", "!huggies", "!sacrifice", "!get_shrekt", "!get_super_shrekt", "!list_events"]
     return special_commands

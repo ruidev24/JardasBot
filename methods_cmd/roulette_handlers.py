@@ -7,7 +7,7 @@ from database import DBbotvars
 from database import DBroulette
 
 
-
+##############################################################################
 async def handle_russian_roulette(ctx: commands.Context):
     bullet = random.randint(1, 6)
     DBroulette.update_russian_score(ctx.author)

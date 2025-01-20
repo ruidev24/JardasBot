@@ -2,6 +2,8 @@ import sqlite3
 
 
 ############################################################
+
+
 def test_code():
     try:
         conn = sqlite3.connect("wordstats.db")
@@ -9,7 +11,7 @@ def test_code():
         c = conn.cursor()
 
         c.execute(
-        """ALTER TABLE fortunes_table ADD COLUMN has_asked BOOLEAN DEFAULT FALSE
+        """ALTER TABLE nuke_table ADD COLUMN allowed BOOLEAN DEFAULT TRUE
         """
         )
 

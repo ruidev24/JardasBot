@@ -4,6 +4,7 @@ from utils import stopfile
 from database import DBstatistics
 from discord import Message
 
+
 #####################################################
 def update_stats(message: Message):
     username = str(message.author)
@@ -23,7 +24,6 @@ def update_stats(message: Message):
         DBstatistics.update_channel_words(channel, word)
 
 
-##################################################
 async def get_top_users_by_word(message: Message):
     try:
         conn = sqlite3.connect("wordstats.db")
@@ -69,7 +69,6 @@ async def get_top_users_by_word(message: Message):
         conn.close()
 
 
-#########################################
 async def get_top_words_by_channel(message: Message):
     try:
         conn = sqlite3.connect("wordstats.db")
@@ -116,7 +115,6 @@ async def get_top_words_by_channel(message: Message):
         conn.close()
 
 
-##################################################
 async def get_top_words_by_user(message: Message):
     try:
         conn = sqlite3.connect("wordstats.db")
@@ -162,7 +160,6 @@ async def get_top_words_by_user(message: Message):
         conn.close()
 
 
-################################################
 async def get_top_words_general(message: Message):
     try:
         conn = sqlite3.connect("wordstats.db")
@@ -188,7 +185,6 @@ async def get_top_words_general(message: Message):
         conn.close()
 
 
-#######################################################
 def transform_channel(channel):
     try:
         conn = sqlite3.connect("wordstats.db")

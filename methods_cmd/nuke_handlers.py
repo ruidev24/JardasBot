@@ -10,18 +10,14 @@ from database import DBgeneral
 from methods.response_handlers import respond_defuse, respond_nuke, respond_bomb, respond_random_roast
 
 
+##############################################################################
 async def handle_nuke(bot: commands.Bot, ctx: commands.Context):
-    today = datetime.date.today()
-    last_date = DBnuke.query_nuke_last_date()
-    if str(last_date) != str(today):
-        DBnuke.clear_nuke_table()
-
-    is_repeat = DBnuke.update_nuke_count(ctx.author)
-    if is_repeat:
+    allowed = DBnuke.query_nuke_allowed(ctx.author)
+    if allowed:
+        DBgeneral.update_negativeFavour(ctx.author)
+    else:
         await ctx.channel.send("Não há repeats")
         return
-    else:
-        DBgeneral.update_negativeFavour(str(ctx.author))
 
     counter = DBnuke.query_nuke_count()
     if counter % 12 == 0:
@@ -31,14 +27,12 @@ async def handle_nuke(bot: commands.Bot, ctx: commands.Context):
 
 
 async def handle_defuse(ctx: commands.Context):
-    prev_cnt = DBnuke.query_nuke_count()
-    DBnuke.update_defuse_count(str(ctx.author))
-    counter = DBnuke.query_nuke_count()
-    if counter == prev_cnt:
-        await ctx.channel.send("Não há repeats")
-    else:
-        DBgeneral.update_positiveFavour(str(ctx.author))
+    allowed = DBnuke.query_nuke_allowed(ctx.author)
+    if allowed:
+        DBgeneral.update_positiveFavour(ctx.author)
         await respond_defuse(ctx)
+    else:
+        await ctx.channel.send("Não há repeats")
 
 
 async def nuke_channel(ctx: commands.Context):

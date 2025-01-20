@@ -6,12 +6,17 @@ from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from apscheduler.triggers.cron import CronTrigger
 from database import DBgeneral
 
+
+##############################################################################
+# Initialize the scheduler
 def handle_schedules(bot: commands.Bot):
-    # Initialize the scheduler
     scheduler = AsyncIOScheduler()
     scheduler.add_job(lambda: bot.loop.create_task(sched_remind_events(bot)), CronTrigger(day_of_week="wed-sat", hour=10, minute=00))
     scheduler.add_job(lambda: bot.loop.create_task(sched_bom_dia(bot)), CronTrigger(hour=8, minute=00))
+    scheduler.add_job(lambda: bot.loop.create_task(sched_fortune_reset(bot)), CronTrigger(hour=0, minute=00))
+
     scheduler.start()
+
 
 async def sched_test(bot: commands.Bot):
     channel1 = bot.get_channel(1103037425690882139) # channel - taberna

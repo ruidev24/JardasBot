@@ -1,5 +1,7 @@
 from database.DBhelpers import db_execute_query, db_select_all, db_select_one
 
+
+##############################################################################
 def get_highscores_russian():
     return db_select_all("""SELECT us.server_nick, hs.best_score_russian 
                             FROM high_scores hs

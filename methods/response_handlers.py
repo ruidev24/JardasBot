@@ -8,6 +8,8 @@ from methods import custom_handlers
 from responses import (Piropos, Generic, DarkJokes, ShowerThoughts, BomDia, Wronged, Roasting, Thanks, Fortunes,
                        Warning, Offerings, Nuke, Huggies)
 
+
+##############################################################################
 async def handle_responses(message: Message):
     intensity = DBbotvars.get_intentsity()
 

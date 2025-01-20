@@ -1,5 +1,7 @@
 import sqlite3
 
+
+##############################################################################
 def db_select_one(query: str, params: tuple = ()):
     try:
         conn = sqlite3.connect("wordstats.db")
