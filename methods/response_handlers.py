@@ -16,7 +16,7 @@ async def handle_responses(message: Message):
     try:
         roll = generate_roll(intensity)
         await custom_handlers.check_custom_replies(message)
-        # Generic
+        
         if roll == 1:
             await respond_generic(message)
         return
@@ -37,7 +37,7 @@ async def respond_generic(message: Message):
     elif roll == 4:
         response = random.choice(Generic.arr_low)
     elif roll <= 6:
-        response = DBgeneral.query_strangers_vocabulary()
+        response = DBgeneral.get_strangers_vocabulary()
     elif roll <= 11:
         response = random.choice(Generic.arr_medium)
     elif roll <= 21:
@@ -48,7 +48,7 @@ async def respond_generic(message: Message):
 ###############################################################################################
 async def respond_acordar(ctx: commands.Context):
     response = random.choice(BomDia.arr_wake)
-    excluded = DBgeneral.query_least_favourable()
+    excluded = DBgeneral.get_least_favourable()
     if excluded:
         response += f" Excepto tu {excluded}! Tu podes ir pro caralho"
     await ctx.channel.send(response)

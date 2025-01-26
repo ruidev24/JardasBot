@@ -10,91 +10,101 @@ def update_vocabulary(pvocabulary, pusername):
     db_execute_query(query, (pvocabulary, pusername))
 
 
+def get_mention_cnt(username) -> int:
+    query = """SELECT mention_cnt FROM mention_table WHERE username = ?"""
+    result = db_select_one(query, (str(username),) )
+
+    if result is None:
+        query_insert = """INSERT INTO mention_table (username, mention_cnt) VALUES (?, ?)"""
+        db_execute_query(query_insert, (str(username), 0))
+        return 0
+
+    return result[0]
+
+
 def update_mention_cnt(username):
-    today = datetime.date.today()
-    query_check = "SELECT mention_cnt FROM mention_table WHERE username = ?"
-    existing_user = db_select_one(query_check, (username,))
+    query = """INSERT INTO mention_table (username, mention_cnt)
+                VALUES (?, ?)
+                ON CONFLICT (username) 
+                DO UPDATE SET mention_cnt = mention_cnt + 1;
+            """
+    db_execute_query(query, (str(username), 1))
 
 
-    if existing_user is None:
-        db_execute_query("INSERT INTO mention_table (username, mention_cnt, date) VALUES (?, 1, ?)", (username, today) )
-    else:
-        count = existing_user[0] + 1
-        db_execute_query("UPDATE mention_table SET mention_cnt = ?, date = ? WHERE username = ?", (count, today, username) )
+def reset_mention_table():
+    query = """UPDATE mention_table SET mention_cnt = 0"""
+    db_execute_query(query)
 
+
+def get_fortune_allowed(username) -> bool:
+    query = """SELECT allowed FROM fortunes_table WHERE username = ?"""
+    result = db_select_one(query, (str(username),) )
+
+    if result is None:
+        query_insert = """INSERT INTO fortunes_table (username, allowed) VALUES (?, ?)"""
+        db_execute_query(query_insert, (str(username), True))
+        return True
+
+    return result[0]
+
+
+def update_fortune_allowed(username):
+    query = """INSERT INTO fortunes_table (username, allowed)
+                VALUES (?, ?)
+                ON CONFLICT (username)
+                DO UPDATE SET allowed = False
+            """
+    db_execute_query(query, (str(username), False) )
+
+
+def reset_fortune_table():
+    query = """UPDATE fortunes_table SET has_asked = True"""
+    db_execute_query(query)
 
 
 def update_negativeFavour(username):
     query = """INSERT INTO favour_table (username, favour)
-                SELECT ?, -1 WHERE NOT EXISTS (SELECT 1 FROM favour_table WHERE username = ?)
+                VALUES (?, ?)
+                ON CONFLICT (username) 
+                DO UPDATE SET favour = favour - 1;
             """
-    db_execute_query(query, (str(username), str(username)) )
+    db_execute_query(query, (str(username), -1))
 
 
 def update_positiveFavour(username):
     query = """INSERT INTO favour_table (username, favour)
-                SELECT ?, 1 WHERE NOT EXISTS (SELECT 1 FROM favour_table WHERE username = ?)
+                VALUES (?, ?)
+                ON CONFLICT (username) 
+                DO UPDATE SET favour = favour + 1;
             """
-    db_execute_query(query, (username, username))
+    db_execute_query(query, (str(username), 1))
 
 
-
-def clear_mention_table(username: str):
-    query = "DELETE FROM mention_table WHERE username = ?"
-    db_execute_query(query, (username,))
-
-
-def clear_database():
-    queries = [
-        "DELETE FROM users",
-        "DELETE FROM channels",
-        "DELETE FROM words",
-        "DELETE FROM userwords",
-        "DELETE FROM channelwords"
-    ]
-    for query in queries:
-        db_execute_query(query)
-    print("Tables deleted successfully.")
-
-
-def get_fortune_allowed(username):
-    allowed = db_select_one("SELECT allowed FROM fortunes_table WHERE username = ?", (str(username),) )
-    return allowed[0] if allowed else False
-
-def update_fortune_allowed(username):
-    db_execute_query("UPDATE fortunes_table SET allowed = False WHERE username = ?", (str(username),) )
-
-def reset_fortune():
-    db_execute_query("UPDATE fortunes_table SET has_asked = True")
-
-
-
-def query_strangers_vocabulary():
-    result = db_select_all("SELECT vocabulary FROM vocabulary_table")
+def get_strangers_vocabulary() -> str:
+    query = """SELECT vocabulary FROM vocabulary_table"""
+    result = db_select_all(query)
     return random.choice(result)[0] if result else None
 
 
-def query_mention_count(username):
-    result = db_select_one("SELECT mention_cnt FROM mention_table WHERE username = ?", (username,) )
-    if result:
-        return result[0]
-    return 0
+def get_least_favourable():
+    query = """SELECT users.server_nick
+                FROM users
+                JOIN favour_table ON users.username = favour_table.username
+                ORDER BY favour_table.favour ASC LIMIT 1
+            """
+    result = db_select_one(query)
+
+    return result[0] if result else None
 
 
-
-
-def query_mention_last_date(username):
-    result = db_select_one("SELECT * FROM mention_table WHERE username = ?", (username,) )
-    if result:
-        return result[2]  # Assuming the date is in the 3rd column
-    return None
-
-
-def query_least_favourable():
-    least_favourable = db_select_one("SELECT * FROM favour_table ORDER BY favour ASC LIMIT 1")
-    if least_favourable:
-        username = least_favourable[0]
-        user_item = db_select_one("SELECT * FROM users WHERE username = ?", (username,))
-        if user_item:
-            return user_item[0]  # Assuming server nickname is in the 1st column
-    return None
+# def clear_database():
+#     queries = [
+#         "DELETE FROM users",
+#         "DELETE FROM channels",
+#         "DELETE FROM words",
+#         "DELETE FROM userwords",
+#         "DELETE FROM channelwords"
+#     ]
+#     for query in queries:
+#         db_execute_query(query)
+#     print("Tables deleted successfully.")

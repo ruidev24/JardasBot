@@ -11,7 +11,10 @@ def test_code():
         c = conn.cursor()
 
         c.execute(
-        """ALTER TABLE nuke_table ADD COLUMN allowed BOOLEAN DEFAULT TRUE
+        """CREATE TABLE mention_table (
+            username TEXT PRIMARY KEY,
+            mention_cnt INTEGER DEFAULT 0
+        );
         """
         )
 

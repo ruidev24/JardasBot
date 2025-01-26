@@ -24,6 +24,7 @@ async def handle_russian_roulette(ctx: commands.Context):
         await ctx.channel.send(f"{ctx.author.mention} is safe!")
 
 
+
 async def handle_hardcore_roulette(ctx: commands.Context):
     rand = random.randint(1,100)
     if rand == 1:
@@ -119,7 +120,7 @@ async def handle_death_roll(ctx: commands.Context):
         DBbotvars.update_death_roll(curr_death_roll)
 
 
-# TODO
+
 async def handle_highscores(ctx: commands.Context):
     message_txt = "" 
     

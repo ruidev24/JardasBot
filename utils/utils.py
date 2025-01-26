@@ -58,25 +58,22 @@ async def respond_cheats(message: discord.Message):
 
 #####################################################
 async def handle_mention(message: discord.Message):
-    today = datetime.date.today()
-    last_date = DBgeneral.query_mention_last_date(str(message.author))
-    if str(last_date) != str(today):
-        DBgeneral.clear_mention_table(str(message.author))
+    DBgeneral.update_mention_cnt(message.author)
+    mention_cnt = DBgeneral.get_mention_cnt(message.author)
 
-    DBgeneral.update_mention_cnt(str(message.author))
-    mention_cnt = int(DBgeneral.query_mention_count(str(message.author)))
-
-    if mention_cnt < 10:
+    if mention_cnt <= 7:
         await respond_mention_general(message)
-    elif mention_cnt == 10:
+    elif mention_cnt == 8:
         await message.channel.send("Ai queres festa? Já te fodo")
+        await respond_mention_dm(message)
     else:
         await respond_mention_dm(message)
 
 
+
 async def respond_mention_dm(message: discord.Message):
     response = random.choice(Mentions.arr_mention)
-    dm = ( await message.author.create_dm() )  # If dm is already made, it does not matter :)
+    dm = ( await message.author.create_dm() )
     await dm.send(response)
 
 

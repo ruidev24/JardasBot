@@ -13,37 +13,41 @@ def reset_nuke_table():
 
 
 def update_nuke_count(username):
-    query = """UPDATE nuke_table
-               SET nuke_count = 1
-               WHERE username = ?    
+    query = """INSERT INTO nuke_table (username, nuke_count)
+                VALUES (?, ?)
+                ON CONFLICT (username) 
+                DO UPDATE SET nuke_count = 1;
             """
-    db_execute_query(query, (str(username),) )
+    db_execute_query(query, (str(username), 1))
 
 
 def update_defuse_count(username):
-    query = """UPDATE nuke_table
-               SET defuse_count = 1
-               WHERE username = ?    
+    query = """INSERT INTO nuke_table (username, defuse_count)
+                VALUES (?, ?)
+                ON CONFLICT (username) 
+                DO UPDATE SET defuse_count = 1;
             """
-    db_execute_query(query, (str(username),) )
+    db_execute_query(query, (str(username), 1))
 
 
-def insert_nuke_count(username):
-    query = """INSERT INTO nuke_table (username)
-                VALUES (?)
-            """
-    db_execute_query(query, (str(username),) )
-
-
-def query_nuke_count():
+def get_nuke_count() -> int:
     nuke_cnt = db_select_one("SELECT SUM(nuke_count) - SUM(defuse_count) FROM nuke_table")
-    return nuke_cnt[0] if nuke_cnt and nuke_cnt[0] else 0
+    return nuke_cnt[0] if (nuke_cnt and nuke_cnt[0]) else 0
 
 
-def query_nuke_allowed(username):
+def get_nuke_allowed(username) -> bool:
     query = """SELECT allowed FROM nuke_table WHERE username = ?"""
-    return db_select_one(query, (str(username),) )
+    result = db_select_one(query, (str(username),))
 
+    if result is None:
+        query_insert = """INSERT INTO nuke_table (username, allowed) VALUES (?, ?)"""
+        db_execute_query(query_insert, (str(username), True))
+        return True
+    
+    return result[0]
+
+
+##################################################################################################
 
 def insert_nickname(username, nickname):    
     query = """INSERT INTO users (username, server_nick)
@@ -54,7 +58,7 @@ def insert_nickname(username, nickname):
     db_execute_query(query, (str(username), nickname))
 
 
-def get_nickname(username):
+def get_nickname(username) -> str:
     query = """SELECT server_nick FROM users WHERE username = ?"""
     nickname = db_select_one(query, (str(username),) )
     return nickname[0] if nickname else None

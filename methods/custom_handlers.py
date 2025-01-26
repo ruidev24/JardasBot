@@ -6,7 +6,6 @@ from responses import Custom
 
 ##############################################################################
 async def check_custom_replies(message: Message):
-    # Caralhamos
     if await caralhamos(message):
         return
     elif (str(message.author) == "curlyfry591") and await custom_reply(message, Custom.arr_german):

@@ -1,3 +1,12 @@
 - Da 01:00 às 07:00, se alguém mandar mensagem na taverna, quero que o Jardas diga "Mas vocês não dormem, seus caralhos?"
-- refatorar replies custom (adicionar frases ao BD) 
 - migrar funções para classes
+
+
+
+- adicionar .env dotenv para o TOKEN
+- adicionar alembic para migrations
+- refatorar replies custom (adicionar frases ao BD) 
+- on_member_join
+- check_for_cheats
+- stats_handlers
+

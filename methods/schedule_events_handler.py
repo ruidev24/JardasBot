@@ -4,23 +4,25 @@ from discord.ext import commands
 from datetime import datetime, timedelta, timezone
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from apscheduler.triggers.cron import CronTrigger
-from database import DBgeneral
+from database import DBgeneral, DBnuke
 
 
 ##############################################################################
-# Initialize the scheduler
 def handle_schedules(bot: commands.Bot):
+    daily_0am = CronTrigger(hour=0, minute=00)
+    daily_8am = CronTrigger(hour=8, minute=00)
+    weekly = CronTrigger(day_of_week="mon", hour=0, minute=00)
+
     scheduler = AsyncIOScheduler()
     scheduler.add_job(lambda: bot.loop.create_task(sched_remind_events(bot)), CronTrigger(day_of_week="wed-sat", hour=10, minute=00))
-    scheduler.add_job(lambda: bot.loop.create_task(sched_bom_dia(bot)), CronTrigger(hour=8, minute=00))
-    scheduler.add_job(lambda: bot.loop.create_task(sched_fortune_reset(bot)), CronTrigger(hour=0, minute=00))
+
+    scheduler.add_job(lambda: bot.loop.create_task(sched_nuke_reset(bot)), daily_0am)
+    scheduler.add_job(lambda: bot.loop.create_task(sched_mention_reset(bot)), daily_0am)
+    scheduler.add_job(lambda: bot.loop.create_task(sched_bom_dia(bot)), daily_8am)
+
+    scheduler.add_job(lambda: bot.loop.create_task(sched_fortune_reset(bot)), weekly)
 
     scheduler.start()
-
-
-async def sched_test(bot: commands.Bot):
-    channel1 = bot.get_channel(1103037425690882139) # channel - taberna
-    await channel1.send("Test Caralho")
 
 
 async def sched_remind_events(bot: commands.Bot):
@@ -46,4 +48,14 @@ async def sched_bom_dia(bot: commands.Bot):
 
 
 async def sched_fortune_reset(bot: commands):
-    DBgeneral.reset_fortune()
+    DBgeneral.reset_fortune_table()
+
+
+async def sched_mention_reset(bot: commands):
+    DBgeneral.reset_mention_table()
+
+
+async def sched_nuke_reset(bot: commands):
+    DBnuke.reset_nuke_table()
+
+
