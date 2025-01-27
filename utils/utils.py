@@ -13,9 +13,7 @@ from responses import Cheats
 #####################################################
 async def get_history_all_channels(guild):
     try:
-        # Iterate over every channel in the server
         for channel in guild.channels:
-            # Check if the channel is a text channel
             if isinstance(channel, discord.TextChannel):
                 await get_history(
                     channel

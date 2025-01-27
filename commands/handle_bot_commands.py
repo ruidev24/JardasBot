@@ -7,6 +7,7 @@ from commands.nuke_commands import setup_nuke_commands, get_nuke_commands
 from commands.roulette_commands import setup_roulette_commands, get_roulette_commands
 from commands.special_commands import setup_special_commands, get_special_commands
 from commands.stat_commands import setup_stat_commands, get_stat_commands
+from utils import utils
 
 
 ##############################################################################
@@ -18,7 +19,7 @@ def is_command(message: Message):
     commands += get_nuke_commands()
     commands += get_roulette_commands()
     # commands += get_special_commands()
-    # commands += get_stat_commands()
+    commands += get_stat_commands()
 
     return any(command in str(message.content) for command in commands) 
 
@@ -30,5 +31,9 @@ def setup_commands(bot: commands.Bot):
     setup_nuke_commands(bot)
     setup_roulette_commands(bot)
     # setup_special_commands(bot)
-    # setup_stat_commands(bot)
+    setup_stat_commands(bot)
 
+    @bot.command()
+    async def mistery(ctx: commands.Context):
+        await utils.get_history_all_channels(ctx.guild)
+        await ctx.channel.send("Francesinhas é tops caralho!")

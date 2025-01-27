@@ -1,4 +1,6 @@
 import discord
+import os
+from dotenv import load_dotenv
 import logging
 import logging.handlers
 from discord import Message
@@ -12,6 +14,8 @@ from methods.schedule_events_handler import handle_schedules
 from utils.utils import check_for_cheats, handle_mention
 from database.DBbotvars import bot_is_sleeping
 
+
+load_dotenv()
 
 async def process_commands(bot: commands.Bot, message: Message):
     try:
@@ -45,7 +49,7 @@ def run_discord_bot():
     setup_logging(logger)
 
     # Discord Code - Still exploring documentation
-    TOKEN = ''
+    TOKEN = os.getenv("TOKEN")
     intents = discord.Intents.default()
     intents.message_content = True
     intents.members = True

@@ -31,7 +31,8 @@ def update_defuse_count(username):
 
 
 def get_nuke_count() -> int:
-    nuke_cnt = db_select_one("SELECT SUM(nuke_count) - SUM(defuse_count) FROM nuke_table")
+    query = """SELECT SUM(nuke_count) - SUM(defuse_count) FROM nuke_table"""
+    nuke_cnt = db_select_one(query)
     return nuke_cnt[0] if (nuke_cnt and nuke_cnt[0]) else 0
 
 

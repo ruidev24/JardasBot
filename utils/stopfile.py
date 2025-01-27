@@ -172,6 +172,7 @@ def validate_word(word: str) -> bool:
     if word in stopwords:
         return False
 
-    if [cmd in word for cmd in commands]:
+    if word in commands:
         return False
+    
     return True

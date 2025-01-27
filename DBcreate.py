@@ -17,9 +17,9 @@ def create_database():
         # Create channels table
         c.execute(
             """CREATE TABLE IF NOT EXISTS channels (
-                        channel_id INTEGER PRIMARY KEY,
-                        channel_name TEXT
-                    )"""
+                id INTEGER PRIMARY KEY,
+                name TEXT
+            )"""
         )
 
         # Create words table
@@ -32,7 +32,7 @@ def create_database():
 
         # Create userwords table
         c.execute(
-            """CREATE TABLE IF NOT EXISTS userwords (
+            """CREATE TABLE IF NOT EXISTS user_words (
                         username TEXT,
                         word TEXT,
                         count INTEGER,
@@ -44,11 +44,11 @@ def create_database():
 
         # Create channelwords table
         c.execute(
-            """CREATE TABLE IF NOT EXISTS channelwords (
+            """CREATE TABLE IF NOT EXISTS channel_words (
                         channel_id INTEGER,
                         word TEXT,
                         count INTEGER,
-                        FOREIGN KEY(channel_id) REFERENCES channels(channel_id),
+                        FOREIGN KEY(channel_id) REFERENCES channels(id),
                         FOREIGN KEY(word) REFERENCES words(word),
                         PRIMARY KEY (channel_id, word)
                     )"""

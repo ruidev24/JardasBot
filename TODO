@@ -3,7 +3,6 @@
 
 
 
-- adicionar .env dotenv para o TOKEN
 - adicionar alembic para migrations
 - refatorar replies custom (adicionar frases ao BD) 
 - on_member_join
