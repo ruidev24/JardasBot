@@ -1,11 +1,3 @@
-from commands.base_commands import get_base_commands
-from commands.dev_commands import get_dev_commands
-from commands.general_commands import get_general_commands
-from commands.nuke_commands import get_nuke_commands
-from commands.roulette_commands import get_roulette_commands
-from commands.special_commands import get_special_commands
-from commands.stat_commands import get_stat_commands
-
 stopwords_pt = ["a","à","ao","aos","às","as","da","das","do","dos","duma","dum","dumas","duns","é","ela","elas","ele","eles",
             "em","essa","esse","essas","esses","esta","este","estas","estes","o","os","e","de","que","um","uma","para",
             "não","no","por","mais","como","mas","foi","ao","tem","seu","sua","ser","quando","muito","há","já","está","também",
@@ -35,15 +27,6 @@ stopwords_eng = ['i', 'me', 'my', 'myself', 'we', 'our', 'ours',
                 'wasn', "wasn't", 'weren', "weren't", 'won', "won't", 'wouldn', "wouldn't"]
 
 
-commands = []
-commands += get_base_commands()
-commands += get_dev_commands()
-commands += get_general_commands()
-commands += get_nuke_commands()
-commands += get_roulette_commands()
-commands += get_special_commands()
-commands += get_stat_commands()
-
 
 ##########################
 def validate_word(word: str) -> bool:
@@ -51,9 +34,6 @@ def validate_word(word: str) -> bool:
         return False
     
     if word in stopwords_eng:
-        return False
-
-    if word in commands:
         return False
     
     return True

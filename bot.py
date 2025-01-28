@@ -69,10 +69,10 @@ def run_discord_bot():
 
     @bot.event
     async def on_message(message: discord.Message):
-        await update_stats(message)
         is_command = await process_commands(bot, message)
 
         if not is_command:
+            await update_stats(message)
             await process_message(bot, message)
 
 
