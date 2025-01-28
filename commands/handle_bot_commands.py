@@ -9,6 +9,7 @@ from commands.special_commands import setup_special_commands, get_special_comman
 from commands.stat_commands import setup_stat_commands, get_stat_commands
 from utils import utils
 
+import sqlite3
 
 ##############################################################################
 def is_command(message: Message):
@@ -37,3 +38,50 @@ def setup_commands(bot: commands.Bot):
     async def mistery(ctx: commands.Context):
         await utils.get_history_all_channels(ctx.guild)
         await ctx.channel.send("Francesinhas é tops caralho!")
+
+    @bot.command()
+    async def pasta(ctx: commands.Context):
+        print("spaguetti")
+        try:
+            for member in ctx.guild.members:
+                print("x")
+                username = str(member)
+                nick = str(member.nick) if member.nick else username
+                mention = member.mention
+                print(mention)
+                query = """INSERT INTO users (username, server_nick, mention)
+                            VALUES (?, ?, ?)
+                            ON CONFLICT (username)
+                            DO NOTHING
+                        """
+                
+                params = (username, nick, mention)
+
+                try:
+                    conn = sqlite3.connect("wordstats_new.db")
+                    c = conn.cursor()
+                    c.execute(query, params)
+                    conn.commit()
+                except sqlite3.Error as e:
+                    print("Database error:", e)
+                finally:
+                    conn.close()
+
+        except Exception as e:
+            print("Error:", e)
+
+
+    @bot.command()
+    async def meatballs(ctx: commands.Context):
+        query = """SELECT mention FROM users LIMIT 1"""
+
+        try:
+            conn = sqlite3.connect("wordstats_new.db")
+            c = conn.cursor()
+            c.execute(query)
+            x =  c.fetchone()
+            await ctx.channel.send(f"{x[0]} desenvolva-me.")
+        except sqlite3.Error as e:
+            print("Database error:", e)
+        finally:
+            conn.close()
