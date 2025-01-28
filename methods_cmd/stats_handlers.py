@@ -1,5 +1,3 @@
-import sqlite3
-
 from utils import stopfile
 from database import DBstatistics, DBhelpers
 
@@ -76,7 +74,7 @@ async def get_top_users_by_word(ctx: commands.Context, arg: str):
     await ctx.channel.send(response)
 
 
-
+#####################################################################
 
 async def get_top_words_by_channel(ctx: commands.Context, arg: str):
     channel = arg.lower().replace(" ", "")

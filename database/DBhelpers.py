@@ -1,10 +1,15 @@
 import sqlite3
+import os
+from dotenv import load_dotenv
 
+
+load_dotenv()
+DATABASE = os.getenv("TOKEN")
 
 ##############################################################################
 def db_select_one(query: str, params: tuple = ()):
     try:
-        conn = sqlite3.connect("wordstats.db")
+        conn = sqlite3.connect(DATABASE)
         c = conn.cursor()
         c.execute(query, params)
         return c.fetchone()
@@ -16,7 +21,7 @@ def db_select_one(query: str, params: tuple = ()):
 
 def db_select_all(query: str, params: tuple = ()):
     try:
-        conn = sqlite3.connect("wordstats.db")
+        conn = sqlite3.connect(DATABASE)
         c = conn.cursor()
         c.execute(query, params)
         return c.fetchall()
@@ -28,7 +33,7 @@ def db_select_all(query: str, params: tuple = ()):
 
 def db_execute_query(query: str, params: tuple = ()):
     try:
-        conn = sqlite3.connect("wordstats.db")
+        conn = sqlite3.connect(DATABASE)
         c = conn.cursor()
         c.execute(query, params)
         conn.commit()

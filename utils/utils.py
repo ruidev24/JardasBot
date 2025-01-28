@@ -11,26 +11,6 @@ from responses import Cheats
 
 
 #####################################################
-async def get_history_all_channels(guild):
-    try:
-        for channel in guild.channels:
-            if isinstance(channel, discord.TextChannel):
-                await get_history(
-                    channel
-                )  # Await the execution of asynchronous function
-    except Exception as e:
-        print("Error:", e)
-
-
-async def get_history(channel):
-    try:
-        async for message in channel.history():
-            stats_handlers.update_stats(message)
-    except Exception as e:
-        print("Error:", e)
-
-
-#####################################################
 async def check_for_cheats(message: discord.Message):
     try:
         message_text = str(message.content).lower()

@@ -41,7 +41,7 @@ def upgrade():
     op.create_table(
         'channels',
         sa.Column('id', sa.Integer, primary_key=True, autoincrement=True),
-        sa.Column('name', sa.String(255), nullable=True)
+        sa.Column('name', sa.String(255), nullable=False, unique=True)
     )
 
     op.create_table(

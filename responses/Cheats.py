@@ -5,4 +5,7 @@ arr_cheats = [
     "Deves achar que tens muita piada",
     "Tá tudo",
     "Tás me a tentar enganar, seu Gino-Bolha",
+    "Deves pensar que me enganas",
+    "E deixares de ser conas?",
+    "Xupa-me as cebolas",
 ]
