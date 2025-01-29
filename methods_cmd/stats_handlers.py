@@ -3,6 +3,9 @@ from database import DBstatistics, DBhelpers
 
 from discord import Message
 from discord.ext import commands
+from tabulate import tabulate
+
+
 
 
 
@@ -32,14 +35,14 @@ async def update_stats(message: Message):
 async def get_top_words_general(ctx: commands.Context):
     top_words = DBstatistics.get_words()
 
-    response = "The most used words in this discord server are:\n"
-    response += "Word".ljust(15) + "Count\n"
-    response += "-" * 20 + "\n"
-    for word in top_words:
-        response += word[0].ljust(15) + str(word[1]).rjust(5) + "\n"
-
-    await ctx.channel.send(response)
-
+    if not top_words:
+        await ctx.channel.send("Não há palavras registadas.")
+        return
+    
+    table = tabulate(top_words, headers=["Word", "Count"], tablefmt="simple_outline")
+    
+    await ctx.channel.send(f"The most used words in this discord server are:\n```\n{table}\n```")
+    
 
 async def get_top_words_by_user(ctx: commands.Context):
     mentioned_users = ctx.message.mentions

@@ -1,3 +1,4 @@
+import time
 from discord import Message
 from discord.ext import commands
 
@@ -37,4 +38,27 @@ def setup_commands(bot: commands.Bot):
     setup_stat_commands(bot)
 
 
+    @bot.command()
+    async def shadow(ctx: commands.Context):
+        guild = ctx.guild  # Obter o servidor
+        member = ctx.author  # A pessoa que usou o comando
+
+        # Adicionar o cargo novo
+        role_shadow = "Shadow Banned"  # Nome do cargo que será atribuído - tem de estar igual igual ao que está no discord!        
+        role_novo = next((role for role in guild.roles if role.name == role_shadow), None)
+        await member.add_roles(role_novo)
+        await ctx.send(f"O cargo `{role_shadow}` foi atribuído a você!")
+
+        # Remover o cargo antigo
+        role_base = "membro"  # Nome do cargo a ser removido - tem de estar igual igual ao que está no discord!
+        role_sai = next((role for role in guild.roles if role.name == role_base), None)
+        await member.remove_roles(role_sai)
+        await ctx.send(f"O cargo `{role_base}` foi removido.")
+
+        time.sleep(2*60*60)
+
+        # Após 2 horas, remover o cargo "Shadow Banned" e reatribuir o cargo "membro"
+        await member.remove_roles(role_novo)
+        await member.add_roles(role_sai)
+        await ctx.send("Welcome back", member)       
 
