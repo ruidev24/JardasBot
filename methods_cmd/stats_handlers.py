@@ -36,7 +36,7 @@ async def get_top_words_general(ctx: commands.Context):
     top_words = DBstatistics.get_words()
 
     if not top_words:
-        await ctx.channel.send("Não há palavras registadas.")
+        await ctx.channel.send("Não há palavras registadas caralho.")
         return
     
     table = tabulate(top_words, headers=["Word", "Count"], tablefmt="simple_outline")
@@ -54,32 +54,32 @@ async def get_top_words_by_user(ctx: commands.Context):
 
         top_words_by_user = DBstatistics.get_top_words_by_user(username)
 
-        response = "The most used words by this user are:\n"
-        response += "{:<30} {:<5}\n".format("Word", "Count")
-        for word in top_words_by_user:
-            response += "{:<30} {:<5}\n".format(word[0], word[1])
+        if not top_words_by_user:
+            await ctx.channel.send("Não há palavras registadas para este user caralho.")
+            return
+        
+        table = tabulate(top_words_by_user, headers=["Word", "Count"], tablefmt="simple_outline")
 
-        await ctx.channel.send(response)
+        await ctx.channel.send(f"The most used words by this user are:\n```\n{table}\n```")
 
 
 
 async def get_top_users_by_word(ctx: commands.Context, arg: str):
-    print("xupai")
     word = arg.lower().replace(" ", "")
-    print(word)
     word_id = DBstatistics.get_word_id(word)
-    print(word_id)
+    
     if not word_id:
         return "That words has never been written"
     
     top_users_by_word = DBstatistics.get_top_users_by_word(word_id)
 
-    response = "The users that most use this word are:\n"
-    response += "{:<30} {:<5}\n".format("User", "Count")
-    for user in top_users_by_word:
-        response += "{:<30} {:<5}\n".format(user[0], user[1])
+    if not top_users_by_word:
+        await ctx.channel.send("Não há palavras registadas para este user caralho.")
+        return
+    
+    table = tabulate(top_users_by_word, headers=["username", "Count"], tablefmt="simple_outline")
 
-    await ctx.channel.send(response)
+    await ctx.channel.send(f"The most used words by this user are:\n```\n{table}\n```")
 
 
 #####################################################################
