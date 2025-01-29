@@ -42,7 +42,16 @@ arr_euskara = [
     "Frossos Tripodea",
     "Kabroi!",
     "Zozoa!",
-    "Eu queria perguntar ao Dr. Jorge onde é que ele foi arranjar tanto estilo?"
+    "zurrupatu nire pilotak",
+    "kimika > fisikoa",
+    "fisika erraza da",
+    "Oh doutor, oh doutor",
+    "porco porco porco",
+
+    "Eu queria perguntar ao Dr. Jorge onde é que ele foi arranjar tanto estilo?",
+    "Dr. Jorge porfavor chupe-me as bolas",
+    "Nem parece que o senhor é doutor",
+    "Frossos é capital caralho"
 ]
 
 arr_french = [

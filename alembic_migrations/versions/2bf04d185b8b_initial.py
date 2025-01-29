@@ -21,21 +21,21 @@ def upgrade():
     op.create_table(
         'users',
         sa.Column('username', sa.String(255), primary_key=True),
-        sa.Column('server_nick', sa.String(255), nullable=True),
-        sa.Column('mention', sa.String(255), nullable=True),
+        sa.Column('server_nick', sa.String(255), nullable=False),
+        sa.Column('mention', sa.String(255), nullable=False),
     )
 
     op.create_table(
         'words',
         sa.Column('word', sa.String(255), primary_key=True),
-        sa.Column('count', sa.Integer, default=0, nullable=True)
+        sa.Column('count', sa.Integer, default=0)
     )
     
     op.create_table(
         'user_words',
         sa.Column('username', sa.String(255), sa.ForeignKey('users.username'), primary_key=True),
         sa.Column('word', sa.String(255), sa.ForeignKey('words.word'), primary_key=True),
-        sa.Column('count', sa.Integer, default=0, nullable=True)
+        sa.Column('count', sa.Integer, default=0)
     )
 
     op.create_table(
@@ -48,25 +48,25 @@ def upgrade():
         'channel_words',
         sa.Column('channel_id', sa.Integer, sa.ForeignKey('channels.id'), primary_key=True),
         sa.Column('word', sa.String(255), sa.ForeignKey('words.word'), primary_key=True),
-        sa.Column('count', sa.Integer, default=0, nullable=True)
+        sa.Column('count', sa.Integer, default=0)
     )
 
     op.create_table(
         'favour_table',
         sa.Column('username', sa.String(255), sa.ForeignKey('users.username'), primary_key=True),
-        sa.Column('favour', sa.Integer, default=0, nullable=True)
+        sa.Column('favour', sa.Integer, default=0)
     )
 
     op.create_table(
-        'fortunes_table',
+        'fortune_table',
         sa.Column('username', sa.String(255), sa.ForeignKey('users.username'), primary_key=True),
-        sa.Column('allowed', sa.Boolean, default=True, nullable=True)
+        sa.Column('allowed', sa.Boolean, default=True)
     )
 
     op.create_table(
         'mention_bot_table',
         sa.Column('username', sa.String(255), sa.ForeignKey('users.username'), primary_key=True),
-        sa.Column('mention_count', sa.Integer, default=0, nullable=True)
+        sa.Column('mention_count', sa.Integer, default=0)
     )
 
     op.create_table(
@@ -78,28 +78,28 @@ def upgrade():
     op.create_table(
         'nuke_table',
         sa.Column('username', sa.String(255), sa.ForeignKey('users.username'), primary_key=True),
-        sa.Column('nuke_count', sa.Integer, default=0, nullable=True),
-        sa.Column('defuse_count', sa.Integer, default=0, nullable=True),
-        sa.Column('allowed', sa.Boolean, default=True, nullable=True)
+        sa.Column('nuke_count', sa.Integer, default=0),
+        sa.Column('defuse_count', sa.Integer, default=0),
+        sa.Column('allowed', sa.Boolean, default=True)
     )
 
     op.create_table(
         'highscores',
         sa.Column('username', sa.String(255), sa.ForeignKey('users.username'), primary_key=True),
-        sa.Column('best_score_russian', sa.Integer, default=0, nullable=True),
-        sa.Column('curr_score_russian', sa.Integer, default=0, nullable=True),
-        sa.Column('best_score_hardcore', sa.Integer, default=0, nullable=True),
-        sa.Column('curr_score_hardcore', sa.Integer, default=0, nullable=True),
-        sa.Column('best_score_glock', sa.Integer, default=0, nullable=True),
-        sa.Column('curr_score_glock', sa.Integer, default=0, nullable=True),
+        sa.Column('best_score_russian', sa.Integer, default=0),
+        sa.Column('curr_score_russian', sa.Integer, default=0),
+        sa.Column('best_score_hardcore', sa.Integer, default=0),
+        sa.Column('curr_score_hardcore', sa.Integer, default=0),
+        sa.Column('best_score_glock', sa.Integer, default=0),
+        sa.Column('curr_score_glock', sa.Integer, default=0),
     )
 
     op.create_table(
         'global_variables',
         sa.Column('id', sa.Integer, primary_key=True, autoincrement=True),
-        sa.Column('state', sa.Integer, default=0, nullable=True),
-        sa.Column('intensity', sa.Integer, default=1, nullable=True),
-        sa.Column('message_count', sa.Integer, default=0, nullable=True),
+        sa.Column('state', sa.Integer, default=0),
+        sa.Column('intensity', sa.Integer, default=1),
+        sa.Column('message_count', sa.Integer, default=0),
         sa.Column('timestamp', sa.DateTime, nullable=True),
         sa.Column('death_roll', sa.Integer, default=100),
     )

@@ -11,12 +11,12 @@ from responses import (Piropos, Generic, DarkJokes, ShowerThoughts, BomDia, Wron
 
 ##############################################################################
 async def handle_responses(message: Message):
-    intensity = DBbotvars.get_intentsity()
-
     try:
-        roll = generate_roll(intensity)
-        await custom_handlers.check_custom_replies(message)
+        if await custom_handlers.check_custom_replies(message):
+            return
         
+        intensity = DBbotvars.get_intentsity()
+        roll = generate_roll(intensity)
         if roll == 1:
             await respond_generic(message)
         return
@@ -25,24 +25,24 @@ async def handle_responses(message: Message):
         print(e)
 
 
-async def respond_generic(message: Message):
-    roll = random.randint(1, 21)
 
-    if roll == 1:
-        response = random.choice(DarkJokes.arr_darkjokes)
-    elif roll == 2:
-        response = random.choice(Piropos.arr_piropo)
-    elif roll == 3:
-        response = random.choice(ShowerThoughts.arr_shower)
-    elif roll == 4:
-        response = random.choice(Generic.arr_low)
-    elif roll <= 6:
-        response = DBgeneral.get_strangers_vocabulary()
-    elif roll <= 11:
-        response = random.choice(Generic.arr_medium)
-    elif roll <= 21:
-        response = random.choice(Generic.arr_high)
+async def respond_generic(message: Message):
+    # Define response categories with weights
+    response_categories = [
+        {"weight": 1, "response": lambda: random.choice(DarkJokes.arr_darkjokes)},   # 4% chance (1/25)
+        {"weight": 1, "response": lambda: random.choice(ShowerThoughts.arr_shower)}, # 4% chance
+        {"weight": 2, "response": lambda: random.choice(Piropos.arr_piropo)},        # 8% chance
+        {"weight": 2, "response": lambda: random.choice(Generic.arr_low)},           # 8% chance
+        {"weight": 5, "response": lambda: DBgeneral.get_strangers_vocabulary()},     # 16% chance (5/25)
+        {"weight": 6, "response": lambda: random.choice(Generic.arr_medium)},        # 24% chance (6/25)
+        {"weight": 8, "response": lambda: random.choice(Generic.arr_high)},          # 36% chance (8/25)
+    ]
+
+    selected_category = random.choices(response_categories, weights=[c["weight"] for c in response_categories], k=1)[0]
+    
+    response = selected_category["response"]()
     await message.channel.send(response)
+
 
 
 ###############################################################################################

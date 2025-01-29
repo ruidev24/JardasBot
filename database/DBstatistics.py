@@ -8,6 +8,11 @@ def get_user_id(username: str):
     result = db_select_one(query, (username,))
     return result[0] if result else None
 
+def get_username_from_mention(mention):
+    query = """SELECT username FROM users WHERE mention = ?"""
+    result = db_select_one(query, (mention,))
+    return result[0] if result else None
+
 
 def get_word_id(word: str):
     query = """SELECT word FROM words WHERE word = ?"""
@@ -28,7 +33,7 @@ def get_words():
     return result
 
 
-def get_top_words_by_user(user: str):
+def get_top_words_by_user(username: str):
     query = """SELECT w.word, uw.count
                 FROM user_words uw
                 JOIN words w ON uw.word = w.word
@@ -37,12 +42,12 @@ def get_top_words_by_user(user: str):
                 ORDER BY uw.count DESC
                 LIMIT 10
             """
-    result = db_select_all(query, (user,))
-    return result[0] if result else None
+    result = db_select_all(query, (username,))
+    return result if result else None
 
 
 def get_top_users_by_word(word: str):
-    query = """SELECT u.username, uw.count
+    query = """SELECT u.server_nick, uw.count
                 FROM user_words uw
                 JOIN words w ON uw.word = w.word
                 JOIN users u ON uw.username = u.username
@@ -51,7 +56,7 @@ def get_top_users_by_word(word: str):
                 LIMIT 10
             """
     result = db_select_all(query, (word,))
-    return result[0] if result else None
+    return result if result else None
 
 def get_top_words_by_channel(channel: str):
     query = """SELECT w.word, cw.count

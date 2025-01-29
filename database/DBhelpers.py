@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 
 
 load_dotenv()
-DATABASE = os.getenv("TOKEN")
+DATABASE = os.getenv("DATABASE")
 
 ##############################################################################
 def db_select_one(query: str, params: tuple = ()):

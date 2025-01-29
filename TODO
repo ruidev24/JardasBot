@@ -3,9 +3,6 @@
 
 
 
-- adicionar alembic para migrations
 - refatorar replies custom (adicionar frases ao BD) 
-- on_member_join
 - check_for_cheats
-- stats_handlers
-
+- shadow ban

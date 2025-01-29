@@ -8,7 +8,7 @@ from discord.ext import commands
 
 
 #####################################################
-def update_stats(message: Message):
+async def update_stats(message: Message):
     username = str(message.author)
     message_text = str(message.content).lower()
     channel = str(message.channel)
@@ -41,26 +41,31 @@ async def get_top_words_general(ctx: commands.Context):
     await ctx.channel.send(response)
 
 
-async def get_top_words_by_user(message: Message, arg: str):
-    username = arg.lower().replace(" ", "")
-    user_id = DBstatistics.get_user_id(username)
-    if not user_id:
-        return "That user doesn't exist"
+async def get_top_words_by_user(ctx: commands.Context):
+    mentioned_users = ctx.message.mentions
 
-    top_words_by_user = DBstatistics.get_top_words_by_user(user_id)
+    for mentioned_user in ctx.message.mentions:
+        username = DBstatistics.get_username_from_mention(mentioned_user.mention)
+        if not username:
+            return "That user doesn't exist"
 
-    response = "The most used words by this user are:\n"
-    response += "{:<30} {:<5}\n".format("Word", "Count")
-    for word in top_words_by_user:
-        response += "{:<30} {:<5}\n".format(word[0], word[1])
+        top_words_by_user = DBstatistics.get_top_words_by_user(username)
 
-    await message.channel.send(response)
+        response = "The most used words by this user are:\n"
+        response += "{:<30} {:<5}\n".format("Word", "Count")
+        for word in top_words_by_user:
+            response += "{:<30} {:<5}\n".format(word[0], word[1])
+
+        await ctx.channel.send(response)
 
 
 
 async def get_top_users_by_word(ctx: commands.Context, arg: str):
+    print("xupai")
     word = arg.lower().replace(" ", "")
+    print(word)
     word_id = DBstatistics.get_word_id(word)
+    print(word_id)
     if not word_id:
         return "That words has never been written"
     

@@ -4,14 +4,28 @@ from database import DBdev
 from methods_cmd.stats_handlers import update_stats
 
 ##############################################################################
-async def handle_get_history(ctx: commands.Context):
-    for channel in ctx.guild.channels:
-        if not isinstance(channel, discord.TextChannel):
-            return
-    
-        for message in channel.history():
-            update_stats(message)
+async def handle_clean_data():
+    DBdev.clean_data()
 
+async def handle_clean_words():
+    DBdev.clean_words()
+
+
+async def handle_get_history(ctx: commands.Context):
+    try:
+        for channel in ctx.guild.channels:
+            print(channel)
+            if isinstance(channel, discord.TextChannel):
+                await get_history(channel)
+    except Exception as e:
+            print("Error:", e)
+
+async def get_history(channel):
+    try:
+        async for message in channel.history():
+            await update_stats(message)
+    except Exception as e:
+        print("Error:", e)
 
 
 async def handle_get_guild_data(ctx: commands.Context):
@@ -20,8 +34,9 @@ async def handle_get_guild_data(ctx: commands.Context):
             DBdev.update_channels(channel)
 
     for member in ctx.guild.members:
-        update_database_member(member)
+        await update_database_member(member)
 
+    DBdev.setup_global_variables()
 
 async def update_database_member(member):
     DBdev.update_users(member)

@@ -11,11 +11,11 @@ def update_vocabulary(pvocabulary, pusername):
 
 
 def get_mention_cnt(username) -> int:
-    query = """SELECT mention_cnt FROM mention_table WHERE username = ?"""
+    query = """SELECT mention_count FROM mention_bot_table WHERE username = ?"""
     result = db_select_one(query, (str(username),) )
 
     if result is None:
-        query_insert = """INSERT INTO mention_table (username, mention_cnt) VALUES (?, ?)"""
+        query_insert = """INSERT INTO mention_bot_table (username, mention_count) VALUES (?, ?)"""
         db_execute_query(query_insert, (str(username), 0))
         return 0
 
@@ -23,25 +23,25 @@ def get_mention_cnt(username) -> int:
 
 
 def update_mention_cnt(username):
-    query = """INSERT INTO mention_table (username, mention_cnt)
+    query = """INSERT INTO mention_bot_table (username, mention_count)
                 VALUES (?, ?)
                 ON CONFLICT (username) 
-                DO UPDATE SET mention_cnt = mention_cnt + 1;
+                DO UPDATE SET mention_count = mention_count + 1;
             """
     db_execute_query(query, (str(username), 1))
 
 
 def reset_mention_table():
-    query = """UPDATE mention_table SET mention_cnt = 0"""
+    query = """UPDATE mention_bot_table SET mention_count = 0"""
     db_execute_query(query)
 
 
 def get_fortune_allowed(username) -> bool:
-    query = """SELECT allowed FROM fortunes_table WHERE username = ?"""
+    query = """SELECT allowed FROM fortune_table WHERE username = ?"""
     result = db_select_one(query, (str(username),) )
 
     if result is None:
-        query_insert = """INSERT INTO fortunes_table (username, allowed) VALUES (?, ?)"""
+        query_insert = """INSERT INTO fortune_table (username, allowed) VALUES (?, ?)"""
         db_execute_query(query_insert, (str(username), True))
         return True
 
@@ -49,7 +49,7 @@ def get_fortune_allowed(username) -> bool:
 
 
 def update_fortune_allowed(username):
-    query = """INSERT INTO fortunes_table (username, allowed)
+    query = """INSERT INTO fortune_table (username, allowed)
                 VALUES (?, ?)
                 ON CONFLICT (username)
                 DO UPDATE SET allowed = False
@@ -58,7 +58,7 @@ def update_fortune_allowed(username):
 
 
 def reset_fortune_table():
-    query = """UPDATE fortunes_table SET has_asked = True"""
+    query = """UPDATE fortune_table SET has_asked = True"""
     db_execute_query(query)
 
 
@@ -97,14 +97,3 @@ def get_least_favourable():
     return result[0] if result else None
 
 
-# def clear_database():
-#     queries = [
-#         "DELETE FROM users",
-#         "DELETE FROM channels",
-#         "DELETE FROM words",
-#         "DELETE FROM userwords",
-#         "DELETE FROM channelwords"
-#     ]
-#     for query in queries:
-#         db_execute_query(query)
-#     print("Tables deleted successfully.")

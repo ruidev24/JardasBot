@@ -6,7 +6,7 @@ stopwords_pt = ["a","à","ao","aos","às","as","da","das","do","dos","duma","dum
             "será","nós","tenho","lhe","deles","essas","esses","pelas","este","fosse","dele","tu","te","vocês","vos","lhes",
             "meus","minhas","teu","tua","teus","tuas","nossa","nossos","nossas","delas","esta","estes","estas","aquele","aquela",
             "aqueles","aquelas","isto","aquilo","estou","está","estamos","estão","estive","esteve","estivemos","estiveram","estava",
-            "estávamos","estavam","estivera","esteja","estejamos","estejam","estivermos"]
+            "estávamos","estavam","estivera","esteja","estejamos","estejam","estivermos", "eu", "com", "na", "se", "ainda"]
 
 
 stopwords_eng = ['i', 'me', 'my', 'myself', 'we', 'our', 'ours', 
@@ -27,6 +27,10 @@ stopwords_eng = ['i', 'me', 'my', 'myself', 'we', 'our', 'ours',
                 'wasn', "wasn't", 'weren', "weren't", 'won', "won't", 'wouldn', "wouldn't"]
 
 
+commands = ["!acorda", "!vaidormir", "!intensity", "!status", "!get_guild_data", "!get_guild_history", "!clean_data", "!roast",
+            "!fortuneteller", "!vocabulary", "!nuke", "!defuse", "!russianroulette", "!hardcoreroulette", "glockroulette",
+            "!ak47roulette", "!deathroll", "!highscores", "!mistery", "!huggies", "!sacrifice", "!get_shrekt", "!get_super_shrekt",
+            "!list_events", "!stats", "!stats_uset", "!stats_words", "!stats_channel"]
 
 ##########################
 def validate_word(word: str) -> bool:
@@ -34,6 +38,9 @@ def validate_word(word: str) -> bool:
         return False
     
     if word in stopwords_eng:
+        return False
+
+    if word in commands:
         return False
     
     return True

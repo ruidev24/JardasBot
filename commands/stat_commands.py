@@ -5,7 +5,7 @@ from database import DBstatistics
 
 ##############################################################################
 def get_stat_commands():
-    stat_commands = ["!stats", "!stats_uset", "!stats_words", "!stats_channel"]
+    stat_commands = ["!stats", "!stats_user", "!stats_word", "!stats_channel"]
     return stat_commands
 
 
@@ -20,7 +20,7 @@ def setup_stat_commands(bot: commands.Bot):
     @bot.command()
     async def stats_user(ctx: commands.Context, arg):
         print(arg)
-        await stats_handlers.get_top_words_by_user(ctx, arg)
+        await stats_handlers.get_top_words_by_user(ctx)
 
 
     @bot.command()

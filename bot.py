@@ -30,8 +30,6 @@ async def process_commands(bot: commands.Bot, message: Message):
 async def process_message(bot: commands.Bot, message: Message):
     try:
         if bot_is_sleeping(): return
-        if message.author == bot.user: return
-        if await check_for_cheats(message): return
             
         if bot.user.mentioned_in(message):
             await handle_mention(message)
@@ -41,7 +39,6 @@ async def process_message(bot: commands.Bot, message: Message):
 
     except Exception as e:
         print(e)
-
 
 
 
@@ -70,6 +67,10 @@ def run_discord_bot():
     @bot.event
     async def on_message(message: discord.Message):
         is_command = await process_commands(bot, message)
+        
+        if message.author == bot.user: return
+        if await check_for_cheats(message): return
+        
 
         if not is_command:
             await update_stats(message)

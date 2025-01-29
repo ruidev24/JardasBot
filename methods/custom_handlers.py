@@ -7,23 +7,23 @@ from responses import Custom
 ##############################################################################
 async def check_custom_replies(message: Message):
     if await caralhamos(message):
-        return
-    elif (str(message.author) == "curlyfry591") and await custom_reply(message, Custom.arr_german):
-        return
-    elif (str(message.author) == "shipyroni") and await custom_reply(message, Custom.arr_latin):
-        return
-    elif (str(message.author) == "carosaf") and await custom_reply(message, Custom.arr_french):
-        return
-    elif (str(message.author) == "jecs21") and await custom_reply(message, Custom.arr_communism):
-        return
-    elif (str(message.author) == "lazersword996") and await custom_reply(message, Custom.arr_japanese):
-        return
-    elif (str(message.author) == "toirao") and await custom_reply(message, Custom.arr_euskara):
-        return
-    elif str(message.author) == "rebolamercedes" and "@everyone" in message.content:
+        return True
+    if (str(message.author) == "curlyfry591") and await custom_reply(message, Custom.arr_german):
+        return True
+    if (str(message.author) == "shipyroni") and await custom_reply(message, Custom.arr_latin):
+        return True
+    if (str(message.author) == "carosaf") and await custom_reply(message, Custom.arr_french):
+        return True
+    if (str(message.author) == "jecs21") and await custom_reply(message, Custom.arr_communism):
+        return True
+    if (str(message.author) == "lazersword996") and await custom_reply(message, Custom.arr_japanese):
+        return True
+    if (str(message.author) == "toirao") and await custom_reply(message, Custom.arr_euskara):
+        return True
+    if str(message.author) == "rebolamercedes" and "@everyone" in message.content:
         await rebola_is_conas(message)
-        return
-    return
+        return True
+    return False
 
 
 async def rebola_is_conas(message: Message):
