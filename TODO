@@ -1,8 +1,27 @@
 - Da 01:00 às 07:00, se alguém mandar mensagem na taverna, quero que o Jardas diga "Mas vocês não dormem, seus caralhos?"
-- migrar funções para classes
 
+- !nuke não está a ter efeito no nuke counter
+- stats devia printar os emojis
+- stats está a contar palavras que deviam estar no stopfiles (ou, eu, etc)
+- stats não devia registar pontuação
 
 
 - refatorar replies custom (adicionar frases ao BD) 
-- check_for_cheats
 - shadow ban
+
+
+- migrar funções para classes
+
+
+----------------------------------------------------------------------------------------------------------------------------------
+- No primeiro do dia de cada mes o Jardas manda os stats do servidor. Quem falou mais, quem mandou mais gifs, etc
+- Ele vai ter uma lista negra de utilizadores e de vez em qd manda esses utilizadores para o caralho só pq sim. As regras para entrar ou sair da lista negra têm de ser pensadas mas mandar nuke manda-te para a lista negra
+- Adicionar uma funcionalidade de duel em que podes pedir para fazer duel com alguem e se a pessoa aceitar entram num mini-jogo, quem perder leva timeout
+- Se desse para o bot ir buscar os nomes dos interessados num evento em específico e mandar DM automática a todos para eles confirmarem a presença, poupava-me imenso trabalho. 
+- ROLETA DE TIMEOUTS
+- Roleta russa da biocenose: as pessoas podem inscrever-se num grupo e depois o bot vai escolher aleatoriamente quem paga a próxima ronda ( ou uma ronda numa saída )
+- Um  game text based de gangsters estilo omerta em que competimos todos para ser o maior gangster, seria um jogo por temporadas, e podíamos ter guerra de gangs e cenas do género 
+- É possível o Jardas falar apenas em inglês no ⁠💬│english-chat ?
+- O Jardas pode fazer polls para banir uma pessoa random e se o voto a favor ganhar essa pessoa é banida do sv
+- eu quero que sempre que o jecs entre no chat depois de estar inativo mais de 30 mins que o bot diga "bem vindo de volta comuna"
+- tempo fixo p intensity 4, e depois timeout

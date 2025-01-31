@@ -7,9 +7,6 @@ from tabulate import tabulate
 
 
 
-
-
-
 #####################################################
 async def update_stats(message: Message):
     username = str(message.author)
@@ -79,7 +76,7 @@ async def get_top_users_by_word(ctx: commands.Context, arg: str):
     
     table = tabulate(top_users_by_word, headers=["username", "Count"], tablefmt="simple_outline")
 
-    await ctx.channel.send(f"The most used words by this user are:\n```\n{table}\n```")
+    await ctx.channel.send(f"The users who most use this word are:\n```\n{table}\n```")
 
 
 #####################################################################

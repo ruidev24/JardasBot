@@ -8,4 +8,6 @@ arr_cheats = [
     "Deves pensar que me enganas",
     "E deixares de ser conas?",
     "Xupa-me as cebolas",
+    "Vais de vela que é para não teres a mania",
+    "Levas timeout que é para não te armares em esperto"
 ]

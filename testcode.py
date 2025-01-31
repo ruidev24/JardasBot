@@ -11,7 +11,7 @@ def test_code():
         c = conn.cursor()
 
         c.execute(
-        """CREATE TABLE mention_table (
+        """CREATE TABLE anticheat_table (
             username TEXT PRIMARY KEY,
             mention_cnt INTEGER DEFAULT 0
         );

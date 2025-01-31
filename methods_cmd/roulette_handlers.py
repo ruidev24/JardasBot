@@ -1,6 +1,5 @@
 import random
 from datetime import timedelta
-from discord import Message
 from discord.ext import commands
 
 from database import DBbotvars

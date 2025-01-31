@@ -10,28 +10,6 @@ from responses import Mentions
 from responses import Cheats
 
 
-#####################################################
-async def check_for_cheats(message: discord.Message):
-    try:
-        message_text = str(message.content).lower()
-        words = message_text.split()
-
-        stats = defaultdict(int)
-        for word in words:
-            stats[word] += 1
-
-            if stats[word] > 10:
-                await respond_cheats(message)
-                return True
-
-        return False
-    except Exception as e:
-        print("Error checking for cheats:", e)
-
-
-async def respond_cheats(message: discord.Message):
-    response = random.choice(Cheats.arr_cheats)
-    await message.channel.send(response)
 
 
 #####################################################

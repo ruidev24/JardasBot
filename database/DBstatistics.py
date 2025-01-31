@@ -1,6 +1,6 @@
 from discord import Message
 from database.DBhelpers import db_execute_query, db_select_all, db_select_one
-
+import time
 
 ##############################################################################
 def get_user_id(username: str):
@@ -103,10 +103,11 @@ def update_channels(message: Message):
 
 
 def update_user_words(username, word):
-    query = """INSERT INTO user_words (username, word, count)
-                VALUES (?, ?, 1)
+    query = """INSERT INTO user_words (username, word, count, cheat_count)
+                VALUES (?, ?, 1, 1)
                 ON CONFLICT (username, word)
-                DO UPDATE SET count = count + 1;
+                DO UPDATE SET count = count + 1,
+                    cheat_count = cheat_count + 1;
             """
     db_execute_query(query, (username, word))
 

@@ -13,11 +13,13 @@ from methods.response_handlers import handle_responses
 from methods.schedule_events_handler import handle_schedules
 from methods_cmd.dev_handlers import update_database_member
 from methods_cmd.stats_handlers import update_stats
-from utils.utils import check_for_cheats, handle_mention
+from utils.utils import handle_mention
+from utils.antiCheat import handle_cheats
 from database.DBbotvars import bot_is_sleeping
 
 
 load_dotenv()
+
 
 async def process_commands(bot: commands.Bot, message: Message):
     try:
@@ -69,9 +71,8 @@ def run_discord_bot():
         is_command = await process_commands(bot, message)
         
         if message.author == bot.user: return
-        if await check_for_cheats(message): return
+        if await handle_cheats(message): return
         
-
         if not is_command:
             await update_stats(message)
             await process_message(bot, message)
@@ -80,7 +81,6 @@ def run_discord_bot():
     @bot.event
     async def on_member_join(member):
         update_database_member(member)
-
 
     bot.run(TOKEN, log_handler=None)
 
