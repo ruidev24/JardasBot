@@ -1,3 +1,4 @@
+import re
 from utils import stopfile
 from database import DBstatistics, DBhelpers
 
@@ -19,7 +20,9 @@ async def update_stats(message: Message):
     words = message_text.split()
 
     for word in words:
+        word = re.sub(r"\W+$", "", word)  # REmover pontuação no fim das palavras
         word = word.lower()
+        print(f"word = {word}")
         if not stopfile.validate_word(word):
             continue
 

@@ -3,7 +3,6 @@
 - !nuke não está a ter efeito no nuke counter
 - stats devia printar os emojis
 - stats está a contar palavras que deviam estar no stopfiles (ou, eu, etc)
-- stats não devia registar pontuação
 
 
 - refatorar replies custom (adicionar frases ao BD) 
