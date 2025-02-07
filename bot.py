@@ -58,6 +58,7 @@ def run_discord_bot():
 
     # allowed_mentions = discord.AllowedMentions(everyone=True)
     setup_commands(bot)
+    print("idk")
 
     ###############################################
     @bot.event
