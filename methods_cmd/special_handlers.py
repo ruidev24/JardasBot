@@ -51,16 +51,12 @@ async def handle_super_shrekt(ctx: commands.Context, arg: str):
 
 
 async def handle_list_events(ctx: commands.Context):
-    print("WHATSUP")
     """List all scheduled events in the guild."""
     events = await ctx.guild.fetch_scheduled_events()
     if not events:
         await ctx.send("No events are currently scheduled.")
     else:
         for event in events:
-            print("-----------------------------")
-            print(event)
-
             if(str(event.name) == "Convívio semanal 🍻"):
                 await ctx.send(f"{event.name} - {event.start_time} {event.status}")
                 await(ctx.send(event.url))

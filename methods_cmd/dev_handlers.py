@@ -14,7 +14,6 @@ async def handle_clean_words():
 async def handle_get_history(ctx: commands.Context):
     try:
         for channel in ctx.guild.channels:
-            print(channel)
             if isinstance(channel, discord.TextChannel):
                 await get_history(channel)
     except Exception as e:

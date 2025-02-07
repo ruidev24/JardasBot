@@ -12,7 +12,6 @@ from responses import Cheats
 #####################################################
 async def handle_cheats(message: discord.Message):
     is_cheating = await check_for_cheats(message)
-    print(is_cheating)
 
     if is_cheating == True:
         try:

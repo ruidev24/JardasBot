@@ -49,9 +49,6 @@ async def get_top_words_by_user(ctx: commands.Context):
 
     for mentioned_user in ctx.message.mentions:
         username = DBstatistics.get_username_from_mention(mentioned_user.mention)
-        if not username:
-            return "That user doesn't exist"
-
         top_words_by_user = DBstatistics.get_top_words_by_user(username)
 
         if not top_words_by_user:
@@ -68,13 +65,10 @@ async def get_top_users_by_word(ctx: commands.Context, arg: str):
     word = arg.lower().replace(" ", "")
     word_id = DBstatistics.get_word_id(word)
     
-    if not word_id:
-        return "That words has never been written"
-    
     top_users_by_word = DBstatistics.get_top_users_by_word(word_id)
 
     if not top_users_by_word:
-        await ctx.channel.send("Não há palavras registadas para este user caralho.")
+        await ctx.channel.send("Esta palavra nunca foi escrita caralho.")
         return
     
     table = tabulate(top_users_by_word, headers=["username", "Count"], tablefmt="simple_outline")
@@ -98,9 +92,6 @@ async def get_top_words_by_channel(ctx: commands.Context, arg: str):
         response += "{:<30} {:<5}\n".format(word[0], word[1])
 
     await ctx.channel.send(response)
-
-
-
 
 
 

@@ -6,7 +6,8 @@ stopwords_pt = ["a","à","ao","aos","às","as","da","das","do","dos","duma","dum
             "será","nós","tenho","lhe","deles","essas","esses","pelas","este","fosse","dele","tu","te","vocês","vos","lhes",
             "meus","minhas","teu","tua","teus","tuas","nossa","nossos","nossas","delas","esta","estes","estas","aquele","aquela",
             "aqueles","aquelas","isto","aquilo","estou","está","estamos","estão","estive","esteve","estivemos","estiveram","estava",
-            "estávamos","estavam","estivera","esteja","estejamos","estejam","estivermos", "eu", "com", "na", "se", "ainda", "nao", "ou"]
+            "estávamos","estavam","estivera","esteja","estejamos","estejam","estivermos", "eu", "com", "na", "se", "ainda", "nao", "ou",
+            "porque", "não", "sim", "era", "fazer", "vou", "fazer", "estar", "ver", "era", "ir"]
 
 
 stopwords_eng = ['i', 'me', 'my', 'myself', 'we', 'our', 'ours', 

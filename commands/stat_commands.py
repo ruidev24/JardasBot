@@ -19,12 +19,12 @@ def setup_stat_commands(bot: commands.Bot):
 
     @bot.command()
     async def stats_user(ctx: commands.Context, arg):
-        print(arg)
         await stats_handlers.get_top_words_by_user(ctx)
 
 
     @bot.command()
     async def stats_word(ctx: commands.Context, arg):
+        print("XPRO")
         await stats_handlers.get_top_users_by_word(ctx, arg)
 
 
