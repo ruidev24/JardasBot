@@ -48,7 +48,7 @@ def run_discord_bot():
     setup_logging(logger)
 
     # Discord Code - Still exploring documentation
-    TOKEN = os.getenv("TOKEN")
+    TOKEN = os.getenv("DEV_TOKEN")
     intents = discord.Intents.default()
     intents.message_content = True
     intents.members = True

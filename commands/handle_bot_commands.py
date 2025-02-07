@@ -1,4 +1,5 @@
 import time
+import asyncio
 from discord import Message
 from discord.ext import commands
 
@@ -37,28 +38,43 @@ def setup_commands(bot: commands.Bot):
     # setup_special_commands(bot)
     setup_stat_commands(bot)
 
+    
+    @bot.command()
+    async def remove(ctx: commands.Context):
+        guild = ctx.guild
+        role_remove = next((role for role in guild.roles if role.name == "Shadow Banned"), None)
+        await ctx.author.remove_roles(role_remove)
+        print("caralho")
 
     @bot.command()
     async def shadow(ctx: commands.Context):
         guild = ctx.guild  # Obter o servidor
         member = ctx.author  # A pessoa que usou o comando
 
-        # Adicionar o cargo novo
-        role_shadow = "Shadow Banned"  # Nome do cargo que será atribuído - tem de estar igual igual ao que está no discord!        
-        role_novo = next((role for role in guild.roles if role.name == role_shadow), None)
-        await member.add_roles(role_novo)
-        await ctx.send(f"O cargo `{role_shadow}` foi atribuído a você!")
+        role_novo = next((role for role in guild.roles if role.name == "Shadow Banned"), None)
+        role_membro = next((role for role in guild.roles if role.name == "membro"), None)
 
-        # Remover o cargo antigo
-        role_base = "membro"  # Nome do cargo a ser removido - tem de estar igual igual ao que está no discord!
-        role_sai = next((role for role in guild.roles if role.name == role_base), None)
-        await member.remove_roles(role_sai)
-        await ctx.send(f"O cargo `{role_base}` foi removido.")
+        try:
+            await member.send("Quantos minutos precisas bebé?")
+            def check(m):
+                return m.author == member and m.content.isdigit()
 
-        time.sleep(2*60*60)
+            msg = await bot.wait_for("message", check=check, timeout=30) # Tens 30segundos para responder ao bot
+            tempo_minutos = int(msg.content) * 60
 
-        # Após 2 horas, remover o cargo "Shadow Banned" e reatribuir o cargo "membro"
-        await member.remove_roles(role_novo)
-        await member.add_roles(role_sai)
-        await ctx.send("Welcome back", member)       
+            # Adicionar role novo, remover role membro
+            await member.add_roles(role_novo)
+            await member.remove_roles(role_membro)
+            await member.send(f"You are now 'Shadow Banned'. Get to work, weakling")
 
+            await asyncio.sleep(tempo_minutos)  # Espera assíncrona por 2 horas
+
+            # Devolver o estado inicial
+            await member.remove_roles(role_novo)
+            await member.add_roles(role_membro)
+            await ctx.send(f"Welcome back, {member.mention}")
+    
+        except asyncio.TimeoutError:
+            await member.send("Demoraste bues a responder, tchau.")
+            return
+        
