@@ -50,7 +50,7 @@ def run_discord_bot():
     setup_logging(logger)
 
     # Discord Code - Still exploring documentation
-    TOKEN = os.getenv("DEV_TOKEN")
+    TOKEN = os.getenv("TOKEN")
     intents = discord.Intents.default()
     intents.message_content = True
     intents.members = True
@@ -58,7 +58,6 @@ def run_discord_bot():
 
     # allowed_mentions = discord.AllowedMentions(everyone=True)
     setup_commands(bot)
-    print("idk")
 
     ###############################################
     @bot.event

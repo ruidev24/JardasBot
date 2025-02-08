@@ -1,4 +1,5 @@
 import random
+import asyncio
 from datetime import timedelta
 from discord.ext import commands
 
@@ -145,3 +146,51 @@ async def handle_highscores(ctx: commands.Context):
         message_txt += f"{pos}st place: {champ[1]} - {champ[0]}\n"
 
     await ctx.channel.send(message_txt)
+
+
+
+
+#------------------------------------------------------------------------------------------
+# Sofia
+#------------------------------------------------------------------------------------------
+
+async def handle_shadow(ctx: commands.Context, bot: commands.Bot):
+    guild = ctx.guild  # Obter o servidor
+    member = ctx.author  # A pessoa que usou o comando
+
+    role_shadow = next((role for role in guild.roles if role.name == "Shadow Banned"), None)
+    role_membro = next((role for role in guild.roles if role.name == "Membro"), None)
+
+    try:
+        await member.send("Quantos minutos precisas bebé?")
+        def check(m):
+            return m.author == member and m.content.isdigit()
+
+        msg = await bot.wait_for("message", check=check, timeout=30) # Tens 30segundos para responder ao bot
+        tempo_horas = int(msg.content) * 60 * 60
+
+        # Adicionar role novo, remover role membro
+        await member.add_roles(role_shadow)
+        await member.remove_roles(role_membro)
+        await member.send(f"You are now 'Shadow Banned'. Get to work, weakling")
+
+        await asyncio.sleep(tempo_horas)  # Espera assíncrona por 2 horas
+
+        # Devolver o estado inicial
+        await member.remove_roles(role_shadow)
+        await member.add_roles(role_membro)
+        await member.send(f"Your punishment has ended you weakling")
+
+    except asyncio.TimeoutError:
+        await member.send("Demoraste bues a responder, tchau.")
+        return
+    
+
+async def handle_remove(ctx: commands.Context):
+    guild = ctx.guild
+    role_remove = next((role for role in guild.roles if role.name == "Shadow Banned"), None)
+    await ctx.author.remove_roles(role_remove)
+    print("caralho")
+
+
+

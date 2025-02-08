@@ -10,7 +10,7 @@ from commands.nuke_commands import setup_nuke_commands, get_nuke_commands
 from commands.roulette_commands import setup_roulette_commands, get_roulette_commands
 from commands.special_commands import setup_special_commands, get_special_commands
 from commands.stat_commands import setup_stat_commands, get_stat_commands
-
+from methods_cmd.special_handlers import handle_mistery
 
 
 ##############################################################################
@@ -39,42 +39,5 @@ def setup_commands(bot: commands.Bot):
     setup_stat_commands(bot)
 
     
-    @bot.command()
-    async def remove(ctx: commands.Context):
-        guild = ctx.guild
-        role_remove = next((role for role in guild.roles if role.name == "Shadow Banned"), None)
-        await ctx.author.remove_roles(role_remove)
-        print("caralho")
 
-    @bot.command()
-    async def shadow(ctx: commands.Context):
-        guild = ctx.guild  # Obter o servidor
-        member = ctx.author  # A pessoa que usou o comando
 
-        role_novo = next((role for role in guild.roles if role.name == "Shadow Banned"), None)
-        role_membro = next((role for role in guild.roles if role.name == "membro"), None)
-
-        try:
-            await member.send("Quantos minutos precisas bebé?")
-            def check(m):
-                return m.author == member and m.content.isdigit()
-
-            msg = await bot.wait_for("message", check=check, timeout=30) # Tens 30segundos para responder ao bot
-            tempo_minutos = int(msg.content) * 60
-
-            # Adicionar role novo, remover role membro
-            await member.add_roles(role_novo)
-            await member.remove_roles(role_membro)
-            await member.send(f"You are now 'Shadow Banned'. Get to work, weakling")
-
-            await asyncio.sleep(tempo_minutos)  # Espera assíncrona por 2 horas
-
-            # Devolver o estado inicial
-            await member.remove_roles(role_novo)
-            await member.add_roles(role_membro)
-            await ctx.send(f"Welcome back, {member.mention}")
-    
-        except asyncio.TimeoutError:
-            await member.send("Demoraste bues a responder, tchau.")
-            return
-        
