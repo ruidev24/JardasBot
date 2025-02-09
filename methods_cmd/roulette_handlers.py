@@ -162,7 +162,7 @@ async def handle_shadow(ctx: commands.Context, bot: commands.Bot):
     role_membro = next((role for role in guild.roles if role.name == "Membro"), None)
 
     try:
-        await member.send("Quantos minutos precisas bebé?")
+        await member.send("Quantas horas precisas bebé?")
         def check(m):
             return m.author == member and m.content.isdigit()
 
@@ -176,10 +176,19 @@ async def handle_shadow(ctx: commands.Context, bot: commands.Bot):
 
         await asyncio.sleep(tempo_horas)  # Espera assíncrona por 2 horas
 
+        try:
+            timeout_duration = timedelta(hours=tempo_horas)
+            await ctx.author.timeout(timeout_duration, reason="Suicide")
+            await ctx.channel.send(f"{ctx.author.mention} bye bye")
+        except Exception as e:
+            await ctx.channel.send(f"Error timing out {ctx.author.mention}: {e}")
+
         # Devolver o estado inicial
         await member.remove_roles(role_shadow)
         await member.add_roles(role_membro)
         await member.send(f"Your punishment has ended you weakling")
+
+        
 
     except asyncio.TimeoutError:
         await member.send("Demoraste bues a responder, tchau.")

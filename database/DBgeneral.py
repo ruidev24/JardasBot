@@ -58,7 +58,7 @@ def update_fortune_allowed(username):
 
 
 def reset_fortune_table():
-    query = """UPDATE fortune_table SET has_asked = True"""
+    query = """UPDATE fortune_table SET allowed = True"""
     db_execute_query(query)
 
 

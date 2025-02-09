@@ -54,13 +54,16 @@ def setup_roulette_commands(bot: commands.Bot):
 
     @bot.command()
     async def shadow(ctx: commands.Context):
-        print("shadow")
         await handle_shadow(ctx, bot)
 
 
     @bot.command()
     async def remove(ctx: commands.Context):
         await handle_remove(ctx)
+
+    @bot.command()
+    async def cati(ctx: commands.Context):
+        await ctx.send("https://tenor.com/view/weak-weakness-disgusts-me-disgusted-disgusting-gif-17171223")
 
 
 
