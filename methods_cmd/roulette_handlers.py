@@ -169,13 +169,6 @@ async def handle_shadow(ctx: commands.Context, bot: commands.Bot):
         msg = await bot.wait_for("message", check=check, timeout=30) # Tens 30segundos para responder ao bot
         tempo_horas = int(msg.content) * 60 * 60
 
-        # Adicionar role novo, remover role membro
-        await member.add_roles(role_shadow)
-        await member.remove_roles(role_membro)
-        await member.send(f"You are now 'Shadow Banned'. Get to work, weakling")
-
-        await asyncio.sleep(tempo_horas)  # Espera assíncrona por 2 horas
-
         try:
             timeout_duration = timedelta(hours=tempo_horas)
             await ctx.author.timeout(timeout_duration, reason="Suicide")
@@ -183,12 +176,17 @@ async def handle_shadow(ctx: commands.Context, bot: commands.Bot):
         except Exception as e:
             await ctx.channel.send(f"Error timing out {ctx.author.mention}: {e}")
 
+        # Adicionar role novo, remover role membro
+        await member.add_roles(role_shadow)
+        await member.remove_roles(role_membro)
+        await member.send(f"You are now 'Shadow Banned'. Get to work, weakling")
+
+        await asyncio.sleep(tempo_horas)  # Espera assíncrona por 2 horas
+
         # Devolver o estado inicial
         await member.remove_roles(role_shadow)
         await member.add_roles(role_membro)
         await member.send(f"Your punishment has ended you weakling")
-
-        
 
     except asyncio.TimeoutError:
         await member.send("Demoraste bues a responder, tchau.")
