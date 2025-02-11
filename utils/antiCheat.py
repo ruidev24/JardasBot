@@ -25,11 +25,10 @@ async def handle_cheats(message: discord.Message):
 
 
 async def check_for_cheats(message: discord.Message):
-    if await detect_spam_message(message):
-        return True
-    if await detect_rapid_spamming(message):
-        return True
-    
+    #if await detect_spam_message(message):
+    #    return True
+    #if await detect_rapid_spamming(message):
+    #    return True
     return False
 
 
